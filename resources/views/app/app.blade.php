@@ -18,12 +18,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
-    <script src="{{ asset('/assets/vendors/tinymce/js/tinymce/tinymce.min.js') }}"></script>
-    <script type="text/javascript">
-  tinymce.init({
-    selector: '#mytextarea'
-  });
-  </script>
+
     @stack('css')
   </head>
 
@@ -76,7 +71,7 @@
                         <li><a href="{{ url('pengaturan/grup-jabatan') }}">Grup Jabatan</a></li>
                         <li><a href="{{ url('pengaturan/isi-disposisi') }}">Isi Disposisi</a></li>
                         <li><a href="{{ url('pengaturan/halaman-depan') }}">Halaman Depan</a></li>
-                        <li><a href="{{ url('pengaturan/data-instansi') }}">Data Instansi</a></li>
+                        <li><a href="{{ url('pengaturan/instansi') }}">Data Instansi</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -248,5 +243,6 @@
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('assets/build/js/custom.min.js') }}"></script>
 
+    @stack('js')
   </body>
 </html>

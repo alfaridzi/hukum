@@ -61,7 +61,7 @@ class GrupJabatanController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$grupJabatan = GrupJabatan::find($input['id']);
+    	$grupJabatan = GrupJabatan::findOrFail($input['id']);
     	$grupJabatan->update(['nama_grup' => $input['nama_grup']]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
@@ -73,11 +73,14 @@ class GrupJabatanController extends Controller
             return redirect()->back();
         }
 
-        $grupJabatan = GrupJabatan::find($id);
+        $grupJabatan = GrupJabatan::findOrFail($id);
         $grupJabatan->delete();
 
-        $isiDisposisi = IsiDisposisi::find($id);
-        $isiDisposisi->delete();
+        $isiDisposisi = IsiDisposisi::where('id_grup', $id);
+
+        if ($isiDisposisi) {
+        	$isiDisposisi->delete();
+        }
 
         return redirect()->back()->with('success', 'Berhasil menghapus data');
     }

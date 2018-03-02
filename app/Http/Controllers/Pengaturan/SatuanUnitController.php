@@ -61,7 +61,7 @@ class SatuanUnitController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$satuanUnit = SatuanUnit::find($input['id']);
+    	$satuanUnit = SatuanUnit::findOrFail($input['id']);
     	
     	$satuanUnit->update(['nama_satuan' => $input['nama_satuan']]);
 
@@ -74,7 +74,7 @@ class SatuanUnitController extends Controller
             return redirect()->back();
         }
 
-        $satuanUnit = SatuanUnit::find($id);
+        $satuanUnit = SatuanUnit::findOrFail($id);
         $satuanUnit->delete();
 
         return redirect()->back()->with('success', 'Berhasil menghapus data');

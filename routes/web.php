@@ -42,3 +42,11 @@ Route::post('/pengaturan/isi-disposisi/edit', 'Pengaturan\IsiDisposisiController
 Route::delete('/pengaturan/isi-disposisi/delete/{id}', 'Pengaturan\IsiDisposisiController@delete');
 
 Route::get('/pengaturan/halaman-depan', 'Pengaturan\HalamanDepanController@index');
+Route::post('/pengaturan/halaman-depan/edit', 'Pengaturan\HalamanDepanController@edit');
+
+Route::get('/pengaturan/instansi', 'Pengaturan\InstansiController@index');
+Route::get('/pengaturan/instansi/tambah', 'Pengaturan\InstansiController@tambah');
+Route::post('/pengaturan/instansi/simpan', 'Pengaturan\InstansiController@simpan');
+Route::get('/pengaturan/instansi/{id}/edit', 'Pengaturan\InstansiController@edit');
+Route::post('/pengaturan/instansi/{id}/update', 'Pengaturan\InstansiController@update');
+Route::delete('/pengaturan/instansi/{id}/delete', 'Pengaturan\InstansiController@delete');

@@ -71,7 +71,7 @@ class IsiDisposisiController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$isiDisposisi = IsiDisposisi::find($input['id']);
+    	$isiDisposisi = IsiDisposisi::findOrFail($input['id']);
     	$isiDisposisi->update(['isi_disposisi' => $input['isi_disposisi'], 'id_grup' => $input['grup_jabatan']]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');

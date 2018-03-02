@@ -37,7 +37,7 @@ class TextTombolController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$textTombol = TextTombol::find($input['id']);
+    	$textTombol = TextTombol::findOrFail($input['id']);
 
     	$textTombol->update([
     		'text' => $input['text']
