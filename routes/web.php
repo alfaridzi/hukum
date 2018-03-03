@@ -97,4 +97,3 @@ Route::post('/pengaturan/template-dokumen/tambah', 'Pengaturan\TemplateDokContro
 Route::post('/pengaturan/template-dokumen/edit', 'Pengaturan\TemplateDokController@edit');
 Route::get('/pengaturan/template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
 Route::delete('/pengaturan/template-dokumen/{id}/delete', 'Pengaturan\TemplateDokController@delete');
->>>>>>> 3c30cd8d1422b70116ecf0f707355b2b7d8a606c
