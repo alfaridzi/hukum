@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class GrupJabatan extends Model
 {
     protected $table = 'tbl_grup_jabatan';
-    protected $fillable = ['nama_grup'];
+    protected $fillable = ['nama_grup', 'updated_at'];
     protected $primaryKey = 'id_grup';
 }

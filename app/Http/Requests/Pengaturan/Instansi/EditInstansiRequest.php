@@ -28,7 +28,7 @@ class EditInstansiRequest extends FormRequest
             'kode_instansi' => 'required|string|unique:tbl_instansi,kode_instansi,'.$id.',id_instansi',
             'nama_instansi' => 'required|string',
             'nama_lain'     => 'string',
-            'tipe_instansi' => 'required|string',
+            'tipe_instansi' => 'string',
             'tanggal_keberadaan' => 'required|date',
             'detail'        => 'required|string',
             'mandat'        => 'required|string',

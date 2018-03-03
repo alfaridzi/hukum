@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use App\Model\Pengaturan\GrupJabatan;
 use App\Model\Pengaturan\IsiDisposisi;
+use Carbon\Carbon;
 
 class GrupJabatanController extends Controller
 {
@@ -21,14 +22,9 @@ class GrupJabatanController extends Controller
 	{
 		$input = $request->all();
 
-    	$message = [
-    		'nama_grup.required' => 'Field Satuan Unit dibutuhkan',
-    		'nama_grup.string' => 'Field Satuan Unit harus berupa string',
-    	];
-
     	$validator = Validator::make($input, [
     		'nama_grup' => 'required|string'
-    	], $message);
+    	]);
 
     	if ($validator->fails()) {
     		return redirect('pengaturan/grup-jabatan')
@@ -43,12 +39,11 @@ class GrupJabatanController extends Controller
 	public function edit(Request $request)
 	{
 		$input = $request->all();
+        $grupJabatan = GrupJabatan::findOrFail($input['id']);
 
     	$message = [
     		'id.required' => 'Terjadi suatu kesalahan',
     		'id.integer' => 'Terjadi suatu kesalahan',
-    		'nama_grup.required' => 'Field Satuan Unit dibutuhkan',
-    		'nama_grup.string' => 'Field Satuan Unit harus berupa string',
     	];
 
     	$validator = Validator::make($input, [
@@ -61,8 +56,7 @@ class GrupJabatanController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$grupJabatan = GrupJabatan::findOrFail($input['id']);
-    	$grupJabatan->update(['nama_grup' => $input['nama_grup']]);
+    	$grupJabatan->update(['nama_grup' => $input['nama_grup'], 'updated_at' => Carbon::now()]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
 	}

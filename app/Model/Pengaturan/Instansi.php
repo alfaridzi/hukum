@@ -7,11 +7,9 @@ use Carbon\Carbon;
 
 class Instansi extends Model
 {
-    protected $table = 'tbl_instansi';
-   	protected $fillable = ['kode_instansi', 'nama_instansi', 'nama_lain', 'tipe_instansi', 'tanggal_keberadaan', 'detail', 'mandat', 'status'];
+      protected $table = 'tbl_instansi';
+   	protected $fillable = ['kode_instansi', 'nama_instansi', 'nama_lain', 'tipe_instansi', 'tanggal_keberadaan', 'detail', 'mandat', 'status', 'updated_at'];
    	protected $primaryKey = 'id_instansi';
-
-   	public $timestamps = true;
 
    	public function get_status()
    	{

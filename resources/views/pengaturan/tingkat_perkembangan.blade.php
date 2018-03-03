@@ -1,5 +1,5 @@
 @extends('app.app')
-@section('page-title', 'Pengaturan Satuan Unit')
+@section('page-title', 'Pengaturan Tingkat Perkembangan')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
 @endpush
@@ -23,25 +23,25 @@
     </div>
 @endif
 
-	<a href="#" class="btn btn-primary" id="tambah-satuan">Tambah</a>
+	<a href="#" class="btn btn-primary" id="tambah-perkembangan">Tambah</a>
 
-	<table class="table table-bordered table-responsive" id="table-satuan-unit">
+	<table class="table table-bordered table-responsive" id="table-tingkat-perkembangan">
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Satuan Unit</th>
+				<th>Tingkat Perkembangan</th>
 				<th>Aksi</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($satuanUnit as $data)
+			@foreach($perkembangan as $data)
 			<tr>
 				<td>{{ $no++ }}</td>
-				<td>{{ $data->nama_satuan }}</td>
-				<td><form style="margin:0; padding:0;" action="{{ url('pengaturan/satuan-unit/delete', $data->id_satuan) }}" method="post">
+				<td>{{ $data->tingkat }}</td>
+				<td><form style="margin:0; padding:0;" action="{{ url('pengaturan/tingkat-perkembangan/'.$data->id_perkembangan.'/delete') }}" method="post">
 					@method('delete')
 					@csrf
-					<a href="javascript:;" class="btn btn-warning" id="edit-satuan" data-id="{{ $data->id_satuan }}" data-nama-satuan="{{ $data->nama_satuan }}">Edit</a> 
+					<a href="javascript:;" class="btn btn-warning" id="edit-tingkat-perkembangan" data-id="{{ $data->id_perkembangan }}" data-tingkat="{{ $data->tingkat }}">Edit</a> 
 					<button style="display: inline;" type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Delete</button>
 				</form></td>
 			</tr>
@@ -51,59 +51,59 @@
 
 
 <!-- Modal Tambah Satuan-->
-<div class="modal fade" id="modal-tambah-satuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-tambah-perkembangan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tambah Satuan Unit</h4>
+        <h4 class="modal-title" id="myModalLabel">Tambah Tingkat Perkembangan</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-tambah-satuan" action="{{ url('pengaturan/satuan-unit/tambah') }}" method="post">
+        <form class="form-horizontal" id="form-tambah-perkembangan" action="{{ url('pengaturan/tingkat-perkembangan/tambah') }}" method="post">
         	{!! csrf_field() !!}
         	<div class="form-group">
 	        	<div class="col-md-3 col-sm-3 col-xs-3">
-	        		<label>Satuan Unit</label>
+	        		<label>Tingkat Perkembangan</label>
 	        	</div>
 	        	<div class="col-md-9 col-sm-9 col-xs-9">
-	        		<input class="form-control" type="text" name="nama_satuan" required="">
+	        		<input class="form-control" type="text" name="tingkat_perkembangan" required="">
 	        	</div>
         	</div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" form="form-tambah-satuan" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="submit-tambah-perkembangan" form="form-tambah-perkembangan" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Edit Satuan-->
-<div class="modal fade" id="modal-edit-satuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-edit-perkembangan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit Satuan Unit</h4>
+        <h4 class="modal-title" id="myModalLabel">Edit Tingkat Perkembangan</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-edit-satuan" action="{{ url('pengaturan/satuan-unit/edit') }}" method="post">
+        <form class="form-horizontal" id="form-edit-perkembangan" action="{{ url('pengaturan/tingkat-perkembangan/edit') }}" method="post">
         	{!! csrf_field() !!}
         	<input type="hidden" name="id" id="id" required>
         	<div class="form-group">
 	        	<div class="col-md-3 col-sm-3 col-xs-3">
-	        		<label>Satuan Unit</label>
+	        		<label>Tingkat Perkembangan</label>
 	        	</div>
 	        	<div class="col-md-9 col-sm-9 col-xs-9">
-	        		<input id="input-nama-satuan" class="form-control" type="text" name="nama_satuan" required>
+	        		<input id="input-perkembangan" class="form-control" type="text" name="tingkat_perkembangan" required>
 	        	</div>
         	</div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-edit-satuan" form="form-edit-satuan" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="submit-edit-perkembangan" form="form-edit-perkembangan" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -116,28 +116,28 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#table-satuan-unit').DataTable();
+		$('#table-tingkat-perkembangan').DataTable();
 
-		$(document).on('click', '#edit-satuan', function(){
-			$('#modal-edit-satuan').modal('show');
+		$(document).on('click', '#edit-tingkat-perkembangan', function(){
+			$('#modal-edit-perkembangan').modal('show');
 
 			var id = $(this).data('id');
-			var nama_satuan = $(this).data('nama-satuan');
+			var tingkat = $(this).data('tingkat');
 
-			$('#input-nama-satuan').val(nama_satuan);
+			$('#input-perkembangan').val(tingkat);
 			$('#id').val(id);
 		});
 
-		$(document).on('click', '#submit-edit-satuan', function(){
-		    $('#form-edit-satuan').submit();
+		$(document).on('click', '#submit-edit-perkembangan', function(){
+		    $('#form-edit-perkembangan').submit();
 		});
 
-		$('#tambah-satuan').on('click', function() {
-			$('#modal-tambah-satuan').modal('show');
+		$('#tambah-perkembangan').on('click', function() {
+			$('#modal-tambah-perkembangan').modal('show');
 		});
 
-		$(document).on('click', '#submit-tambah-satuan', function(){
-		    $('#form-tambah-satuan').submit();
+		$(document).on('click', '#submit-tambah-perkembangan', function(){
+		    $('#form-tambah-perkembangan').submit();
 		});
 	});
 </script>

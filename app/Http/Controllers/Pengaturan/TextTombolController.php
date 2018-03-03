@@ -6,6 +6,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Pengaturan\TextTombol;
+use Carbon\Carbon;
 
 class TextTombolController extends Controller
 {
@@ -19,12 +20,11 @@ class TextTombolController extends Controller
     public function edit(Request $request)
     {
     	$input = $request->all();
+        $textTombol = TextTombol::findOrFail($input['id']);
 
     	$message = [
     		'id.required' => 'Terjadi suatu kesalahan',
     		'id.integer' => 'Terjadi suatu kesalahan',
-    		'text.required' => 'Field text dibutuhkan',
-    		'text.string' => 'Field text harus berupa string',
     	];
 
     	$validator = Validator::make($input, [
@@ -37,10 +37,9 @@ class TextTombolController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$textTombol = TextTombol::findOrFail($input['id']);
-
     	$textTombol->update([
-    		'text' => $input['text']
+    		'text' => $input['text'],
+            'updated_at' => Carbon::now(),
     	]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');

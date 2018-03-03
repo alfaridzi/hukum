@@ -47,6 +47,7 @@ class InstansiController extends Controller
     {
     	$input = $request->all();
     	$input['tanggal_keberadaan'] = Carbon::parse($input['tanggal_keberadaan'])->format('Y-m-d');
+        $input['updated_at'] = Carbon::now();
 
     	$instansi = Instansi::findOrFail($id);
     	$instansi->update($input);

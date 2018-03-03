@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class IsiDisposisi extends Model
 {
     protected $table = 'tbl_isi_disposisi';
-    protected $fillable = ['id_grup', 'isi_disposisi'];
+    protected $fillable = ['id_grup', 'isi_disposisi', 'updated_at'];
     protected $primaryKey = 'id_disposisi';
 
     public function grup_jabatan()

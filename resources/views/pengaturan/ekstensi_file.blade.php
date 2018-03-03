@@ -1,5 +1,5 @@
 @extends('app.app')
-@section('page-title', 'Pengaturan Satuan Unit')
+@section('page-title', 'Pengaturan Ekstensi File')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
 @endpush
@@ -23,25 +23,25 @@
     </div>
 @endif
 
-	<a href="#" class="btn btn-primary" id="tambah-satuan">Tambah</a>
+	<a href="#" class="btn btn-primary" id="tambah-jenis-ekstensi">Tambah</a>
 
-	<table class="table table-bordered table-responsive" id="table-satuan-unit">
+	<table class="table table-bordered table-responsive" id="table-jenis-ekstensi">
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>Satuan Unit</th>
+				<th>Jenis Ekstensi File</th>
 				<th>Aksi</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($satuanUnit as $data)
+			@foreach($ekstensi as $data)
 			<tr>
 				<td>{{ $no++ }}</td>
-				<td>{{ $data->nama_satuan }}</td>
-				<td><form style="margin:0; padding:0;" action="{{ url('pengaturan/satuan-unit/delete', $data->id_satuan) }}" method="post">
+				<td>.{{ $data->jenis_ekstensi }}</td>
+				<td><form style="margin:0; padding:0;" action="{{ url('pengaturan/ekstensi-file/'.$data->id_ekstensi.'/delete') }}" method="post">
 					@method('delete')
 					@csrf
-					<a href="javascript:;" class="btn btn-warning" id="edit-satuan" data-id="{{ $data->id_satuan }}" data-nama-satuan="{{ $data->nama_satuan }}">Edit</a> 
+					<a href="javascript:;" class="btn btn-warning" id="edit-jenis-ekstensi" data-id="{{ $data->id_ekstensi }}" data-jenis-ekstensi="{{ $data->jenis_ekstensi }}">Edit</a> 
 					<button style="display: inline;" type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus data ini?')">Delete</button>
 				</form></td>
 			</tr>
@@ -51,59 +51,59 @@
 
 
 <!-- Modal Tambah Satuan-->
-<div class="modal fade" id="modal-tambah-satuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-tambah-ekstensi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tambah Satuan Unit</h4>
+        <h4 class="modal-title" id="myModalLabel">Tambah Jenis Ekstensi</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-tambah-satuan" action="{{ url('pengaturan/satuan-unit/tambah') }}" method="post">
+        <form class="form-horizontal" id="form-tambah-ekstensi" action="{{ url('pengaturan/ekstensi-file/tambah') }}" method="post">
         	{!! csrf_field() !!}
         	<div class="form-group">
 	        	<div class="col-md-3 col-sm-3 col-xs-3">
-	        		<label>Satuan Unit</label>
+	        		<label>Jenis Ekstensi File</label>
 	        	</div>
 	        	<div class="col-md-9 col-sm-9 col-xs-9">
-	        		<input class="form-control" type="text" name="nama_satuan" required="">
+	        		<input class="form-control" type="text" name="jenis_ekstensi" required="">
 	        	</div>
         	</div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" form="form-tambah-satuan" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="submit-tambah-ekstensi" form="form-tambah-ekstensi" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Edit Satuan-->
-<div class="modal fade" id="modal-edit-satuan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-edit-ekstensi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit Satuan Unit</h4>
+        <h4 class="modal-title" id="myModalLabel">Edit Jenis Ekstensi</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-edit-satuan" action="{{ url('pengaturan/satuan-unit/edit') }}" method="post">
+        <form class="form-horizontal" id="form-edit-ekstensi" action="{{ url('pengaturan/ekstensi-file/edit') }}" method="post">
         	{!! csrf_field() !!}
         	<input type="hidden" name="id" id="id" required>
         	<div class="form-group">
 	        	<div class="col-md-3 col-sm-3 col-xs-3">
-	        		<label>Satuan Unit</label>
+	        		<label>Jenis Ekstensi File</label>
 	        	</div>
 	        	<div class="col-md-9 col-sm-9 col-xs-9">
-	        		<input id="input-nama-satuan" class="form-control" type="text" name="nama_satuan" required>
+	        		<input id="input-ekstensi" class="form-control" type="text" name="jenis_ekstensi" required>
 	        	</div>
         	</div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-edit-satuan" form="form-edit-satuan" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="submit-edit-ekstensi" form="form-edit-ekstensi" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -116,28 +116,28 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#table-satuan-unit').DataTable();
+		$('#table-jenis-ekstensi').DataTable();
 
-		$(document).on('click', '#edit-satuan', function(){
-			$('#modal-edit-satuan').modal('show');
+		$(document).on('click', '#edit-jenis-ekstensi', function(){
+			$('#modal-edit-ekstensi').modal('show');
 
 			var id = $(this).data('id');
-			var nama_satuan = $(this).data('nama-satuan');
+			var ekstensi = $(this).data('jenis-ekstensi');
 
-			$('#input-nama-satuan').val(nama_satuan);
+			$('#input-ekstensi').val(ekstensi);
 			$('#id').val(id);
 		});
 
-		$(document).on('click', '#submit-edit-satuan', function(){
-		    $('#form-edit-satuan').submit();
+		$(document).on('click', '#submit-edit-ekstensi', function(){
+		    $('#form-edit-ekstensi').submit();
 		});
 
-		$('#tambah-satuan').on('click', function() {
-			$('#modal-tambah-satuan').modal('show');
+		$('#tambah-jenis-ekstensi').on('click', function() {
+			$('#modal-tambah-ekstensi').modal('show');
 		});
 
-		$(document).on('click', '#submit-tambah-satuan', function(){
-		    $('#form-tambah-satuan').submit();
+		$(document).on('click', '#submit-tambah-ekstensi', function(){
+		    $('#form-tambah-ekstensi').submit();
 		});
 	});
 </script>

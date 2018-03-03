@@ -23,6 +23,43 @@ Route::get('/dashboard', function() {
 	return view('dashboard');
 });
 
+/* ------------------------- Bagian Pengaturan ----------------------------------- */
+
+Route::get('/pengaturan/bahasa', 'Pengaturan\BahasaController@index');
+Route::post('/pengaturan/bahasa/tambah', 'Pengaturan\BahasaController@tambah');
+Route::post('/pengaturan/bahasa/edit', 'Pengaturan\BahasaController@edit');
+Route::delete('/pengaturan/bahasa/{id}/delete', 'Pengaturan\BahasaController@delete');
+
+Route::get('/pengaturan/jenis-naskah', 'Pengaturan\JenisNaskahController@index');
+Route::post('/pengaturan/jenis-naskah/tambah', 'Pengaturan\JenisNaskahController@tambah');
+Route::post('/pengaturan/jenis-naskah/edit', 'Pengaturan\JenisNaskahController@edit');
+Route::delete('/pengaturan/jenis-naskah/{id}/delete', 'Pengaturan\JenisNaskahController@delete');
+
+Route::get('/pengaturan/media-arsip', 'Pengaturan\MediaArsipController@index');
+Route::post('/pengaturan/media-arsip/tambah', 'Pengaturan\MediaArsipController@tambah');
+Route::post('/pengaturan/media-arsip/edit', 'Pengaturan\MediaArsipController@edit');
+Route::delete('/pengaturan/media-arsip/{id}/delete', 'Pengaturan\MediaArsipController@delete');
+
+Route::get('/pengaturan/sifat-naskah', 'Pengaturan\SifatNaskahController@index');
+Route::post('/pengaturan/sifat-naskah/tambah', 'Pengaturan\SifatNaskahController@tambah');
+Route::post('/pengaturan/sifat-naskah/edit', 'Pengaturan\SifatNaskahController@edit');
+Route::delete('/pengaturan/sifat-naskah/{id}/delete', 'Pengaturan\SifatNaskahController@delete');
+
+Route::get('/pengaturan/tingkat-perkembangan', 'Pengaturan\PerkembanganController@index');
+Route::post('/pengaturan/tingkat-perkembangan/tambah', 'Pengaturan\PerkembanganController@tambah');
+Route::post('/pengaturan/tingkat-perkembangan/edit', 'Pengaturan\PerkembanganController@edit');
+Route::delete('/pengaturan/tingkat-perkembangan/{id}/delete', 'Pengaturan\PerkembanganController@delete');
+
+Route::get('/pengaturan/tingkat-urgensi', 'Pengaturan\UrgensiController@index');
+Route::post('/pengaturan/tingkat-urgensi/tambah', 'Pengaturan\UrgensiController@tambah');
+Route::post('/pengaturan/tingkat-urgensi/edit', 'Pengaturan\UrgensiController@edit');
+Route::delete('/pengaturan/tingkat-urgensi/{id}/delete', 'Pengaturan\UrgensiController@delete');
+
+Route::get('/pengaturan/ekstensi-file', 'Pengaturan\EkstensiController@index');
+Route::post('/pengaturan/ekstensi-file/tambah', 'Pengaturan\EkstensiController@tambah');
+Route::post('/pengaturan/ekstensi-file/edit', 'Pengaturan\EkstensiController@edit');
+Route::delete('/pengaturan/ekstensi-file/{id}/delete', 'Pengaturan\EkstensiController@delete');
+
 Route::get('/pengaturan/text-tombol', 'Pengaturan\TextTombolController@index');
 Route::post('/pengaturan/text-tombol/edit', 'Pengaturan\TextTombolController@edit');
 
@@ -50,3 +87,9 @@ Route::post('/pengaturan/instansi/simpan', 'Pengaturan\InstansiController@simpan
 Route::get('/pengaturan/instansi/{id}/edit', 'Pengaturan\InstansiController@edit');
 Route::post('/pengaturan/instansi/{id}/update', 'Pengaturan\InstansiController@update');
 Route::delete('/pengaturan/instansi/{id}/delete', 'Pengaturan\InstansiController@delete');
+
+Route::get('/pengaturan/template-dokumen', 'Pengaturan\TemplateDokController@index');
+Route::post('/pengaturan/template-dokumen/tambah', 'Pengaturan\TemplateDokController@tambah');
+Route::post('/pengaturan/template-dokumen/edit', 'Pengaturan\TemplateDokController@edit');
+Route::get('/pengaturan/template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
+Route::delete('/pengaturan/template-dokumen/{id}/delete', 'Pengaturan\TemplateDokController@delete');

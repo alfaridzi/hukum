@@ -7,6 +7,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use App\Model\Pengaturan\IsiDisposisi;
 use App\Model\Pengaturan\GrupJabatan;
+use Carbon\Carbon;
 
 class IsiDisposisiController extends Controller
 {
@@ -49,15 +50,11 @@ class IsiDisposisiController extends Controller
     {
     	$input = $request->all();
 
+        $isiDisposisi = IsiDisposisi::findOrFail($input['id']);
+
     	$message = [
     		'id.required' => 'Terjadi suatu kesalahan',
     		'id.integer'  => 'Terjadi suatu kesalahan',
-    		'isi_disposisi.required' => 'Field Isi Disposisi dibutuhkan',
-    		'isi_disposisi.string' => 'Field Isi Disposisi harus berupa string',
-    		'isi_disposisi.max' => 'Field Isi Disposisi tidak boleh lebih dari 255 karakter',
-    		'grup_jabatan.required' => 'Field Grup Jabatan dibutuhkan',
-    		'grup_jabatan.integer' => 'Field Grup Jabatan harus berupa integer',
-    		'grup_jabatan.max' => 'Field Isi Disposisi tidak boleh lebih dari 10 karakter',
     	];
 
     	$validator = Validator::make($input, [
@@ -71,8 +68,7 @@ class IsiDisposisiController extends Controller
     					 ->withErrors($validator);
     	}
 
-    	$isiDisposisi = IsiDisposisi::findOrFail($input['id']);
-    	$isiDisposisi->update(['isi_disposisi' => $input['isi_disposisi'], 'id_grup' => $input['grup_jabatan']]);
+    	$isiDisposisi->update(['isi_disposisi' => $input['isi_disposisi'], 'id_grup' => $input['grup_jabatan'], 'updated_at' => Carbon::now()]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
 
@@ -84,7 +80,7 @@ class IsiDisposisiController extends Controller
     		return redirect()->back();
     	}
 
-    	$isiDisposisi = IsiDisposisi::find($id);
+    	$isiDisposisi = IsiDisposisi::findOrFail($id);
     	$isiDisposisi->delete();
 
     	return redirect()->back()->with('success', 'Berhasil menghapus data');

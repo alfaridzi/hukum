@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Model\Pengaturan\SatuanUnit;
+use Carbon\Carbon;
 
 class SatuanUnitController extends Controller
 {
@@ -21,14 +22,9 @@ class SatuanUnitController extends Controller
     {
     	$input = $request->all();
 
-    	$message = [
-    		'nama_satuan.required' => 'Field Satuan Unit dibutuhkan',
-    		'nama_satuan.string' => 'Field Satuan Unit harus berupa string',
-    	];
-
     	$validator = Validator::make($input, [
     		'nama_satuan' => 'required|string'
-    	], $message);
+    	]);
 
     	if ($validator->fails()) {
     		return redirect('pengaturan/satuan-unit')
@@ -43,12 +39,11 @@ class SatuanUnitController extends Controller
     public function edit(Request $request)
     {
     	$input = $request->all();
+        $satuanUnit = SatuanUnit::findOrFail($input['id']);
 
     	$message = [
     		'id.required' => 'Terjadi suatu kesalahan',
     		'id.integer' => 'Terjadi suatu kesalahan',
-    		'nama_satuan.required' => 'Field text dibutuhkan',
-    		'nama_satuan.string' => 'Field Satuan Unit harus berupa string',
     	];
 
     	$validator = Validator::make($input, [
@@ -60,10 +55,8 @@ class SatuanUnitController extends Controller
     		return redirect('pengaturan/satuan-unit')
     					 ->withErrors($validator);
     	}
-
-    	$satuanUnit = SatuanUnit::findOrFail($input['id']);
     	
-    	$satuanUnit->update(['nama_satuan' => $input['nama_satuan']]);
+    	$satuanUnit->update(['nama_satuan' => $input['nama_satuan'], 'updated_at' => Carbon::now()]);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
     }
