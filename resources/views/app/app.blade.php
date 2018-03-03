@@ -18,6 +18,8 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/build/css/custom.min.css') }}" rel="stylesheet">
+
+    @stack('css')
   </head>
 
   <body class="nav-md">
@@ -54,18 +56,30 @@
                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home"></i> Home </a></li>
                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="#level1_1">Level One</a>
-                        <li><a>Level One<span class="fa fa-chevron-down"></span></a>
+                        <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
+                        <li><a href="{{ url('pengaturan/jenis-naskah') }}">Jenis Surat</a></li>
+                        <li><a href="{{ url('pengaturan/media-arsip') }}">Media Arsip</a></li>
+                        <li><a href="{{ url('pengaturan/sifat-naskah') }}">Sifat Surat</a></li>
+                        <li><a href="{{ url('pengaturan/tingkat-perkembangan') }}">Tingkat Perkembangan</a></li>
+                        <li><a href="{{ url('pengaturan/tingkat-urgensi') }}">Tingkat Urgensi</a></li>
+                        <li><a href="{{ url('pengaturan/ekstensi-file') }}">Ekstensi File</a></li>
+                        {{-- <li><a>Level One<span class="fa fa-chevron-down"></span></a>
                           <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html">Level Two</a>
+                            <li class="sub_menu"><a href="level2.html"></a>
                             </li>
                             <li><a href="#level2_1">Level Two</a>
                             </li>
                             <li><a href="#level2_2">Level Two</a>
                             </li>
                           </ul>
-                        </li>
-                        <li><a href="#level1_2">Level One</a></li>
+                        </li> --}}
+                        <li><a href="{{ url('pengaturan/text-tombol') }}">Text Tombol</a>
+                        <li><a href="{{ url('pengaturan/satuan-unit') }}">Satuan Unit</a></li>
+                        <li><a href="{{ url('pengaturan/grup-jabatan') }}">Grup Jabatan</a></li>
+                        <li><a href="{{ url('pengaturan/isi-disposisi') }}">Isi Disposisi</a></li>
+                        <li><a href="{{ url('pengaturan/halaman-depan') }}">Halaman Depan</a></li>
+                        <li><a href="{{ url('pengaturan/instansi') }}">Data Instansi</a></li>
+                        <li><a href="{{ url('pengaturan/template-dokumen') }}">Upload Template Dokumen</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -233,8 +247,10 @@
     <script src="{{ asset('assets/vendors/fastclick/lib/fastclick.js') }}"></script>
     <!-- NProgress -->
     <script src="{{ asset('assets/vendors/nprogress/nprogress.js') }}"></script>
-    
+  
     <!-- Custom Theme Scripts -->
     <script src="{{ asset('assets/build/js/custom.min.js') }}"></script>
+
+    @stack('js')
   </body>
 </html>
