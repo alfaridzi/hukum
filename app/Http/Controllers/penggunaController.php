@@ -58,25 +58,37 @@ class penggunaController extends Controller
     	//}
       //  $input['updated_at'] = Carbon::now();
 
-    	if(!is_null($input['password'])) {
-    		$validator = Validator::make($input, [
-    		'password' => 'required|confirmed',
-    	]);
-
-    	if ($validator->fails()) {
-    		return redirect('/pengguna')
-    					->withErrors($validator);
-    	}
-
-    	$input['password'] = Hash::make($input['password']);
-
-    	}
+    	
 
 
+    	
+    	$user = User::findOrFail($input['id_user']);
+    	$passwd = $user->password;
+
+    	
     	if(!isset($input['id_status'])) {
     		$input['id_status'] = '0';
     	}
-    	$user = User::findOrFail($input['id_user'])->update($input);
+
+    	if(!is_null($input['password'])) {
+    		$validator = Validator::make($input, [
+    			'password' => 'required|confirmed',
+    		]);
+
+	    	if ($validator->fails()) {
+	    		return redirect('/pengguna')
+	    					->withErrors($validator);
+	    	}
+
+    		$input['password'] = Hash::make($input['password']);
+
+    	} else {
+    		$input['password'] = $passwd;
+    	}
+
+
+
+    	$user->update($input);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
     }

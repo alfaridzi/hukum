@@ -40,7 +40,8 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>{{ Auth::guard()->user()->nama }}</h2>
+                <h2>{{ Auth::guard()->user()->nama }}<br>
+                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} ]</small></h2>
               </div>
               <div class="clearfix"></div>
             </div>
