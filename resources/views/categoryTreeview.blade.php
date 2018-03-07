@@ -45,13 +45,6 @@
     </div>
 @endif
 
-@if(Session::has('success'))
-    <div class="alert alert-success">
-        <ul>
-            <li>{{ Session::get('success') }}</li>
-        </ul>
-    </div>
-@endif
 
 			
 	  			<div class="row">
@@ -81,7 +74,7 @@
 	  				</div>
 	  				</div>
 	  				<div class="col-md-6">
-	  					<h3>Tambah Jabatan</h3>
+	  					<h3>Tambah Unit Kerja</h3>
 
 
 				  			<form method="POST" id="frm">
@@ -160,13 +153,13 @@
                 $('.jabatan').val(node.data.jabatan);
 				$('.unitkerja').val(node.data.title);
 				$('#parent_id').val(node.data.id);
-				$('.grupjabatan option').removeAttr('selected');
-				$('#grupjabatan option[value=' + node.data.id_grup + ']').attr('selected','selected');
+				$('.grupjabatan option').prop('selected',false);
+				$('#grupjabatan option[value=' + node.data.id_grup + ']').prop('selected',true);
 
 				if(node.data.status == 1) {
-					$('.status').attr('checked','checked');
+					$('.status').prop('checked',true)
 				} else {
-					$('.status').removeAttr('checked');
+					$('.status').prop('checked',false)
 				}
 
 
@@ -202,18 +195,6 @@
 
 
 
-	$(document).on('click', '.edit', function(){
-			var id = $(this).data('id');
-			var title = $(this).data('title');
-			$('.jabatan').val(title);
-			$('.status').val(title);
-			$('.unitkerja').val(title);
-
-			$('#btn_submit	').val('Edit');
-			return false;
-		});
-
-
 	$(document).on('click', '#editData', function(){
 			var id = $(this).data('id');
 			var title = $(this).data('title');
@@ -223,7 +204,7 @@
 			$('#parent_id').removeAttr('name');
 			$(".grupjabatan").removeAttr('disabled');
 			return false;
-		});
+		}); 
 
 
 

@@ -30,6 +30,18 @@ Route::post('unitkerja/tambah','unitKerjaController@tambahUnitKerja');
 Route::get('unitkerja/delete/{id}', 'unitKerjaController@deleteData');
 
 Route::post('unitkerja/update/{id}','unitKerjaController@updateUnitKerja');
+
+
+
+Route::get('klasifikasi','klasifikasiController@klasifikasi');
+
+Route::post('klasifikasi/tambah','klasifikasiController@tambahKlasifikasi');
+
+Route::get('klasifikasi/delete/{id}', 'klasifikasiController@deleteData');
+
+Route::post('klasifikasi/update/{id}','klasifikasiController@updateKlasifikasi');
+
+
 /* ------------------------- Bagian Pengaturan ----------------------------------- */
 
 Route::get('/pengaturan/bahasa', 'Pengaturan\BahasaController@index');
@@ -100,7 +112,7 @@ Route::post('/pengaturan/template-dokumen/tambah', 'Pengaturan\TemplateDokContro
 Route::post('/pengaturan/template-dokumen/edit', 'Pengaturan\TemplateDokController@edit');
 Route::get('/pengaturan/template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
 Route::delete('/pengaturan/template-dokumen/{id}/delete', 'Pengaturan\TemplateDokController@delete');
-=======
+
 Route::middleware(['user'])->group(function(){
 	Route::post('/logout', 'Login\LoginController@logout');
 	

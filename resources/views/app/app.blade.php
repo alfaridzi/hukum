@@ -62,6 +62,15 @@
                        <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
                     </ul>
                   </li>
+
+
+                  <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/klasifikasi') }}"> Pengaturan Klasifikasi </a></li>
+
+                    
+                    </ul>
+                  </li>
       
 
                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>

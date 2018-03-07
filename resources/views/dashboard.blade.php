@@ -1,10 +1,8 @@
 @extends('app.app')
 @section('page-title', 'Dashboard')
 @section('content')
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<p>Menu <span style="color:green">Registrasi Surat</span> untuk melakukan Registrasi Surat Masuk dan Surat Keluar</p>
+<p>Menu <span style="color:green">Surat Masuk</span> untuk melihat Surat Masuk</p>
+<p>Menu <span style="color:green">Log Surat</span> Keluar untuk melihat Surat Keluar pernah Anda buat sebelumnya</p>
+<p>Menu <span style="color:green">Berkas</span> untuk melihat Berkas Unit Kerja (sebagai Administrator Unit) serta Notifikasi Berkas Aktif</p>
 @endsection

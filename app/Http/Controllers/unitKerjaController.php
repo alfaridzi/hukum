@@ -19,9 +19,11 @@ class unitKerjaController extends Controller
     public function unitKerja()
     {
         $unitKerja = unitKerja::where('parent_id', '=', 0)->get();
-       
-        $grupjabatan = GrupJabatan::pluck('nama_grup', 'id_grup')->all();
 
+        
+        
+        $grupjabatan[0] = '-';
+        $grupjabatan += GrupJabatan::pluck('nama_grup', 'id_grup')->all();
 
         return view('categoryTreeview',compact('unitKerja','grupjabatan'));
     }
@@ -54,13 +56,20 @@ class unitKerjaController extends Controller
 
         $unit = unitKerja::findOrFail($id);
         $input = $request->all();
+        if($request->get('id_status') == '') {
+       		$input['id_status'] = '0';
+       	}
         $unit->update($input);
         $unit->save();
-        return back()->with('success', 'New Unit added successfully.');
+        return back()->with('success', 'Unit updated successfully.');
     }
 
     public function deleteData($id) {
-    	unitKerja::find($id)->delete();
+    	$unitKerja = unitKerja::find($id);
+    	if($unitKerja->childs()->count() > 0) {
+    		$unitKerja->childs()->delete();
+    	}
+    	$unitKerja->delete();
     	return back()->with('success', ' Unit Has been deleted.');
     }
 
