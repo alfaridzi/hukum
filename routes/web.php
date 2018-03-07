@@ -42,6 +42,16 @@ Route::get('klasifikasi/delete/{id}', 'klasifikasiController@deleteData');
 Route::post('klasifikasi/update/{id}','klasifikasiController@updateKlasifikasi');
 
 
+//pengguna
+
+
+Route::get('/pengguna', 'penggunaController@index');
+Route::post('/pengguna/tambah', 'penggunaController@tambah');
+Route::post('/pengguna/edit', 'penggunaController@edit');
+Route::delete('/pengguna/{id}/delete', 'penggunaController@delete');
+
+
+
 /* ------------------------- Bagian Pengaturan ----------------------------------- */
 
 Route::get('/pengaturan/bahasa', 'Pengaturan\BahasaController@index');

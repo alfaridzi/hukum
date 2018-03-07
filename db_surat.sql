@@ -1,19 +1,52 @@
 /*
-Navicat MariaDB Data Transfer
+Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1
-Source Server Version : 100126
-Source Host           : localhost:3306
-Source Database       : kemensos_surat
+Source Server         : l
+Source Server Version : 50505
+Source Host           : 127.0.0.1:3306
+Source Database       : db_surat
 
-Target Server Type    : MariaDB
-Target Server Version : 100126
+Target Server Type    : MYSQL
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-03-04 00:06:48
+Date: 2018-03-07 21:53:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of migrations
+-- ----------------------------
+INSERT INTO `migrations` VALUES ('1', '2014_10_12_000000_create_users_table', '1');
+INSERT INTO `migrations` VALUES ('2', '2014_10_12_100000_create_password_resets_table', '1');
+INSERT INTO `migrations` VALUES ('3', '2018_03_02_051918_create_category_table', '1');
+
+-- ----------------------------
+-- Table structure for password_resets
+-- ----------------------------
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of password_resets
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tbl_bahasa
@@ -61,12 +94,15 @@ CREATE TABLE `tbl_grup_jabatan` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_grup`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of tbl_grup_jabatan
 -- ----------------------------
 INSERT INTO `tbl_grup_jabatan` VALUES ('2', 'Eselon I', '2018-03-01 20:26:43', '2018-03-03 23:47:01');
+INSERT INTO `tbl_grup_jabatan` VALUES ('3', 'Eselon II', '2018-03-07 16:18:51', '2018-03-07 16:18:51');
+INSERT INTO `tbl_grup_jabatan` VALUES ('4', 'Eselon III', '2018-03-07 16:19:02', '2018-03-07 16:19:02');
+INSERT INTO `tbl_grup_jabatan` VALUES ('5', 'Eselon IV', '2018-03-07 16:19:10', '2018-03-07 16:19:10');
 
 -- ----------------------------
 -- Table structure for tbl_halaman_depan
@@ -147,6 +183,33 @@ CREATE TABLE `tbl_jenis_naskah` (
 -- ----------------------------
 INSERT INTO `tbl_jenis_naskah` VALUES ('2', 'Berita Acara', '2018-03-03 20:45:22', '2018-03-03 23:50:48');
 INSERT INTO `tbl_jenis_naskah` VALUES ('4', 'Catatan File', '2018-03-03 20:46:43', '2018-03-03 23:57:34');
+
+-- ----------------------------
+-- Table structure for tbl_klasifikasi
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_klasifikasi`;
+CREATE TABLE `tbl_klasifikasi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `deskripsi` text,
+  `rAktif` int(11) DEFAULT '0',
+  `rInaktif` int(11) DEFAULT '0',
+  `penyusutan_akhir` int(11) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT NULL,
+  `id_status` varchar(255) DEFAULT '0',
+  `created_at` datetime DEFAULT NULL,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tbl_klasifikasi
+-- ----------------------------
+INSERT INTO `tbl_klasifikasi` VALUES ('1', 'SK', 'Semua Klasifikasi', 'Klasifikasi Induk', '1', '2', '3', '0', '0', null, '2018-03-07 16:33:27');
+INSERT INTO `tbl_klasifikasi` VALUES ('2', 'PB', 'Pembinaan', 'Klasifikasi Pembinaan', '1', '1', '1', '1', '0', null, '0000-00-00 00:00:00');
+INSERT INTO `tbl_klasifikasi` VALUES ('3', 'P02', 'al', 'afsafsa', '1', '5', '4', '3', '1', '2018-03-07 14:48:35', '2018-03-07 16:07:58');
+INSERT INTO `tbl_klasifikasi` VALUES ('5', 'k91', 'value', null, null, null, '0', '5', '1', '2018-03-07 14:58:39', '2018-03-07 16:08:27');
 
 -- ----------------------------
 -- Table structure for tbl_media_arsip
@@ -273,6 +336,31 @@ INSERT INTO `tbl_text_tombol` VALUES ('7', 'Tombol untuk Kembali', 'Kembali', '2
 INSERT INTO `tbl_text_tombol` VALUES ('8', 'Tombol untuk Menutup Berkas', 'Tutup Berkas', '2018-03-02 00:04:28', '2018-03-04 00:03:48');
 
 -- ----------------------------
+-- Table structure for tbl_unitkerja
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_unitkerja`;
+CREATE TABLE `tbl_unitkerja` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_status` int(11) DEFAULT '0',
+  `jabatan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_grup` int(11) DEFAULT NULL,
+  `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of tbl_unitkerja
+-- ----------------------------
+INSERT INTO `tbl_unitkerja` VALUES ('14', '1', 'Unit Kearsipan', '4', 'Unit Kearsipan', '0', '2018-03-07 04:54:07', '2018-03-07 16:27:29');
+INSERT INTO `tbl_unitkerja` VALUES ('15', '1', 'Menteri Sosial', '8', 'Kementerian Sosial', '14', '2018-03-07 04:57:02', '2018-03-07 04:57:02');
+INSERT INTO `tbl_unitkerja` VALUES ('18', '1', 'Kepala Unit Kearsipan Sekretariat Jendral', '2', 'Unit Kearsipan Sekretariat Jendral', '15', '2018-03-07 05:21:31', '2018-03-07 19:43:30');
+INSERT INTO `tbl_unitkerja` VALUES ('19', '0', 'Staf Ahli Menteri Bidang Dampak Sosial', '2', 'Staf Ahli Menteri Bidang Dampak Sosial', '15', '2018-03-07 05:22:11', '2018-03-07 16:17:21');
+INSERT INTO `tbl_unitkerja` VALUES ('20', '1', 'Sekretariat Jendral', '1', 'Sekretariat Jendral', '18', '2018-03-07 05:22:44', '2018-03-07 05:22:44');
+
+-- ----------------------------
 -- Table structure for tbl_urgensi
 -- ----------------------------
 DROP TABLE IF EXISTS `tbl_urgensi`;
@@ -290,3 +378,48 @@ CREATE TABLE `tbl_urgensi` (
 INSERT INTO `tbl_urgensi` VALUES ('1', 'Amat Segera', '2018-03-03 22:11:46', '2018-03-03 22:13:40');
 INSERT INTO `tbl_urgensi` VALUES ('3', 'Segera', '2018-03-03 22:13:56', '2018-03-04 00:05:17');
 INSERT INTO `tbl_urgensi` VALUES ('4', 'Biasa', '2018-03-03 22:14:50', '2018-03-03 22:14:50');
+
+-- ----------------------------
+-- Table structure for tbl_user
+-- ----------------------------
+DROP TABLE IF EXISTS `tbl_user`;
+CREATE TABLE `tbl_user` (
+  `id_user` int(30) NOT NULL AUTO_INCREMENT,
+  `id_jabatan` int(11) DEFAULT NULL,
+  `id_jabatan_atasan` int(11) DEFAULT NULL,
+  `id_status` int(255) DEFAULT '0',
+  `username` varchar(255) DEFAULT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `role` int(15) DEFAULT NULL,
+  `remember_token` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Records of tbl_user
+-- ----------------------------
+INSERT INTO `tbl_user` VALUES ('1', '20', null, '1', 'admin', 'Administrator', null, '1', '1cY5ZlVkF6PP79korRJWq8qPsvOLHDYmr3oUKTdSW0tLmNGf2IvlJOtH5iQB', '2018-03-04 21:29:01', '2018-03-07 21:38:12');
+INSERT INTO `tbl_user` VALUES ('4', '15', null, '0', 'alfaridzi', 'Rifq', null, '1', null, '2018-03-07 20:42:32', '2018-03-07 21:51:42');
+
+-- ----------------------------
+-- Table structure for users
+-- ----------------------------
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ----------------------------
+-- Records of users
+-- ----------------------------

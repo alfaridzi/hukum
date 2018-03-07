@@ -21,7 +21,6 @@ class unitKerjaController extends Controller
         $unitKerja = unitKerja::where('parent_id', '=', 0)->get();
 
         
-        
         $grupjabatan[0] = '-';
         $grupjabatan += GrupJabatan::pluck('nama_grup', 'id_grup')->all();
 
