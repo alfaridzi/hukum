@@ -26,7 +26,7 @@ class HalamanDepanController extends Controller
     	$validator = Validator::make($input, [
     		'header_page' => 'required|string|max:150',
     		'konten' => 'required|string',
-    		'file_image' => 'image|mimes:jpeg,jpg,png'
+    		'file_image' => 'image|mimes:jpeg,jpg,png|max:15000'
     	]);
 
     	if ($validator->fails()) {

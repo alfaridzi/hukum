@@ -28,74 +28,85 @@ Route::middleware(['user'])->group(function(){
 		return view('dashboard');
 	});
 
+	Route::get('/registrasi-naskah', 'Naskah\RegistrasiNaskahController@index');
+	Route::post('/registrasi-naskah/simpan', 'Naskah\RegistrasiNaskahController@simpan');
+	Route::get('/registrasi-naskah/template-dokumen', 'Pengaturan\TemplateDokController@regdownload');
+	Route::get('/registrasi-naskah/template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
+
+	Route::get('/naskah-masuk', 'Naskah\NaskahMasukController@index');
+	Route::get('/naskah-masuk/detail/{id}', 'Naskah\NaskahMasukController@detail');
+	Route::get('/naskah-masuk/detail/{id}/ubah-metadata', 'Naskah\NaskahMasukController@ubahMetadata');
+	Route::post('/naskah-masuk/detail/{id}/ubah-metadata/update', 'Naskah\NaskahMasukController@updateMetadata');
+
 	/* ------------------------- Bagian Pengaturan ----------------------------------- */
+	Route::prefix('pengaturan')->group(function(){
+		Route::get('bahasa', 'Pengaturan\BahasaController@index');
+		Route::post('bahasa/tambah', 'Pengaturan\BahasaController@tambah');
+		Route::post('bahasa/edit', 'Pengaturan\BahasaController@edit');
+		Route::delete('bahasa/{id}/delete', 'Pengaturan\BahasaController@delete');
 
-	Route::get('/pengaturan/bahasa', 'Pengaturan\BahasaController@index');
-	Route::post('/pengaturan/bahasa/tambah', 'Pengaturan\BahasaController@tambah');
-	Route::post('/pengaturan/bahasa/edit', 'Pengaturan\BahasaController@edit');
-	Route::delete('/pengaturan/bahasa/{id}/delete', 'Pengaturan\BahasaController@delete');
+		Route::get('jenis-naskah', 'Pengaturan\JenisNaskahController@index');
+		Route::post('jenis-naskah/tambah', 'Pengaturan\JenisNaskahController@tambah');
+		Route::post('jenis-naskah/edit', 'Pengaturan\JenisNaskahController@edit');
+		Route::delete('jenis-naskah/{id}/delete', 'Pengaturan\JenisNaskahController@delete');
 
-	Route::get('/pengaturan/jenis-naskah', 'Pengaturan\JenisNaskahController@index');
-	Route::post('/pengaturan/jenis-naskah/tambah', 'Pengaturan\JenisNaskahController@tambah');
-	Route::post('/pengaturan/jenis-naskah/edit', 'Pengaturan\JenisNaskahController@edit');
-	Route::delete('/pengaturan/jenis-naskah/{id}/delete', 'Pengaturan\JenisNaskahController@delete');
+		Route::get('media-arsip', 'Pengaturan\MediaArsipController@index');
+		Route::post('media-arsip/tambah', 'Pengaturan\MediaArsipController@tambah');
+		Route::post('media-arsip/edit', 'Pengaturan\MediaArsipController@edit');
+		Route::delete('media-arsip/{id}/delete', 'Pengaturan\MediaArsipController@delete');
 
-	Route::get('/pengaturan/media-arsip', 'Pengaturan\MediaArsipController@index');
-	Route::post('/pengaturan/media-arsip/tambah', 'Pengaturan\MediaArsipController@tambah');
-	Route::post('/pengaturan/media-arsip/edit', 'Pengaturan\MediaArsipController@edit');
-	Route::delete('/pengaturan/media-arsip/{id}/delete', 'Pengaturan\MediaArsipController@delete');
+		Route::get('sifat-naskah', 'Pengaturan\SifatNaskahController@index');
+		Route::post('sifat-naskah/tambah', 'Pengaturan\SifatNaskahController@tambah');
+		Route::post('sifat-naskah/edit', 'Pengaturan\SifatNaskahController@edit');
+		Route::delete('sifat-naskah/{id}/delete', 'Pengaturan\SifatNaskahController@delete');
 
-	Route::get('/pengaturan/sifat-naskah', 'Pengaturan\SifatNaskahController@index');
-	Route::post('/pengaturan/sifat-naskah/tambah', 'Pengaturan\SifatNaskahController@tambah');
-	Route::post('/pengaturan/sifat-naskah/edit', 'Pengaturan\SifatNaskahController@edit');
-	Route::delete('/pengaturan/sifat-naskah/{id}/delete', 'Pengaturan\SifatNaskahController@delete');
+		Route::get('tingkat-perkembangan', 'Pengaturan\PerkembanganController@index');
+		Route::post('tingkat-perkembangan/tambah', 'Pengaturan\PerkembanganController@tambah');
+		Route::post('tingkat-perkembangan/edit', 'Pengaturan\PerkembanganController@edit');
+		Route::delete('tingkat-perkembangan/{id}/delete', 'Pengaturan\PerkembanganController@delete');
 
-	Route::get('/pengaturan/tingkat-perkembangan', 'Pengaturan\PerkembanganController@index');
-	Route::post('/pengaturan/tingkat-perkembangan/tambah', 'Pengaturan\PerkembanganController@tambah');
-	Route::post('/pengaturan/tingkat-perkembangan/edit', 'Pengaturan\PerkembanganController@edit');
-	Route::delete('/pengaturan/tingkat-perkembangan/{id}/delete', 'Pengaturan\PerkembanganController@delete');
+		Route::get('tingkat-urgensi', 'Pengaturan\UrgensiController@index');
+		Route::post('tingkat-urgensi/tambah', 'Pengaturan\UrgensiController@tambah');
+		Route::post('tingkat-urgensi/edit', 'Pengaturan\UrgensiController@edit');
+		Route::delete('tingkat-urgensi/{id}/delete', 'Pengaturan\UrgensiController@delete');
 
-	Route::get('/pengaturan/tingkat-urgensi', 'Pengaturan\UrgensiController@index');
-	Route::post('/pengaturan/tingkat-urgensi/tambah', 'Pengaturan\UrgensiController@tambah');
-	Route::post('/pengaturan/tingkat-urgensi/edit', 'Pengaturan\UrgensiController@edit');
-	Route::delete('/pengaturan/tingkat-urgensi/{id}/delete', 'Pengaturan\UrgensiController@delete');
+		Route::get('ekstensi-file', 'Pengaturan\EkstensiController@index');
+		Route::post('ekstensi-file/tambah', 'Pengaturan\EkstensiController@tambah');
+		Route::post('ekstensi-file/edit', 'Pengaturan\EkstensiController@edit');
+		Route::delete('ekstensi-file/{id}/delete', 'Pengaturan\EkstensiController@delete');
 
-	Route::get('/pengaturan/ekstensi-file', 'Pengaturan\EkstensiController@index');
-	Route::post('/pengaturan/ekstensi-file/tambah', 'Pengaturan\EkstensiController@tambah');
-	Route::post('/pengaturan/ekstensi-file/edit', 'Pengaturan\EkstensiController@edit');
-	Route::delete('/pengaturan/ekstensi-file/{id}/delete', 'Pengaturan\EkstensiController@delete');
+		Route::get('text-tombol', 'Pengaturan\TextTombolController@index');
+		Route::post('text-tombol/edit', 'Pengaturan\TextTombolController@edit');
 
-	Route::get('/pengaturan/text-tombol', 'Pengaturan\TextTombolController@index');
-	Route::post('/pengaturan/text-tombol/edit', 'Pengaturan\TextTombolController@edit');
+		Route::get('satuan-unit', 'Pengaturan\SatuanUnitController@index');
+		Route::post('satuan-unit/tambah', 'Pengaturan\SatuanUnitController@tambah');
+		Route::post('satuan-unit/edit', 'Pengaturan\SatuanUnitController@edit');
+		Route::delete('satuan-unit/delete/{id}', 'Pengaturan\SatuanUnitController@delete');
 
-	Route::get('/pengaturan/satuan-unit', 'Pengaturan\SatuanUnitController@index');
-	Route::post('/pengaturan/satuan-unit/tambah', 'Pengaturan\SatuanUnitController@tambah');
-	Route::post('/pengaturan/satuan-unit/edit', 'Pengaturan\SatuanUnitController@edit');
-	Route::delete('/pengaturan/satuan-unit/delete/{id}', 'Pengaturan\SatuanUnitController@delete');
+		Route::get('grup-jabatan', 'Pengaturan\GrupJabatanController@index');
+		Route::post('grup-jabatan/tambah', 'Pengaturan\GrupJabatanController@tambah');
+		Route::post('grup-jabatan/edit', 'Pengaturan\GrupJabatanController@edit');
+		Route::delete('grup-jabatan/delete/{id}', 'Pengaturan\GrupJabatanController@delete');
 
-	Route::get('/pengaturan/grup-jabatan', 'Pengaturan\GrupJabatanController@index');
-	Route::post('/pengaturan/grup-jabatan/tambah', 'Pengaturan\GrupJabatanController@tambah');
-	Route::post('/pengaturan/grup-jabatan/edit', 'Pengaturan\GrupJabatanController@edit');
-	Route::delete('/pengaturan/grup-jabatan/delete/{id}', 'Pengaturan\GrupJabatanController@delete');
+		Route::get('isi-disposisi', 'Pengaturan\IsiDisposisiController@index');
+		Route::post('isi-disposisi/tambah', 'Pengaturan\IsiDisposisiController@tambah');
+		Route::post('isi-disposisi/edit', 'Pengaturan\IsiDisposisiController@edit');
+		Route::delete('isi-disposisi/delete/{id}', 'Pengaturan\IsiDisposisiController@delete');
 
-	Route::get('/pengaturan/isi-disposisi', 'Pengaturan\IsiDisposisiController@index');
-	Route::post('/pengaturan/isi-disposisi/tambah', 'Pengaturan\IsiDisposisiController@tambah');
-	Route::post('/pengaturan/isi-disposisi/edit', 'Pengaturan\IsiDisposisiController@edit');
-	Route::delete('/pengaturan/isi-disposisi/delete/{id}', 'Pengaturan\IsiDisposisiController@delete');
+		Route::get('halaman-depan', 'Pengaturan\HalamanDepanController@index');
+		Route::post('halaman-depan/edit', 'Pengaturan\HalamanDepanController@edit');
 
-	Route::get('/pengaturan/halaman-depan', 'Pengaturan\HalamanDepanController@index');
-	Route::post('/pengaturan/halaman-depan/edit', 'Pengaturan\HalamanDepanController@edit');
+		Route::get('instansi', 'Pengaturan\InstansiController@index');
+		Route::get('instansi/tambah', 'Pengaturan\InstansiController@tambah');
+		Route::post('instansi/simpan', 'Pengaturan\InstansiController@simpan');
+		Route::get('instansi/{id}/edit', 'Pengaturan\InstansiController@edit');
+		Route::post('instansi/{id}/update', 'Pengaturan\InstansiController@update');
+		Route::delete('instansi/{id}/delete', 'Pengaturan\InstansiController@delete');
 
-	Route::get('/pengaturan/instansi', 'Pengaturan\InstansiController@index');
-	Route::get('/pengaturan/instansi/tambah', 'Pengaturan\InstansiController@tambah');
-	Route::post('/pengaturan/instansi/simpan', 'Pengaturan\InstansiController@simpan');
-	Route::get('/pengaturan/instansi/{id}/edit', 'Pengaturan\InstansiController@edit');
-	Route::post('/pengaturan/instansi/{id}/update', 'Pengaturan\InstansiController@update');
-	Route::delete('/pengaturan/instansi/{id}/delete', 'Pengaturan\InstansiController@delete');
-
-	Route::get('/pengaturan/template-dokumen', 'Pengaturan\TemplateDokController@index');
-	Route::post('/pengaturan/template-dokumen/tambah', 'Pengaturan\TemplateDokController@tambah');
-	Route::post('/pengaturan/template-dokumen/edit', 'Pengaturan\TemplateDokController@edit');
-	Route::get('/pengaturan/template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
-	Route::delete('/pengaturan/template-dokumen/{id}/delete', 'Pengaturan\TemplateDokController@delete');
+		Route::get('template-dokumen', 'Pengaturan\TemplateDokController@index');
+		Route::post('template-dokumen/tambah', 'Pengaturan\TemplateDokController@tambah');
+		Route::post('template-dokumen/edit', 'Pengaturan\TemplateDokController@edit');
+		Route::get('template-dokumen/{id}/download', 'Pengaturan\TemplateDokController@download');
+		Route::delete('template-dokumen/{id}/delete', 'Pengaturan\TemplateDokController@delete');
+	});
 });

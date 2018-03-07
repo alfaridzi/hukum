@@ -36,7 +36,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="{{ asset('assets/images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                <img src="{{ asset('assets/images/user.png') }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
@@ -53,7 +53,14 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home"></i> Home </a></li>
+                  <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                  <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
+                        <li><a href="{{ url('registrasi-naskah/template-dokumen') }}">Download Template Dokumen</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
@@ -118,7 +125,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="{{ asset('assets/images/img.jpg') }}" alt="">{{ Auth::guard()->user()->nama }}
+                    <img src="{{ asset('assets/images/user.png') }}" alt="">{{ Auth::guard()->user()->nama }}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

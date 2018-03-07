@@ -28,6 +28,13 @@ class TemplateDokController extends Controller
     	return response()->download('assets/uploads/TemplateDokumen/'.$templateDok->file_template);
     }
 
+    public function regdownload()
+    {
+        $templateDok = TemplateDok::all();
+        $no = 1;
+        return view('registrasi_naskah.template_dokumen', compact('templateDok', 'no'));
+    }
+
     public function tambah(Request $request)
     {
     	$input = $request->all();
