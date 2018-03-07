@@ -70,13 +70,13 @@
 	        	</div>
         	</div>
         </form>
-      </div>
+      </div> 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" id="submit-tambah-urgensi" form="form-tambah-urgensi" class="btn btn-primary">Save changes</button>
       </div>
     </div>
-  </div>
+  </d iv>
 </div>
 
 <!-- Modal Edit Satuan-->

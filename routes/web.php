@@ -24,9 +24,13 @@ Route::get('/dashboard', function() {
 });
 
 
-Route::get('category-tree-view',['uses'=>'CategoryController@manageCategory']);
-Route::post('add-category',['as'=>'add.category','uses'=>'CategoryController@addCategory']);
+Route::get('unitkerja','unitKerjaController@unitKerja');
 
+Route::post('unitkerja/tambah','unitKerjaController@tambahUnitKerja');
+
+Route::get('unitkerja/delete/{id}', 'unitKerjaController@deleteData');
+
+Route::post('unitkerja/update/{id}','unitKerjaController@updateUnitKerja');
 /* ------------------------- Bagian Pengaturan ----------------------------------- */
 
 Route::get('/pengaturan/bahasa', 'Pengaturan\BahasaController@index');
