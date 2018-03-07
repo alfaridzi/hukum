@@ -8,12 +8,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RegistrasiNaskah\RegistrasiNaskahRequest;
 
 use App\Model\Naskah\Naskah;
+use App\Model\User;
 use App\Model\Pengaturan\JenisNaskah;
 use App\Model\Pengaturan\Urgensi;
 use App\Model\Pengaturan\SifatNaskah;
 use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
+use App\Model\Pengaturan\Perkembangan;
+use Auth;
 
 use Storage;
 use Carbon\Carbon;
@@ -31,7 +34,9 @@ class RegistrasiNaskahController extends Controller
     		$nomor_agenda = Naskah::orderBy('id_naskah', 'desc')->first()->nomor_agenda;
     	}
     	$urgensi = Urgensi::all();
-    	return view('registrasi_naskah.tambah_naskah', compact('jenisNaskah', 'urgensi', 'nomor_agenda'));
+        $dataUser = User::all('id_user', 'nama')->toArray();
+        $user = json_encode($dataUser);
+    	return view('registrasi_naskah.tambah_naskah', compact('jenisNaskah', 'urgensi', 'nomor_agenda', 'user'));
     }
 
     public function simpan(RegistrasiNaskahRequest $request)
@@ -39,6 +44,7 @@ class RegistrasiNaskahController extends Controller
     	$input = $request->all();
     	$files = $request->file('file_uploads');
     	$input['tanggal_registrasi'] = Carbon::now();
+        $input['id_user'] = Auth::user()->id_user;
     	$arrFiles = array();
     	if ($input['tipe_registrasi'] == 5) {
     		$input['kepada'] = null;

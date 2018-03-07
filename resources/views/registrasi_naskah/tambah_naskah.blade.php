@@ -136,7 +136,7 @@
             <label>Kepada <span>*</span></label>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-7 col-xs-8">
-            <input type="text" class="form-control" name="kepada" required="">
+            <input type="text" class="form-control tujuan-naskah" name="kepada" required="">
         </div>
     </div>
     <div class="form-group change">
@@ -144,7 +144,7 @@
             <label>Tembusan</label>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-7 col-xs-8">
-            <input type="text" class="form-control" id="tembusan" name="tembusan" autocomplete="off" data-role="tagsinput">
+            <input type="text" class="form-control tujuan-naskah" name="tembusan" id="tembusan" autocomplete="off" data-role="tagsinput">
         </div>
     </div>
     <br>
@@ -199,15 +199,7 @@
     $('#datepicker').datepicker({
         format: 'yyyy-mm-dd',
     });
-    var pengguna = [
-  {value:1, nama: "user5295866"}, 
-  {value:2, nama: "Los Angeles"},
-  {value:3, nama: "Copenhagen"},
-  {value:4, nama: "Albertslund"},
-  {value:5, nama: "Ridwan Alamsyah"},
-  {value:6, nama: "testing"},
-  {value:7, nama: "asdasfiasongfasubfiuasbgfiasbui"}
-];
+    var pengguna = {!! $user !!};
 
     var pengguna = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
@@ -215,8 +207,8 @@
         local: pengguna
     });
 
-$('#tembusan').tagsinput({
-    itemValue: 'value',
+$('.tujuan-naskah').tagsinput({
+    itemValue: 'id_user',
     itemText: 'nama',
     typeahead: {
         name: 'pengguna',
@@ -227,7 +219,21 @@ $('#tembusan').tagsinput({
             this.$element[0].value = '';
         }
     }
-}); 
+});
+
+// $('.tujuan-naskah').tagsinput({
+//     itemValue: 'id_user',
+//     itemText: 'nama',
+//     typeahead: {
+//         name: 'pengguna',
+//         displayKey: 'nama',
+//         source: pengguna.local,
+//         // source: places.map(function(item) { return item.name }),
+//         afterSelect: function() {
+//             this.$element[0].value = '';
+//         }
+//     }
+// }); 
 
     $(document).ready(function() {
 

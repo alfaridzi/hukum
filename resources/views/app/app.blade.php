@@ -40,7 +40,8 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>{{ Auth::guard()->user()->nama }}</h2>
+                <h2>{{ Auth::guard()->user()->nama }}<br>
+                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} ]</small></h2>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -61,6 +62,24 @@
                     </ul>
                   </li>
                   <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
+
+                   <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
+
+                       <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
+                    </ul>
+                  </li>
+
+
+                  <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/klasifikasi') }}"> Pengaturan Klasifikasi </a></li>
+
+                    
+                    </ul>
+                  </li>
+                  
                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>

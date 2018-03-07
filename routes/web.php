@@ -28,6 +28,24 @@ Route::middleware(['user'])->group(function(){
 		return view('dashboard');
 	});
 
+	Route::get('unitkerja','unitKerjaController@unitKerja');
+	Route::post('unitkerja/tambah','unitKerjaController@tambahUnitKerja');
+	Route::get('unitkerja/delete/{id}', 'unitKerjaController@deleteData');
+	Route::post('unitkerja/update/{id}','unitKerjaController@updateUnitKerja');
+
+	Route::get('klasifikasi','klasifikasiController@klasifikasi');
+	Route::post('klasifikasi/tambah','klasifikasiController@tambahKlasifikasi');
+	Route::get('klasifikasi/delete/{id}', 'klasifikasiController@deleteData');
+	Route::post('klasifikasi/update/{id}','klasifikasiController@updateKlasifikasi');
+
+
+	//pengguna
+	Route::get('/pengguna', 'penggunaController@index');
+	Route::post('/pengguna/tambah', 'penggunaController@tambah');
+	Route::post('/pengguna/edit', 'penggunaController@edit');
+	Route::delete('/pengguna/{id}/delete', 'penggunaController@delete');
+
+
 	Route::get('/registrasi-naskah', 'Naskah\RegistrasiNaskahController@index');
 	Route::post('/registrasi-naskah/simpan', 'Naskah\RegistrasiNaskahController@simpan');
 	Route::get('/registrasi-naskah/template-dokumen', 'Pengaturan\TemplateDokController@regdownload');

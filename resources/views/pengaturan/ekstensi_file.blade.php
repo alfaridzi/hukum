@@ -4,7 +4,6 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
 @endpush
 @section('content')
-
 @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

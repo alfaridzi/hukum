@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Naskah extends Model
 {
     protected $table = 'tbl_naskah';
-    protected $fillable = ['jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'kepada', 'tembusan', 'file_uploads', 'tipe_registrasi', 'status_naskah'];
+    protected $fillable = ['id_user', 'jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'kepada', 'tembusan', 'file_uploads', 'tipe_registrasi', 'status_naskah'];
     protected $primaryKey = 'id_naskah';
 
     public function detail()

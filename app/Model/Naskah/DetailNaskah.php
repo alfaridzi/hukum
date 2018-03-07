@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class DetailNaskah extends Model
 {
     protected $table = 'tbl_detail';
-    protected $fillable = ['id_naskah', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'updated_at'];
+    protected $fillable = ['id_naskah', 'perkembangan', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'updated_at'];
     protected $primaryKey = 'id_detail';
 
     public function kategori_arsip()
