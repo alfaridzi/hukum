@@ -55,6 +55,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                  
                   <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
@@ -73,23 +74,7 @@
                     </ul>
                   </li>
 
-                   <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                       <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
-
-                       <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
-                    </ul>
-                  </li>
-
-                  <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                       <li><a href="{{ url('/klasifikasi') }}"> Pengaturan Klasifikasi </a></li>
-
-                    
-                    </ul>
-                  </li>
-                  
-                  <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
+                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
                         <li><a href="{{ url('pengaturan/jenis-naskah') }}">Jenis Surat</a></li>
@@ -117,6 +102,57 @@
                         <li><a href="{{ url('pengaturan/template-dokumen') }}">Upload Template Dokumen</a></li>
                     </ul>
                   </li>
+
+
+                   <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/klasifikasi') }}"> Pengaturan Klasifikasi </a></li>
+
+                    
+                    </ul>
+                  </li>
+
+
+                   <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
+
+                       
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+
+                    
+                       <li><a href="{{ url('/berkas/usul') }}"> Usul pindah arsip inaktif </a></li>
+
+                    
+                    </ul>
+                  </li>
+
+
+                   <li><a><i class="fa fa-user"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/unitkerja') }}"> Registrasi naskah masuk </a></li>
+
+                       <li><a href="{{ url('/pengguna') }}"> Memo </a></li>
+                        <li><a href="{{ url('/pengguna') }}"> Nota dinas </a></li>
+                         <li><a href="{{ url('/pengguna') }}"> Naskah keluar </a></li>
+
+                          <li><a href="{{ url('/pengguna') }}"> Naskah tanpa tindak lanjut </a></li>
+                    </ul>
+                  </li>
+
+
+                  <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/unitkerja') }}"> Naskah masuk </a></li>
+
+                       <li><a href="{{ url('/pengguna') }}"> Naskah keluar </a></li>
+                        <li><a href="{{ url('/pengguna') }}"> Registrasi naskah masuk </a></li>
+
+                        <li><a href="{{ url('/pengguna') }}"> Registrasi naskah tanpa tindak lanjut </a></li>
+                         <li><a href="{{ url('/pengguna') }}"> Daftar berkas </a></li>
+                    </ul>
+                  </li>
+                 
                 </ul>
               </div>
 
