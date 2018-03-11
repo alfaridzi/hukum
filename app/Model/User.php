@@ -24,6 +24,33 @@ class User extends Authenticatable
         return $this->hasOne('App\unitKerja','id','id_jabatan') ;
     }
 
+    public function get_role() {
+        switch($this->role) {
+            case 1:
+            return 'Administrasi Pusat';
+            break;
+
+            case 2:
+            return 'Administrasi Satuan Organisasi';
+            brea;
+
+            case 3:
+            return 'Pejabat Struktural';
+            break;
+
+            case 4:
+            return 'Sektretaris';
+            break;
+
+            case 5:
+            return 'Pencatat Surat';
+            break;
+
+            default:
+            return 'Error';
+        }
+    }
+
     public function getstatus() {
         if($this->id_status == '1') {
             echo "<i class='text-primary fa fa-2x fa-check'></i>";

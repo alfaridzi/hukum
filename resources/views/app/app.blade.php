@@ -39,9 +39,9 @@
                 <img src="{{ asset('assets/images/user.png') }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
+          
                 <h2>{{ Auth::guard()->user()->nama }}<br>
-                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} ]</small></h2>
+                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} - {{ Auth::user()->get_role() }} ]</small></h2>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -55,6 +55,17 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+
+
+
+                  <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
+
+                       <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
+                    </ul>
+                  </li>
+
                   
                   <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
