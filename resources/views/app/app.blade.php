@@ -131,8 +131,8 @@
                        
                        <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
 
-                    
-                       <li><a href="{{ url('/berkas/usul') }}"> Usul pindah arsip inaktif </a></li>
+                    <!--
+                       <li><a href="{{ url('/berkas/usul') }}"> Usul pindah arsip inaktif </a></li>-->
 
                     
                     </ul>
@@ -152,7 +152,7 @@
                   </li>
 
 
-                  <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                  <!--<li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/unitkerja') }}"> Naskah masuk </a></li>
 
@@ -162,7 +162,7 @@
                         <li><a href="{{ url('/pengguna') }}"> Registrasi naskah tanpa tindak lanjut </a></li>
                          <li><a href="{{ url('/pengguna') }}"> Daftar berkas </a></li>
                     </ul>
-                  </li>
+                  </li>-->
                  
                 </ul>
               </div>

@@ -18,6 +18,8 @@ use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
 use App\Model\Pengaturan\Perkembangan;
+use App\berkas;
+
 use Auth;
 
 use Storage;
@@ -28,6 +30,10 @@ class RegistrasiNaskahController extends Controller
 {
     public function index()
     {
+
+
+        $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
+        $no = 1;
     	$jenisNaskah = JenisNaskah::all();
     	$naskah = Naskah::first();
     	if (is_null($naskah)) {
@@ -38,7 +44,7 @@ class RegistrasiNaskahController extends Controller
     	$urgensi = Urgensi::all();
         $dataUser = User::all('id_user', 'nama')->toArray();
         $user = json_encode($dataUser);
-    	return view('registrasi_naskah.tambah_naskah', compact('jenisNaskah', 'urgensi', 'nomor_agenda', 'user'));
+    	return view('registrasi_naskah.tambah_naskah', compact('jenisNaskah', 'urgensi', 'nomor_agenda', 'user','berkas','no'));
     }
 
     public function simpan(RegistrasiNaskahRequest $request)

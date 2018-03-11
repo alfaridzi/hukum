@@ -7,7 +7,7 @@ use App\User;
 use App\berkas;
 use Auth;
 use App\klasifikasi;
-
+use App\Model\Naskah\Naskah;
 
 class berkasController extends Controller
 {
@@ -23,6 +23,19 @@ class berkasController extends Controller
 
     	$no = 1;
     	return view('berkas',compact('user','berkas','no','klasifikasi','nomor_berkas'));
+    }
+
+
+    public function inaktif() {
+    	$berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->where('r_inaktif','<',date('Y-m-d'))->get();
+    	if($berkas->count() > 0) {
+    		$nomor_berkas = $berkas->last()->nomor_berkas + 1;
+    	} else {
+    		$nomor_berkas = 1;
+    	}
+
+    	$no = 1;
+    	return view('berkas_inaktif',compact('berkas','no'));
     }
 
 
@@ -69,6 +82,19 @@ class berkasController extends Controller
     	$berkas = berkas::where('id_berkas', $input['id_berkas'])->first()->update($input);
 
     	return redirect()->back()->with('success', 'Berhasil update data');
+    }
+
+    public function list($id) {
+    	$list = Naskah::where('id_berkas',$id)->get();
+    	$no = 1;
+    	return view('list_berkas', compact('list','no'));
+    }
+
+    public function tutup_berkas($id) {
+    	$data['status_retensi'] = '2';
+    	$berkas = berkas::where('id_berkas',$id)->first()->update($data);
+
+    	return redirect()->back()->with('success', 'Berhasil tutup berkas');
     }
 
 

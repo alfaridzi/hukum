@@ -48,9 +48,15 @@
 				<td><a href="{{ url('log/registrasi-naskah-masuk/detail/'.$data->id_naskah) }}">{{ $data->nomor_naskah }}</a></td>
 				<td><a href="{{ url('log/registrasi-naskah-masuk/detail/'.$data->id_naskah) }}">{{ $data->asal_naskah }}</a></td>
 				<td><a href="{{ url('log/registrasi-naskah-masuk/detail/'.$data->id_naskah) }}">{{ $data->hal }}
-					@if(is_null($data->berkas) || $data->berkas == "")
+					@if(is_null($data->id_berkas) || $data->id_berkas == "")
 					<div>
 						<label class="label label-danger">(Belum Diberkaskan)</label>
+					</div>
+
+					@else
+
+					<div>
+						<label class="label label-success">(Sudah Diberkaskan)</label>
 					</div>
 					@endif
 				</a></td>

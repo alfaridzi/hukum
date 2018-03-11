@@ -75,7 +75,7 @@
 				<td>{!! $data->status_berkas() !!}</td>
 				<td>{{ $data->kode_klasifikasi.'/'.$data->nomor_berkas }}</td>
 				<td>{{ $data->judul_berkas }}</td>
-				<td>0</td>
+				<td>{{ $data->naskah->count() }} Item</td>
 				<td>{{ $data->jabatan->title }}</td>
 				<td>{{ $data->r_aktif }}</td>
 				<td>
@@ -90,7 +90,12 @@
 					data-lokasi_fisik = "{{ $data->lokasi_fisik }}"
 					data-isi_ringkas = "{{ $data->isi_ringkas }}"
 					data-id_berkas = "{{ $data->id_berkas }}"
-					>Edit</a> 
+					>Edit</a>
+
+					@if($data->naskah->count() > 0)
+
+					<a class="btn btn-xs btn-default" style="border-radius:0px" href="berkas/list/{{ $data->id_berkas }}">List</a>
+					@endif
 				</form></td>
 			</tr>
 			@endforeach

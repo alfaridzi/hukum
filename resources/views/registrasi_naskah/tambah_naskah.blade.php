@@ -113,6 +113,22 @@
             <input type="text" class="form-control" name="asal_naskah" required>
         </div>
     </div>
+
+
+    <div class="form-group">
+        <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+            <label>Berkaskan <span>*</span></label>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-7 col-xs-8">
+            <input type="hidden" class="form-control" name="id_berkas" required>
+
+            <a href="javascript:;" id="pilih_berkas" class="btn btn-xs btn-primary" style="border-radius: 0px">Pilih Berkas</a>
+
+            <a href="javascript:;" type="" id="buat_berkas" class="btn btn-xs btn-success" style="border-radius: 0px">Buat Berkas</a>
+        </div>
+
+
+    </div>
     <div class="form-group">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
             <label>Tingkat Urgensi <span>*</span></label>
@@ -183,12 +199,51 @@
             </select>
         </div>
     </div>
+
+    <input type="hidden" name="id_berkas" id="field_berkas">
     <div class="form-group">
         <div class="col-lg-offset-2 col-lg-10 col-md-offset-2 col-md-10 col-sm-offset-3 col-sm-9 col-xs-offset-3 col-xs-9">
             <button class="btn btn-primary">Kirim</button>
         </div>
     </div>
 </form>
+
+
+<div class="modal fade" id="modal-tambah-berkas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Tambah Berkas</h4>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-condensed">
+            <tr>
+                <td>No</td>
+                <td></td>
+                <td>Klasifikasi</td>
+                <td>Berkas</td>
+            </tr>
+     
+        @foreach($berkas as $item)
+                <tr>
+                    <td>{{$no++}}</td>
+                    <td><input type="radio" class="radioberkas" name="id_berkas" value="{{ $item->id_berkas }}"></td>
+                    <td>{{ $item->klasifikasi->kode}} - {{$item->klasifikasi->nama}}</td>
+                    <td>{{ $item->kode_klasifikasi.'/'.$item->nomor_berkas.' - '.$item->judul_berkas}}</td>
+                </tr>
+        @endforeach
+
+    </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    
+      </div>
+    </div>
+  </div>
+</div>
 @endsection
 @push('js')
 <script type="text/javascript" src="{{ asset('assets/vendors/typeahead/bloodhound.min.js') }}"></script>
@@ -196,6 +251,16 @@
 <script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
 <script type="text/javascript" src="https://rawgit.com/davidkonrad/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js"></script>
 <script type="text/javascript">
+
+
+    $('.radioberkas').on('click', function() {
+        $('#field_berkas').val(this.value);
+    });
+    $('#pilih_berkas').on('click', function() {
+            $('#modal-tambah-berkas').modal('show');
+        });
+
+
     $('#datepicker').datepicker({
         format: 'yyyy-mm-dd',
     });

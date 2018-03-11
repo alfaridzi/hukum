@@ -43,7 +43,9 @@ Route::middleware(['user'])->group(function(){
 	Route::get('berkas','berkasController@index');
 	Route::post('berkas/tambah', 'berkasController@tambah');
 	Route::post('berkas/edit', 'berkasController@edit');
-
+	Route::get('berkas/list/{id}','berkasController@list');
+	Route::get('berkas/tutup/{id}','berkasController@tutup_berkas');
+	Route::get('berkas/inaktif','berkasController@inaktif');
 	//pengguna
 	Route::get('/pengguna', 'penggunaController@index');
 	Route::post('/pengguna/tambah', 'penggunaController@tambah');

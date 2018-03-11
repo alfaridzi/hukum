@@ -9,7 +9,7 @@ class Naskah extends Model
 {
     protected $table = 'tbl_naskah';
 
-    protected $fillable = ['id_group', 'id_user', 'jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'tingkat_perkembangan', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'tipe_registrasi', 'updated_at'];
+    protected $fillable = ['id_group', 'id_user', 'jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'tingkat_perkembangan', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'tipe_registrasi', 'updated_at','id_berkas'];
 
     protected $primaryKey = 'id_naskah';
 
@@ -17,6 +17,11 @@ class Naskah extends Model
     {
     	return $this->belongsTo('App\Model\Pengaturan\Urgensi', 'tingkat_urgensi', 'id_urgensi');
     }
+
+    public function berkas() {
+        return $this->hasOne('id_berkas','id_berkas');
+    }
+
 
     public function tingkatPerkembangan()
     {

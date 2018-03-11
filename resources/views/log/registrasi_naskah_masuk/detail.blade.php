@@ -198,7 +198,13 @@
     		<div class="col-md-8">{{ $metadataNaskah->jumlah }} {{ $metadataNaskah->satuanUnit->nama_satuan }}</div>
     	</div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="status-pemberkasan">.a..</div>
+    <div role="tabpanel" class="tab-pane" id="status-pemberkasan">
+        @if(!is_null($metadataNaskah->id_berkas))
+
+        <h3>Naskah Sudah diberkaskan</h3>
+
+        @endif
+    </div>
   </div>
 
 </div>
