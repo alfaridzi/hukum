@@ -47,8 +47,8 @@ class RegistrasiNaskahRequest extends FormRequest
                 'hal' => 'required|string',
                 'asal_naskah' => 'required|string',
                 'tingkat_urgensi' => 'required|integer',
-                'kepada' => 'required|integer',
-                'tembusan' => 'integer|nullable',
+                'kepada' => 'required',
+                'tembusan' => 'nullable',
                 'file_upload.*' => 'mimes:'.$ekstensi.'|max:15000',
                 'tipe_registrasi' => 'required|integer',
             ];

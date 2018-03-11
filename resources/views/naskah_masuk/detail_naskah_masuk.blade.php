@@ -143,7 +143,7 @@
     	</div>
     	<div class="row">
     		<div class="col-md-4"><label>Jumlah : </label></div>
-    		<div class="col-md-8">{{ $naskah->detail->jumlah }} {{ $naskah->detail->satuanUnit->satuan_unit }}</div>
+    		<div class="col-md-8">{{ $naskah->detail->jumlah }} {{ $naskah->detail->satuanUnit->nama_satuan }}</div>
     	</div>
     </div>
     <div role="tabpanel" class="tab-pane" id="status-pemberkasan">.a..</div>

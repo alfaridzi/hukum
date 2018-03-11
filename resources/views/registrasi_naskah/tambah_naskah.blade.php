@@ -19,8 +19,8 @@
         box-shadow: none;
     }
     .box-file {
-        height: 200px;
-        overflow-y: scroll;
+        max-height: 200px;
+        overflow-y: auto;
     }
     .bootstrap-tagsinput{
         width: 100%;

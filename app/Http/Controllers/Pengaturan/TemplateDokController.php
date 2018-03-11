@@ -21,11 +21,11 @@ class TemplateDokController extends Controller
     public function download($id)
     {
     	$templateDok = TemplateDok::findOrFail($id);
-    	if (!File::exists('assets/uploads/TemplateDokumen/'.$templateDok->file_template)) {
+    	if (!File::exists('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template)) {
     		return redirect()->back()->withErrors('Tidak dapat menemukan file');
     	}
 
-    	return response()->download('assets/uploads/TemplateDokumen/'.$templateDok->file_template);
+    	return response()->download('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template);
     }
 
     public function regdownload()
@@ -53,7 +53,7 @@ class TemplateDokController extends Controller
     	$namaFile = substr(str_random(5).'-'.pathinfo($fileTemplate->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$fileTemplate->getClientOriginalExtension();
     	$input['file_template'] = $namaFile;
 
-    	$fileTemplate->move('assets/uploads/TemplateDokumen/', $namaFile);
+    	$fileTemplate->move('assets/FilesUploaded/TemplateDokumen/', $namaFile);
 
     	TemplateDok::create($input);
 
@@ -83,12 +83,12 @@ class TemplateDokController extends Controller
 
     	if (!is_null($request->file('file_template'))) {
     		$fileTemplate = $request->file('file_template');
-    		if (File::exists('assets/uploads/TemplateDokumen/'.$templateDok->file_template)) {
-    			File::delete('assets/uploads/TemplateDokumen/'.$templateDok->file_template);
+    		if (File::exists('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template)) {
+    			File::delete('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template);
     		}
 	    	$namaFile = substr(str_random(5).'-'.pathinfo($fileTemplate->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$fileTemplate->getClientOriginalExtension();
 
-	    	$fileTemplate->move('assets/uploads/TemplateDokumen/', $namaFile);
+	    	$fileTemplate->move('assets/FilesUploaded/TemplateDokumen/', $namaFile);
 
 	    	$input['file_template'] = $namaFile;
     	}
@@ -103,8 +103,8 @@ class TemplateDokController extends Controller
     {
     	$templateDok = TemplateDok::findOrFail($id);
 
-    	if (File::exists('assets/uploads/TemplateDokumen/'.$templateDok->file_template)) {
-    		File::delete('assets/uploads/TemplateDokumen/'.$templateDok->file_template);
+    	if (File::exists('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template)) {
+    		File::delete('assets/FilesUploaded/TemplateDokumen/'.$templateDok->file_template);
     	}
 
     	$templateDok->delete();

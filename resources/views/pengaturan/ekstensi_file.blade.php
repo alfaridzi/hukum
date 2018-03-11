@@ -49,7 +49,7 @@
 	</table>
 
 
-<!-- Modal Tambah Satuan-->
+<!-- Modal Ekstensi-->
 <div class="modal fade" id="modal-tambah-ekstensi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

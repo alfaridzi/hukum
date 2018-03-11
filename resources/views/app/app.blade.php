@@ -63,6 +63,16 @@
                   </li>
                   <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
 
+                  <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('log/registrasi-naskah-masuk') }}">Registrasi Naskah Masuk</a></li>
+                        <li><a href="{{ url('log/memo') }}">Memo</a></li>
+                        <li><a href="{{ url('log/nota-dinas') }}">Nota Dinas</a></li>
+                        <li><a href="{{ url('log/naskah-keluar') }}">Naskah Keluar</a></li>
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut') }}">Naskah Tanpa Tindak Lanjut</a></li>
+                    </ul>
+                  </li>
+
                    <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
@@ -70,7 +80,6 @@
                        <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
                     </ul>
                   </li>
-
 
                   <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
