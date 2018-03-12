@@ -2,6 +2,8 @@
 @section('page-title', 'Detail Naskah')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
 <style type="text/css">
 	#metadata div {
 		font-size: 14px;
@@ -14,6 +16,14 @@
     .box-file {
         max-height: 200px;
         overflow-y: auto;
+    }
+    .bootstrap-tagsinput{
+        width: 100%;
+        height: 100%;
+        border-radius: 0px;
+    }
+    .bootstrap-tagsinput .tag{
+        font-size: 14px;
     }
 </style>
 @endpush
@@ -37,9 +47,11 @@
     </div>
 @endif
 
-{{-- <a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
+@if(!$cekNaskah->isEmpty())
+<a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
 <a href="javascript:;" class="btn btn-info" id="btn-balas">Reply</a> 
-<a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>  --}}
+<a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a> 
+@endif
 <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
 
 <div>
@@ -203,7 +215,7 @@
 
 </div>
 
-{{-- <div class="modal fade" id="modal-teruskan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-teruskan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -211,14 +223,14 @@
         <h4 class="modal-title" id="myModalLabel">Teruskan</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-teruskan" action="{{ url('pengaturan/ekstensi-file/tambah') }}" method="post">
+        <form class="form-horizontal" id="form-teruskan" action="{{ url('log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/teruskan') }}" method="post" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <label>Tujuan Surat</label>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="kepada" required="">
+                    <input class="form-control tujuan-naskah" type="text" name="kepada" required="">
                 </div>
             </div>
             <div class="form-group">
@@ -226,7 +238,7 @@
                     <label>Tembusan</label>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="tembusan">
+                    <input class="form-control tujuan-naskah" type="text" name="tembusan">
                 </div>
             </div>
             <div class="form-group">
@@ -266,7 +278,7 @@
       </div>
     </div>
   </div>
-</div> --}}
+</div>
 
 {{-- <div class="modal fade" id="modal-balas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
@@ -316,8 +328,34 @@
 @push('js')
 <script type="text/javascript" src="{{ asset('assets/vendors/dataTables/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendors/dataTables/js/dataTables.bootstrap.min.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('assets/vendors/typeahead/bloodhound.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-tagsinput/bootstrap-tagsinput.js') }}"></script>
+<script type="text/javascript" src="https://rawgit.com/davidkonrad/Bootstrap-3-Typeahead/master/bootstrap3-typeahead.js"></script>
 <script type="text/javascript">
+    var pengguna = {!! $user !!};
+
+    var pengguna = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: pengguna
+    });
+
+$('.tujuan-naskah').tagsinput({
+    itemValue: 'id_user',
+    itemText: 'nama',
+    typeahead: {
+        name: 'pengguna',
+        displayKey: 'nama',
+        source: pengguna.local,
+        // source: places.map(function(item) { return item.name }),
+        afterSelect: function() {
+            this.$element[0].value = '';
+        }
+    }
+});
+
+
 	$(document).ready(function() {
 		$('#table-detail-1').DataTable();
 		$('#table-detail-2').DataTable();

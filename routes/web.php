@@ -66,6 +66,7 @@ Route::middleware(['user'])->group(function(){
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata', 'Log\RegistrasiNaskahMasuk\LogController@ubahMetaRgNaskahMasuk');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata/update', 'Log\RegistrasiNaskahMasuk\LogController@updateMetaRgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/download/{namaFile}', 'Log\RegistrasiNaskahMasuk\LogController@downloadRgNaskahMasuk');
+	Route::post('/log/registrasi-naskah-masuk/detail/{id}/teruskan', 'Log\RegistrasiNaskahMasuk\LogController@teruskanRgNaskahMasuk');
 
 	Route::get('/log/memo', 'Log\Memo\LogController@memo');
 	Route::get('/log/memo/detail/{id}', 'Log\Memo\LogController@detailMemo');

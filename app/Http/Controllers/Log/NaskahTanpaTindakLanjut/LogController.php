@@ -46,7 +46,7 @@ class LogController extends Controller
     	$naskah1 = Naskah::where('id_naskah', $id)->whereHas('penerima', function($q) use($id){
     		$q->where('id_naskah', $id);
     	})->with('user', 'penerima', 'penerima.user', 'penerima.tujuan_kirim')->with(['files' => function($q) use($id, $getGroup){
-    		$q->where('id_naskah', $id);
+    		$q->where('id_naskah', $id)->whereNotIn('sebagai', ['to_tl', 'to_memo', 'to_keluar']);
     	}])->get();
        	$no = 1;
     	$no1 = 1;
