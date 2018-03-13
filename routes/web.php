@@ -65,37 +65,50 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/naskah-masuk/detail/{id}/ubah-metadata/update', 'Naskah\NaskahMasukController@updateMetadata');
 	Route::post('/naskah-masuk/detail/{id}/teruskan', 'BalasController@teruskan');
 	Route::post('/naskah-masuk/detail/{id}/balas', 'BalasController@balas');
+	Route::post('/naskah-masuk/detail/{id}/disposisi', 'BalasController@disposisi');
+	Route::get('/naskah-masuk/detail/{id}/download/{namaFile}', 'DownloadController');
 
 	Route::get('/log/registrasi-naskah-masuk', 'Log\RegistrasiNaskahMasuk\LogController@rgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}', 'Log\RegistrasiNaskahMasuk\LogController@detailRgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata', 'Log\RegistrasiNaskahMasuk\LogController@ubahMetaRgNaskahMasuk');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata/update', 'Log\RegistrasiNaskahMasuk\LogController@updateMetaRgNaskahMasuk');
-	Route::get('/log/registrasi-naskah-masuk/{id}/download/{namaFile}', 'Log\RegistrasiNaskahMasuk\LogController@downloadRgNaskahMasuk');
+	Route::get('/log/registrasi-naskah-masuk/detail/{id}/download/{namaFile}', 'DownloadController');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/teruskan', 'BalasController@teruskan');
+	Route::post('/log/registrasi-naskah-masuk/detail/{id}/balas', 'BalasController@balas');
+	Route::post('/log/registrasi-naskah-masuk/detail/{id}/disposisi', 'BalasController@disposisi');
 
 	Route::get('/log/memo', 'Log\Memo\LogController@memo');
 	Route::get('/log/memo/detail/{id}', 'Log\Memo\LogController@detailMemo');
 	Route::get('/log/memo/detail/{id}/ubah-metadata', 'Log\Memo\LogController@ubahMetaMemo');
 	Route::post('/log/memo/detail/{id}/ubah-metadata/update', 'Log\Memo\LogController@updateMetaMemo');
-	Route::get('/log/memo/download/{namaFile}', 'Log\Memo\LogController@downloadMemo');
+	Route::get('/log/memo/detail/{id}/download/{namaFile}', 'DownloadController');
+	Route::post('/log/memo/detail/{id}/teruskan', 'BalasController@teruskan');
+	Route::post('/log/memo/detail/{id}/balas', 'BalasController@balas');
+	Route::post('/log/memo/detail/{id}/disposisi', 'BalasController@disposisi');
 
 	Route::get('/log/nota-dinas', 'Log\NotaDinas\LogController@notaDinas');
 	Route::get('/log/nota-dinas/detail/{id}', 'Log\NotaDinas\LogController@detailNotaDinas');
 	Route::get('/log/nota-dinas/detail/{id}/ubah-metadata', 'Log\NotaDinas\LogController@ubahMetaNotaDinas');
 	Route::post('/log/nota-dinas/detail/{id}/ubah-metadata/update', 'Log\NotaDinas\LogController@updateMetaNotaDinas');
-	Route::get('/log/nota-dinas/download/{namaFile}', 'Log\NotaDinas\LogController@downloadNotaDinas');
+	Route::get('/log/nota-dinas/detail/{id}/download/{namaFile}', 'DownloadController');
+	Route::post('/log/nota-dinas/detail/{id}/teruskan', 'BalasController@teruskan');
+	Route::post('/log/nota-dinas/detail/{id}/balas', 'BalasController@balas');
+	Route::post('/log/nota-dinas/detail/{id}/disposisi', 'BalasController@disposisi');
 
 	Route::get('/log/naskah-keluar', 'Log\NaskahKeluar\LogController@naskahKeluar');
 	Route::get('/log/naskah-keluar/detail/{id}', 'Log\NaskahKeluar\LogController@detailNaskahKeluar');
 	Route::get('/log/naskah-keluar/detail/{id}/ubah-metadata', 'Log\NaskahKeluar\LogController@ubahMetaNaskahKeluar');
 	Route::post('/log/naskah-keluar/detail/{id}/ubah-metadata/update', 'Log\NaskahKeluar\LogController@updateMetaNaskahKeluar');
-	Route::get('/log/naskah-keluar/download/{namaFile}', 'Log\NaskahKeluar\LogController@downloadNaskahKeluar');
+	Route::get('/log/naskah-keluar/detail/{id}/download/{namaFile}', 'DownloadController');
+	Route::post('/log/naskah-keluar/detail/{id}/teruskan', 'BalasController@teruskan');
+	Route::post('/log/naskah-keluar/detail/{id}/balas', 'BalasController@balas');
+	Route::post('/log/naskah-keluar/detail/{id}/disposisi', 'BalasController@disposisi');
 
 	Route::get('/log/naskah-tanpa-tindak-lanjut', 'Log\NaskahTanpaTindakLanjut\LogController@index');
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}', 'Log\NaskahTanpaTindakLanjut\LogController@detail');
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}/ubah-metadata', 'Log\NaskahTanpaTindakLanjut\LogController@ubahMetadata');
 	Route::post('/log/naskah-tanpa-tindak-lanjut/detail/{id}/ubah-metadata/update', 'Log\NaskahTanpaTindakLanjut\LogController@updateMetadata');
-	Route::get('/log/naskah-tanpa-tindak-lanjut/download/{namaFile}', 'Log\NaskahTanpaTindakLanjut\LogController@download');
+	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}/download/{namaFile}', 'DownloadController');
 
 	/* ------------------------- Bagian Pengaturan ----------------------------------- */
 	Route::prefix('pengaturan')->group(function(){

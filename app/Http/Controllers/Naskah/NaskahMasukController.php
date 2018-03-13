@@ -17,6 +17,7 @@ use App\Model\Pengaturan\SifatNaskah;
 use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
+use App\Model\Pengaturan\IsiDisposisi;
 use App\Model\Penerima;
 use App\Model\User;
 use App\berkas;
@@ -44,8 +45,11 @@ class NaskahMasukController extends Controller
 
     public function detail($id)
     {
+        $sifatNaskah = SifatNaskah::all();
+        $isiDisposisi = IsiDisposisi::all();
         //Berkas
         $userJabatan = Auth::user()->jabatan;
+        $sifatNaskah = SifatNaskah::all();
         $klasifikasi = klasifikasi::where('parent_id', '=', 0)->get();
         $dataBerkas = Berkas::all();
         $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
@@ -75,9 +79,13 @@ class NaskahMasukController extends Controller
             });
         })->with('user')->with(['files' => function($q) use($id){
             $q->where('id_naskah', $id);
+        }])->with(['disposisi' => function($q) use($id){
+            $q->where('id_naskah', $id);
         }])->groupBy('id_group')->orderBy('id_penerima', 'DESC')->get();
 
         $naskah1 = Penerima::where('id_naskah', $id)->groupBy('id_group')->with('user')->with(['files' => function($q) use($id){
+            $q->where('id_naskah', $id);
+        }])->with(['disposisi' => function($q) use($id){
             $q->where('id_naskah', $id);
         }])->orderBy('id_penerima', 'desc')->get();
 
@@ -93,7 +101,7 @@ class NaskahMasukController extends Controller
         $no2 = 1;
         $cek = false;
         $cek1 = false;
-    	return view('naskah_masuk.detail_naskah_masuk', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'no2', 'getNaskah', 'userJabatan', 'klasifikasi', 'berkas', 'nomor_berkas', 'dataBerkas'));
+    	return view('naskah_masuk.detail_naskah_masuk', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'no2', 'getNaskah', 'userJabatan', 'klasifikasi', 'berkas', 'nomor_berkas', 'dataBerkas', 'sifatNaskah', 'isiDisposisi'));
     }
 
     public function ubahMetadata($id)
@@ -120,12 +128,9 @@ class NaskahMasukController extends Controller
     public function updateMetadata(UbahMetadataRequest $request, $id)
     {
     	$input = $request->all();
-    	$naskah = Naskah::find($id);
+        $naskah = Naskah::find($id);
 
-    	$naskah->update($input);
-
-    	$detail = DetailNaskah::where('id_naskah', $id)->first();
-    	$detail->update($input);
+        $naskah->update($input);
 
     	return redirect('naskah-masuk/detail/'.$id)->with('success', 'Berhasil update metadata');
     }

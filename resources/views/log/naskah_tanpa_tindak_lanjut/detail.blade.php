@@ -74,9 +74,15 @@
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $data->tanggal_registrasi }}</td>
-                    <td>{{ $data->user->jabatan->jabatan }}</td>
+                    <td>
+                        @if($naskah->count() < $no)
+                            {{ $getNaskah->asal_naskah }}
+                        @else
+                            {{ $data->user->jabatan->jabatan }}
+                        @endif
+                    </td>
                     <td>@foreach($data->penerima as $dataPenerima)
-                        @if($dataPenerima->sebagai == 'cc1')
+                        @if($dataPenerima->sebagai == 'bcc')
                             @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
                         @endif
                         @if(!is_null($dataPenerima->tujuan_kirim))
@@ -85,6 +91,9 @@
                     @endforeach</td>
                     <td>{{ $data->get_tipe_registrasi() }}</td>
                     <td>{{ $data->pesan }}</td>
+                    <td><ol>@foreach($data->files as $dataFiles)
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                    @endforeach</ol></td>
                     <td></td>
                 </tr>
                 @endforeach
@@ -103,6 +112,7 @@
 					<th>Keterangan</th>
 					<th>Pesan</th>
                     <th>File Upload</th>
+                    <th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -110,9 +120,15 @@
                 <tr>
                     <td>{{ $no1++ }}</td>
                     <td>{{ $data->tanggal_registrasi }}</td>
-                    <td>{{ $data->user->jabatan->jabatan }}</td>
+                    <td>
+                        @if($naskah1->count() < $no1)
+                            {{ $getNaskah->asal_naskah }}
+                        @else
+                            {{ $data->user->jabatan->jabatan }}
+                        @endif
+                    </td>
                     <td>@foreach($data->penerima as $dataPenerima)
-                        @if($dataPenerima->sebagai == 'cc1')
+                        @if($dataPenerima->sebagai == 'bcc')
                             @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
                         @endif
                         @if(!is_null($dataPenerima->tujuan_kirim))
@@ -122,8 +138,9 @@
                     <td>{{ $data->get_tipe_registrasi() }}</td>
                     <td>{{ $data->pesan }}</td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('log/memo/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @endforeach</ol></td>
+                    <th>Aksi</th>
                 </tr>
                 @endforeach
 			</tbody>
@@ -203,115 +220,6 @@
   </div>
 
 </div>
-
-{{-- <div class="modal fade" id="modal-teruskan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Teruskan</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" id="form-teruskan" action="{{ url('pengaturan/ekstensi-file/tambah') }}" method="post">
-            {!! csrf_field() !!}
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Tujuan Surat</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="kepada" required="">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Tembusan</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="tembusan">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Pesan</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <textarea class="form-control" name="pesan"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>File Upload</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9 box-file">
-                    <div class="input-group control-group increment">
-                      <input type="file" name="file_uploads[]" class="form-control">
-                      <div class="input-group-btn"> 
-                        <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
-                      </div>
-                    </div>
-                    <div class="clone hide">
-                      <div class="control-group input-group" style="margin-top:10px">
-                        <input type="file" name="file_uploads[]" class="form-control">
-                        <div class="input-group-btn"> 
-                          <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-teruskan" form="form-teruskan" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
-
-{{-- <div class="modal fade" id="modal-balas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Kirim Nota Dinas</h4>
-      </div>
-      <div class="modal-body">
-        <form class="form-horizontal" id="form-teruskan" action="{{ url('pengaturan/ekstensi-file/tambah') }}" method="post">
-            {!! csrf_field() !!}
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Tujuan Surat</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="kepada" required="">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Tembusan</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="tembusan">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-3 col-sm-3 col-xs-3">
-                    <label>Pesan</label>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-9">
-                    <textarea class="form-control" name="pesan"></textarea>
-                </div>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-teruskan" form="form-teruskan" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
 
 @endsection
 @push('js')

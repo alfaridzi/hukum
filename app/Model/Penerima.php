@@ -10,6 +10,11 @@ class Penerima extends Model
     protected $fillable = ['id_naskah', 'id_group', 'id_user', 'sebagai', 'pesan', 'kirim_user', 'status_naskah', 'updated_at'];
     protected $primaryKey = 'id_penerima';
 
+    public function disposisi()
+    {
+        return $this->hasMany('App\Model\Disposisi', 'id_group', 'id_group');
+    }
+
     public function get_status_naskah()
     {
     	if ($this->status_naskah == '0') {
@@ -21,7 +26,7 @@ class Penerima extends Model
 
     public function get_sebagai()
     {
-        $sebagai = $this->where('id_group', $this->id_group)->where('id_naskah', $this->id_naskah)->groupBy('id_group')->first();
+        $sebagai = $this->where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->groupBy('id_group')->first();
 
         if ($sebagai->sebagai == 'to') {
             return 'Surat Masuk';
@@ -39,12 +44,14 @@ class Penerima extends Model
             return 'Naskah Tanpa Tindak Lanjut';
         }elseif($sebagai->sebagai == 'to_memo'){
             return 'Memo';
+        }elseif($sebagai->sebagai == 'cc1'){
+            return 'Disposisi';
         }
     }
 
     public function get_tujuan()
     {
-        return $this->where('id_group', $this->id_group)->get();
+        return $this->where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->get();
     }
 
     public function naskah()

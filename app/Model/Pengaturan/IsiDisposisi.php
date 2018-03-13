@@ -12,6 +12,6 @@ class IsiDisposisi extends Model
 
     public function grup_jabatan()
     {
-    	return $this->hasOne('App\Model\Pengaturan\GrupJabatan', 'id_grup', 'id_grup');
+    	return $this->belongsTo('App\Model\Pengaturan\GrupJabatan', 'id_grup', 'id_grup');
     }
 }

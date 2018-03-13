@@ -14,6 +14,7 @@ use App\Model\Pengaturan\SifatNaskah;
 use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
+use App\Model\Pengaturan\IsiDisposisi;
 use App\berkas;
 use App\klasifikasi;
 use App\Model\Files;
@@ -46,7 +47,21 @@ class LogController extends Controller
 
     public function detailRgNaskahMasuk($id)
     {
-    	$getNaskah = Naskah::findOrFail($id);
+    	$sifatNaskah = SifatNaskah::all();
+        $isiDisposisi = IsiDisposisi::all();
+        //Berkas
+        $userJabatan = Auth::user()->jabatan;
+        $sifatNaskah = SifatNaskah::all();
+        $klasifikasi = klasifikasi::where('parent_id', '=', 0)->get();
+        $dataBerkas = Berkas::all();
+        $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
+        if($berkas->count() > 0) {
+            $nomor_berkas = $berkas->last()->nomor_berkas + 1;
+        } else {
+            $nomor_berkas = 1;
+        }
+
+        $getNaskah = Naskah::findOrFail($id)->load('berkas');
 
         $user = Auth::user();
         $update = Penerima::where('id_naskah', $id)->where('kirim_user', $user->id_user)->get();
@@ -66,9 +81,13 @@ class LogController extends Controller
             });
         })->with('user')->with(['files' => function($q) use($id){
             $q->where('id_naskah', $id);
+        }])->with(['disposisi' => function($q) use($id){
+            $q->where('id_naskah', $id);
         }])->groupBy('id_group')->orderBy('id_penerima', 'DESC')->get();
 
         $naskah1 = Penerima::where('id_naskah', $id)->groupBy('id_group')->with('user')->with(['files' => function($q) use($id){
+            $q->where('id_naskah', $id);
+        }])->with(['disposisi' => function($q) use($id){
             $q->where('id_naskah', $id);
         }])->orderBy('id_penerima', 'desc')->get();
 
@@ -81,9 +100,11 @@ class LogController extends Controller
 
         $no = 1;
         $no1 = 1;
+        $no2 = 1;
         $cek = false;
         $cek1 = false;
-    	return view('log.registrasi_naskah_masuk.detail', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'getNaskah'));
+
+    	return view('log.registrasi_naskah_masuk.detail', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'no2', 'getNaskah', 'userJabatan', 'klasifikasi', 'berkas', 'nomor_berkas', 'dataBerkas', 'sifatNaskah', 'isiDisposisi'));
     }
 
     public function ubahMetaRgNaskahMasuk($id)
@@ -115,20 +136,6 @@ class LogController extends Controller
     	$naskah->update($input);
 
     	return redirect('log/registrasi-naskah-masuk/detail/'.$id)->with('success', 'Berhasil update metadata');
-    }
-
-    public function downloadRgNaskahMasuk($id, $namaFile)
-    {
-        $getGroup = Files::where('nama_file', $namaFile)->first();
-    	$file = Files::where('nama_file', $namaFile)->with(['penerima' => function($q) use($id, $getGroup){
-            $q->where('id_naskah', $id)->where('id_group', $getGroup->id_group)->groupBy('id_group')->with('naskah');
-        }])->first();
-
-    	if (!File::exists('assets/FilesUploaded/'.$file->penerima->naskah->file_dir.'/'.$file->nama_file)) {
-    		return redirect()->back()->withErrors('Tidak dapat menemukan file');
-    	}
-
-    	return response()->download('assets/FilesUploaded/'.$file->penerima->naskah->file_dir.'/'.$file->nama_file);
     }
     
 }

@@ -3,7 +3,7 @@
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}">
 <style type="text/css">
-	label span {
+    label span {
         color:red;
     }
     label#last-agenda {
@@ -34,8 +34,8 @@
 @endif
 
 <form class="form-horizontal" action="{{ url('/naskah-masuk/detail/'.$naskah->id_naskah.'/ubah-metadata/update') }}" method="post">
-	@csrf
-	<div class="form-group">
+    @csrf
+    <div class="form-group">
         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
             <label>Tanggal Registrasi</label>
         </div>
@@ -50,9 +50,9 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
             <select name="jenis_naskah" class="form-control" required>
-            	@foreach($jenisNaskah as $data)
-            	<option @if($data->id_jenis_naskah == $naskah->jenisNaskah->id_jenis_naskah) selected @endif value="{{ $data->id_jenis_naskah }}">{{ $data->jenis_naskah }}</option>
-            	@endforeach
+                @foreach($jenisNaskah as $data)
+                <option @if($data->id_jenis_naskah == $naskah->jenisNaskah->id_jenis_naskah) selected @endif value="{{ $data->id_jenis_naskah }}">{{ $data->jenis_naskah }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -62,9 +62,9 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="perkembangan" class="form-control" required>
-            	@foreach($perkembangan as $data)
-            	<option @if($data->id_perkembangan == $naskah->detail->tingkatPerkembangan->id_perkembangan) selected @endif value="{{ $data->id_perkembangan }}">{{ $data->tingkat }}</option>
-            	@endforeach
+                @foreach($perkembangan as $data)
+                <option @if($data->id_perkembangan == $naskah->tingkatPerkembangan->id_perkembangan) selected @endif value="{{ $data->id_perkembangan }}">{{ $data->tingkat }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -116,9 +116,9 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="tingkat_urgensi" class="form-control" required>
-            	@foreach($urgensi as $data)
-            	<option @if($data->id_urgensi == $naskah->urgensi->id_urgensi) selected @endif value="{{ $data->id_urgensi }}">{{ $data->tingkat }}</option>
-            	@endforeach
+                @foreach($urgensi as $data)
+                <option @if($data->id_urgensi == $naskah->urgensi->id_urgensi) selected @endif value="{{ $data->id_urgensi }}">{{ $data->tingkat }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -128,9 +128,9 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
             <select name="sifat_naskah" class="form-control" required>
-            	@foreach($sifatNaskah as $data)
-            	<option @if($data->id_sifat_naskah == $naskah->detail->sifatNaskah->id_sifat_naskah) selected @endif value="{{ $data->id_sifat_naskah }}">{{ $data->sifat_naskah }}</option>
-            	@endforeach
+                @foreach($sifatNaskah as $data)
+                <option @if($data->id_sifat_naskah == $naskah->sifatNaskah->id_sifat_naskah) selected @endif value="{{ $data->id_sifat_naskah }}">{{ $data->sifat_naskah }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -140,8 +140,8 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="kategori_arsip" class="form-control" required>
-            	<option value="0" @if($naskah->detail->kategori_arsip == '0') selected @endif>Umum</option>
-            	<option value="1" @if($naskah->detail->kategori_arsip == '1') selected @endif>Terjaga</option>
+                <option value="0" @if($naskah->kategori_arsip == '0') selected @endif>Umum</option>
+                <option value="1" @if($naskah->kategori_arsip == '1') selected @endif>Terjaga</option>
             </select>
         </div>
     </div>
@@ -151,8 +151,8 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="akses_publik" class="form-control" required>
-            	<option value="0" @if($naskah->detail->akses_publik == '0') selected @endif>Terbuka</option>
-            	<option value="1" @if($naskah->detail->akses_publik == '1') selected @endif>Tertutup</option>
+                <option value="0" @if($naskah->akses_publik == '0') selected @endif>Terbuka</option>
+                <option value="1" @if($naskah->akses_publik == '1') selected @endif>Tertutup</option>
             </select>
         </div>
     </div>
@@ -162,9 +162,9 @@
         </div>
         <div class="col-lg-4 col-md-4 col-sm-5 col-xs-6">
             <select name="media_arsip" class="form-control" required>
-            	@foreach($mediaArsip as $data)
-            	<option @if($data->id_media_arsip == $naskah->detail->mediaArsip->id_media_arsip) selected @endif value="{{ $data->id_media_arsip }}">{{ $data->media_arsip }}</option>
-            	@endforeach
+                @foreach($mediaArsip as $data)
+                <option @if($data->id_media_arsip == $naskah->mediaArsip->id_media_arsip) selected @endif value="{{ $data->id_media_arsip }}">{{ $data->media_arsip }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -174,9 +174,9 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="bahasa" class="form-control" required>
-            	@foreach($bahasa as $data)
-            	<option @if($data->id_bahasa == $naskah->detail->bahasas->id_bahasa) selected @endif value="{{ $data->id_bahasa }}">{{ $data->bahasa }}</option>
-            	@endforeach
+                @foreach($bahasa as $data)
+                <option @if($data->id_bahasa == $naskah->bahasas->id_bahasa) selected @endif value="{{ $data->id_bahasa }}">{{ $data->bahasa }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -185,7 +185,7 @@
             <label>Isi Ringkas</label>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-7 col-xs-8">
-            <textarea name="isi_ringkas" class="form-control" rows="10">{{ $data->isi_ringkas }}</textarea>
+            <textarea name="isi_ringkas" class="form-control" rows="10">{{ $naskah->isi_ringkas }}</textarea>
         </div>
     </div>
     <div class="form-group">
@@ -194,8 +194,8 @@
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="vital" class="form-control">
-            	<option value="0" @if($naskah->detail->vital == '0') selected @endif>Tidak Vital</option>
-            	<option value="1" @if($naskah->detail->vital == '1') selected @endif>Vital</option>
+                <option value="0" @if($naskah->vital == '0') selected @endif>Tidak Vital</option>
+                <option value="1" @if($naskah->vital == '1') selected @endif>Vital</option>
             </select>
         </div>
     </div>
@@ -204,13 +204,13 @@
             <label>Jumlah</label>
         </div>
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
-            <input type="number" name="jumlah" class="form-control" value="{{ $naskah->detail->jumlah }}">
+            <input type="number" name="jumlah" class="form-control" value="{{ $naskah->jumlah }}">
         </div>
         <div class="col-lg-3 col-md-3 col-sm-4 col-xs-5">
             <select name="satuan_unit" class="form-control">
-            	@foreach($satuanUnit as $data)
-            	<option @if($data->id_satuan == $naskah->detail->satuanUnit->id_satuan) selected @endif value="{{ $data->id_satuan }}">{{ $data->nama_satuan }}</option>
-            	@endforeach
+                @foreach($satuanUnit as $data)
+                <option @if($data->id_satuan == $naskah->satuanUnit->id_satuan) selected @endif value="{{ $data->id_satuan }}">{{ $data->nama_satuan }}</option>
+                @endforeach
             </select>
         </div>
     </div>
@@ -219,7 +219,7 @@
             <label>Lokasi Fisik</label>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-7 col-xs-8">
-            <input type="text" class="form-control" name="lokasi_fisik" value="{{ $naskah->detail->lokasi_fisik }}">
+            <input type="text" class="form-control" name="lokasi_fisik" value="{{ $naskah->lokasi_fisik }}">
         </div>
     </div>
     <div class="form-group">
@@ -232,7 +232,7 @@
 @push('js')
 <script type="text/javascript" src="{{ asset('assets/vendors/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 <script type="text/javascript">
-	$('#datepicker').datepicker({
+    $('#datepicker').datepicker({
         format: 'yyyy-mm-dd',
     });
 </script>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Naskah\Naskah;
 use App\Model\Penerima;
 use App\Model\Files;
+use App\Model\Disposisi;
 
 use Auth;
 use Storage;
@@ -23,6 +24,15 @@ class BalasController extends Controller
         $input['id_user'] = Auth::user()->id_user;
         $input['id_naskah'] = $naskah->id_naskah;
         $input['sebagai'] = 'to_forward';
+
+        if (!is_null($files)) {
+            foreach ($files as $key => $file) {
+                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
+                $arrFiles[] = $namaFile;
+                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
+                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
+            }
+        }
 
         if (is_null($input['tembusan'])) {
             $tembusan = null;
@@ -56,15 +66,6 @@ class BalasController extends Controller
             }
         }
 
-        if (!is_null($files)) {
-            foreach ($files as $key => $file) {
-                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
-                $arrFiles[] = $namaFile;
-                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
-                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
-            }
-        }
-
         return redirect()->back()->with('success', 'Berhasil meneruskan naskah');
     }
 
@@ -78,6 +79,16 @@ class BalasController extends Controller
         $files = $request->file('file_uploads');
         $input['id_user'] = Auth::user()->id_user;
         $input['id_naskah'] = $naskah->id_naskah;
+
+        if (!is_null($files)) {
+            foreach ($files as $key => $file) {
+                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
+                $arrFiles[] = $namaFile;
+                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
+                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
+            }
+        }
+
         if ($naskah->tipe_registrasi == 3) {
         	$input['sebagai'] = 'to_usul';
         }else{
@@ -115,6 +126,21 @@ class BalasController extends Controller
             }
         }
 
+        return redirect()->back()->with('success', 'Berhasil membalas naskah');
+    }
+
+    public function disposisi(Request $request, $id)
+    {
+    	$naskah = Naskah::findOrFail($id);
+        $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
+        $id_group = $penerima->id_group + 1;
+    	$input = $request->all();
+        $input['id_group'] = $id_group;
+        $files = $request->file('file_uploads');
+        $input['id_user'] = Auth::user()->id_user;
+        $input['id_naskah'] = $naskah->id_naskah;
+        $input['sebagai'] = 'cc1';
+
         if (!is_null($files)) {
             foreach ($files as $key => $file) {
                 $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
@@ -124,6 +150,33 @@ class BalasController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Berhasil membalas naskah');
+        if (is_null($input['disposisi'])) {
+            $disposisi = null;
+        }else{
+            $input['disposisi'] = explode(',', $input['disposisi']);
+            $disposisi = $input['disposisi'];
+        }
+
+        if (!is_null($disposisi)) {
+            foreach ($disposisi as $key => $data) {
+                $input['disposisi'] = $data;
+                Disposisi::create($input);
+            }
+        }
+
+		if (is_null($input['kepada'])) {
+            $data1 = null;
+        }else{
+            $input['kepada'] = explode(',', $input['kepada']);
+            $data1 = $input['kepada'];
+        }
+		if (!is_null($data1)) {
+            foreach ($data1 as $key => $data) {
+                $input['kirim_user'] = $data;
+                Penerima::create($input);
+            }
+        }
+    	
+    	return redirect()->back()->with('success', 'Berhasil mengirim disposisi');
     }
 }

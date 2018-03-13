@@ -75,12 +75,12 @@
     <a href="javascript:;" class="btn btn-info" id="btn-balas">Balas</a> 
     <a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>
     @if($getNaskah->id_user == Auth::user()->id_user)
-        <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+        <a href="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
     @else
-        <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+        <a href="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
     @endif
 @elseif($getNaskah->id_user == Auth::user()->id_user)
-    <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+    <a href="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
 @endif
 
 <div>
@@ -115,7 +115,12 @@
                 <tr>
                     <td>{{ $no++ }}</td>
                     <td>{{ $data->created_at }}</td>
-                    <td>{{ $data->user->jabatan->jabatan }}</td>
+                    <td>@if($naskah->count() < $no)
+                            {{ $getNaskah->asal_naskah }}
+                        @else
+                            {{ $data->user->jabatan->jabatan }}
+                        @endif
+                    </td>
                     <td>
                     @foreach($data->get_tujuan() as $dataPenerima)
                         @if($dataPenerima->sebagai == 'bcc')
@@ -126,9 +131,20 @@
                         @endif
                     @endforeach</td>
                     <td>{{ $data->get_sebagai() }}</td>
-                    <td>{{ $data->pesan }}</td>
+                    <td>
+                        @if(!$data->disposisi->isEmpty())
+                            <ul>
+                            @foreach($data->disposisi as $disposisi)
+                                <li>{{ $disposisi->isiDisposisi->isi_disposisi }}</li>
+                            @endforeach
+                            </ul>
+                            {{ $data->pesan }}
+                        @else
+                            {{ $data->pesan }}
+                        @endif
+                    </td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('naskah-masuk/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                        <li><a href="{{ url('naskah-masuk/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @php $cek = false @endphp
                     @endforeach</ol></td>
                     <td></td>
@@ -157,8 +173,14 @@
                 <tr>
                     <td>{{ $no1++ }}</td>
                     <td>{{ $data->created_at }}</td>
-                    <td>{{ $data->user->jabatan->jabatan }}</td>
-
+                    
+                    <td>
+                        @if($naskah1->count() < $no1)
+                            {{ $getNaskah->asal_naskah }}
+                        @else
+                            {{ $data->user->jabatan->jabatan }}
+                        @endif
+                    </td>
                     <td>
                     @foreach($data->get_tujuan() as $dataPenerima)
                         @if($dataPenerima->sebagai == 'bcc')
@@ -169,10 +191,21 @@
                         @endif
                     @endforeach</td>
                     <td>{{ $data->get_sebagai() }}</td>
-                    <td>{{ $data->pesan }}</td>
+                    <td>
+                        @if(!$data->disposisi->isEmpty())
+                            <ul>
+                            @foreach($data->disposisi as $disposisi)
+                                <li>{{ $disposisi->isiDisposisi->isi_disposisi }}</li>
+                            @endforeach
+                            </ul>
+                            {{ $data->pesan }}
+                        @else
+                            {{ $data->pesan }}
+                        @endif
+                    </td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('log/registrasi-naskah-masuk/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
-                    @php $cek1 = false @endphp
+                        <li><a href="{{ url('naskah-masuk/detail/'.$data->id_naskah.'download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                    @php $cek1 = false; @endphp
                     @endforeach</ol></td>
                     <td></td>
                 </tr>
@@ -439,6 +472,93 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal-disposisi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Disposisi</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form-disposisi" action="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/disposisi') }}" method="post" enctype="multipart/form-data">
+            {!! csrf_field() !!}
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>No Index</label>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <input class="form-control" type="text" name="no_index">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Sifat</label>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <select name="sifat" class="form-control">
+                        @foreach($sifatNaskah as $data)
+                            <option value="{{ $data->id_sifat_naskah }}">{{ $data->sifat_naskah }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Isi Disposisi</label>
+                </div>
+                @foreach($isiDisposisi as $data)
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <input type="checkbox" value="{{ $data->id_disposisi }}" name="disposisi"> {{ $data->isi_disposisi }}
+                </div>
+                @endforeach
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Tujuan</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <input class="form-control tujuan-naskah" type="text" name="kepada">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Pesan</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <textarea class="form-control" name="pesan"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>File Upload</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9 box-file">
+                    <div class="input-group control-group increment">
+                      <input type="file" name="file_uploads[]" class="form-control">
+                      <div class="input-group-btn"> 
+                        <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                      </div>
+                    </div>
+                    <div class="clone hide">
+                      <div class="control-group input-group" style="margin-top:10px">
+                        <input type="file" name="file_uploads[]" class="form-control">
+                        <div class="input-group-btn"> 
+                          <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" id="submit-disposisi" form="form-disposisi" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="modal-tambah-berkas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -665,6 +785,10 @@ $('.tujuan-naskah').tagsinput({
 
         $('#btn-balas').on('click', function(){
             $('#modal-balas').modal('show');
+        });
+
+        $('#btn-disposisi').on('click', function(){
+            $('#modal-disposisi').modal('show');
         });
 
         $('#tambah-berkas').on('click', function() {

@@ -23,7 +23,7 @@
     </div>
 @endif
 
-	<table class="table table-bordered table-responsive" id="table-naskah-masuk">
+	<table class="table table-bordered table-responsive" id="table-nota-dinas">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -48,9 +48,15 @@
 				<td><a href="{{ url('log/nota-dinas/detail/'.$data->id_naskah) }}">{{ $data->nomor_naskah }}</a></td>
 				<td><a href="{{ url('log/nota-dinas/detail/'.$data->id_naskah) }}">{{ $data->asal_naskah }}</a></td>
 				<td><a href="{{ url('log/nota-dinas/detail/'.$data->id_naskah) }}">{{ $data->hal }}
-					@if(is_null($data->berkas) || $data->berkas == "")
+					@if(is_null($data->id_berkas) || $data->id_berkas == "")
 					<div>
 						<label class="label label-danger">(Belum Diberkaskan)</label>
+					</div>
+
+					@else
+
+					<div>
+						<label class="label label-success">(Sudah Diberkaskan)</label>
 					</div>
 					@endif
 				</a></td>
@@ -68,7 +74,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#table-naskah-masuk').DataTable();
+		$('#table-nota-dinas').DataTable();
 	});
 </script>
 @endpush
