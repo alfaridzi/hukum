@@ -14,6 +14,8 @@ use App\Model\Pengaturan\SifatNaskah;
 use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
+use App\berkas;
+use App\klasifikasi;
 use App\Model\Files;
 use App\Model\User;
 use Storage;

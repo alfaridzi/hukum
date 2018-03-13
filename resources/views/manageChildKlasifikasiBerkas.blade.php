@@ -5,7 +5,7 @@
 		>
 	    {{$child->kode.' - '. $child->nama }}
 	@if(count($child->childs))
-            @include('manageChildKlasifikasi',['childs' => $child->childs])
+            @include('manageChildKlasifikasiBerkas',['childs' => $child->childs])
         @endif
 	</li>
 @endforeach

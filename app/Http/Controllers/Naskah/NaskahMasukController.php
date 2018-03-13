@@ -19,6 +19,8 @@ use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
 use App\Model\Penerima;
 use App\Model\User;
+use App\berkas;
+use App\klasifikasi;
 
 use Auth;
 
@@ -42,7 +44,18 @@ class NaskahMasukController extends Controller
 
     public function detail($id)
     {
-    	$getNaskah = Naskah::findOrFail($id);
+        //Berkas
+        $userJabatan = Auth::user()->jabatan;
+        $klasifikasi = klasifikasi::where('parent_id', '=', 0)->get();
+        $dataBerkas = Berkas::all();
+        $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
+        if($berkas->count() > 0) {
+            $nomor_berkas = $berkas->last()->nomor_berkas + 1;
+        } else {
+            $nomor_berkas = 1;
+        }
+
+    	$getNaskah = Naskah::findOrFail($id)->load('berkas');
 
         $user = Auth::user();
         $update = Penerima::where('id_naskah', $id)->where('kirim_user', $user->id_user)->get();
@@ -77,9 +90,10 @@ class NaskahMasukController extends Controller
 
         $no = 1;
         $no1 = 1;
+        $no2 = 1;
         $cek = false;
         $cek1 = false;
-    	return view('naskah_masuk.detail_naskah_masuk', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'getNaskah'));
+    	return view('naskah_masuk.detail_naskah_masuk', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'no2', 'getNaskah', 'userJabatan', 'klasifikasi', 'berkas', 'nomor_berkas', 'dataBerkas'));
     }
 
     public function ubahMetadata($id)

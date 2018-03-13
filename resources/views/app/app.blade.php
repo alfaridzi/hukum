@@ -39,9 +39,9 @@
                 <img src="{{ asset('assets/images/user.png') }}" alt="..." class="img-circle profile_img">
               </div>
               <div class="profile_info">
-                <span>Welcome,</span>
+          
                 <h2>{{ Auth::guard()->user()->nama }}<br>
-                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} ]</small></h2>
+                  <small style="color:white">[ {{ Auth::guard()->user()->jabatan->jabatan }} - {{ Auth::user()->get_role() }} ]</small></h2>
               </div>
               <div class="clearfix"></div>
             </div>
@@ -134,20 +134,7 @@
                     </ul>
                   </li>
 
-                   <li><a><i class="fa fa-user"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                       <li><a href="{{ url('/unitkerja') }}"> Registrasi naskah masuk </a></li>
-
-                       <li><a href="{{ url('/pengguna') }}"> Memo </a></li>
-                        <li><a href="{{ url('/pengguna') }}"> Nota dinas </a></li>
-                         <li><a href="{{ url('/pengguna') }}"> Naskah keluar </a></li>
-
-                          <li><a href="{{ url('/pengguna') }}"> Naskah tanpa tindak lanjut </a></li>
-                    </ul>
-                  </li>
-
-
-                  <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                  <!--<li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/unitkerja') }}"> Naskah masuk </a></li>
 
@@ -159,6 +146,7 @@
                     </ul>
                   </li>
        
+                  </li>-->
                 </ul>
               </div>
 

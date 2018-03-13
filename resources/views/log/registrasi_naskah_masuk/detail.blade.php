@@ -53,11 +53,14 @@
 
 @if(!$cekNaskah->isEmpty())
     <a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
-    <a href="javascript:;" class="btn btn-info" id="btn-balas">Reply</a> 
+    <a href="javascript:;" class="btn btn-info" id="btn-balas">Balas</a> 
     <a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>
-@endif
-
-@if($getNaskah->id_user == Auth::user()->id_user)
+    @if($getNaskah->id_user == Auth::user()->id_user)
+        <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+    @else
+        <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+    @endif
+@elseif($getNaskah->id_user == Auth::user()->id_user)
     <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
 @endif
 
@@ -228,7 +231,13 @@
     		<div class="col-md-8">{{ $metadataNaskah->jumlah }} {{ $metadataNaskah->satuanUnit->nama_satuan }}</div>
     	</div>
     </div>
-    <div role="tabpanel" class="tab-pane" id="status-pemberkasan">.a..</div>
+    <div role="tabpanel" class="tab-pane" id="status-pemberkasan">
+        @if(!is_null($metadataNaskah->id_berkas))
+
+        <h3>Naskah Sudah diberkaskan</h3>
+
+        @endif
+    </div>
   </div>
 
 </div>
