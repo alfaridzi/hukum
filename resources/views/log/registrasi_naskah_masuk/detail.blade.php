@@ -364,7 +364,7 @@
         <h4 class="modal-title" id="myModalLabel">Teruskan</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-teruskan" action="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/teruskan') }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" id="form-teruskan" action="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/teruskan') }}" method="post" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-3">
@@ -429,7 +429,7 @@
         <h4 class="modal-title" id="myModalLabel">Balas</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-balas" action="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/balas') }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" id="form-balas" action="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/balas') }}" method="post" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-3">
@@ -494,7 +494,7 @@
         <h4 class="modal-title" id="myModalLabel">Disposisi</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-disposisi" action="{{ url('/naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/disposisi') }}" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" id="form-disposisi" action="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/disposisi') }}" method="post" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-3">
