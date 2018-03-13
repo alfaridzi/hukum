@@ -9,7 +9,7 @@ class Naskah extends Model
 {
     protected $table = 'tbl_naskah';
 
-    protected $fillable = ['id_group', 'id_user', 'jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'tingkat_perkembangan', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'tipe_registrasi', 'updated_at'];
+    protected $fillable = ['id_group', 'id_user', 'jenis_naskah', 'tanggal_naskah', 'tanggal_registrasi', 'nomor_naskah', 'nomor_agenda', 'hal', 'asal_naskah', 'tingkat_urgensi', 'berkas', 'tingkat_perkembangan', 'sifat_naskah', 'kategori_arsip', 'akses_publik', 'media_arsip', 'bahasa', 'isi_ringkas', 'vital', 'jumlah', 'satuan_unit', 'lokasi_fisik', 'file_dir', 'tipe_registrasi', 'updated_at'];
 
     protected $primaryKey = 'id_naskah';
 

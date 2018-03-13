@@ -21,19 +21,35 @@ class Penerima extends Model
 
     public function get_sebagai()
     {
-        if ($this->sebagai == 'to') {
+        $sebagai = $this->where('id_group', $this->id_group)->where('id_naskah', $this->id_naskah)->groupBy('id_group')->first();
+
+        if ($sebagai->sebagai == 'to') {
             return 'Surat Masuk';
-        }elseif($this->sebagai == 'to_reply'){
+        }elseif($sebagai->sebagai == 'to_reply'){
             return 'Nota Dinas';
-        }elseif($this->sebagai == 'to_forward'){
+        }elseif($sebagai->sebagai == 'to_usul'){
+            return 'Nota Dinas';
+        }elseif($sebagai->sebagai == 'to_konsep'){
+            return 'Nota Dinas';
+        }elseif($sebagai->sebagai == 'to_forward'){
             return 'Teruskan';
-        }elseif($this->sebagai == 'to_keluar'){
+        }elseif($sebagai->sebagai == 'to_keluar'){
             return 'Naskah Keluar';
-        }elseif($this->sebagai == 'to_tl'){
+        }elseif($sebagai->sebagai == 'to_tl'){
             return 'Naskah Tanpa Tindak Lanjut';
-        }elseif($this->sebagai == 'to_memo'){
+        }elseif($sebagai->sebagai == 'to_memo'){
             return 'Memo';
         }
+    }
+
+    public function get_tujuan()
+    {
+        return $this->where('id_group', $this->id_group)->get();
+    }
+
+    public function naskah()
+    {
+        return $this->belongsTo('App\Model\Naskah\Naskah', 'id_naskah', 'id_naskah');
     }
 
     public function user()
@@ -44,5 +60,10 @@ class Penerima extends Model
     public function tujuan_kirim()
     {
         return $this->belongsTo('App\Model\User', 'kirim_user', 'id_user');
+    }
+
+    public function files()
+    {
+        return $this->hasMany('App\Model\Files', 'id_group', 'id_group');
     }
 }

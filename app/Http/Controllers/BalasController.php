@@ -1,0 +1,129 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Model\Naskah\Naskah;
+use App\Model\Penerima;
+use App\Model\Files;
+
+use Auth;
+use Storage;
+
+class BalasController extends Controller
+{
+    public function teruskan(Request $request, $id)
+    {
+    	$naskah = Naskah::findOrFail($id);
+        $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
+        $id_group = $penerima->id_group + 1;
+    	$input = $request->all();
+        $input['id_group'] = $id_group;
+        $files = $request->file('file_uploads');
+        $input['id_user'] = Auth::user()->id_user;
+        $input['id_naskah'] = $naskah->id_naskah;
+        $input['sebagai'] = 'to_forward';
+
+        if (is_null($input['tembusan'])) {
+            $tembusan = null;
+        }else{
+            $input['tembusan'] = explode(",", $input['tembusan']);
+            $tembusan = $input['tembusan'];
+        }
+
+        if (is_null($input['kepada'])) {
+            $data1 = null;
+        }else{
+            $input['kepada'] = explode(',', $input['kepada']);
+            $data1 = $input['kepada'];
+        }
+
+        if (!is_null($data1)) {
+            foreach ($data1 as $key => $data) {
+                $input['kirim_user'] = $data;
+                Penerima::create($input);
+            }
+        }
+        $tembusan1['id_group'] = $id_group;
+        $tembusan1['id_naskah'] = $naskah->id_naskah;
+        $tembusan1['id_user'] = $input['id_user'];
+        $tembusan1['pesan'] = $input['pesan'];
+        if (!is_null($tembusan)) {
+            foreach ($tembusan as $key => $data) {
+                $tembusan1['sebagai'] = 'bcc';
+                $tembusan1['kirim_user'] = $data;
+                Penerima::create($tembusan1);
+            }
+        }
+
+        if (!is_null($files)) {
+            foreach ($files as $key => $file) {
+                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
+                $arrFiles[] = $namaFile;
+                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
+                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Berhasil meneruskan naskah');
+    }
+
+    public function balas(Request $request, $id)
+    {
+    	$naskah = Naskah::findOrFail($id);
+        $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
+        $id_group = $penerima->id_group + 1;
+    	$input = $request->all();
+        $input['id_group'] = $id_group;
+        $files = $request->file('file_uploads');
+        $input['id_user'] = Auth::user()->id_user;
+        $input['id_naskah'] = $naskah->id_naskah;
+        if ($naskah->tipe_registrasi == 3) {
+        	$input['sebagai'] = 'to_usul';
+        }else{
+        	$input['sebagai'] = 'to_reply';
+        }
+        if (is_null($input['tembusan'])) {
+            $tembusan = null;
+        }else{
+            $input['tembusan'] = explode(",", $input['tembusan']);
+            $tembusan = $input['tembusan'];
+        }
+
+        if (is_null($input['kepada'])) {
+            $data1 = null;
+        }else{
+            $input['kepada'] = explode(',', $input['kepada']);
+            $data1 = $input['kepada'];
+        }
+
+        if (!is_null($data1)) {
+            foreach ($data1 as $key => $data) {
+                $input['kirim_user'] = $data;
+                Penerima::create($input);
+            }
+        }
+        $tembusan1['id_group'] = $id_group;
+        $tembusan1['id_naskah'] = $naskah->id_naskah;
+        $tembusan1['id_user'] = $input['id_user'];
+        $tembusan1['pesan'] = $input['pesan'];
+        if (!is_null($tembusan)) {
+            foreach ($tembusan as $key => $data) {
+                $tembusan1['sebagai'] = 'bcc';
+                $tembusan1['kirim_user'] = $data;
+                Penerima::create($tembusan1);
+            }
+        }
+
+        if (!is_null($files)) {
+            foreach ($files as $key => $file) {
+                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
+                $arrFiles[] = $namaFile;
+                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
+                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Berhasil membalas naskah');
+    }
+}

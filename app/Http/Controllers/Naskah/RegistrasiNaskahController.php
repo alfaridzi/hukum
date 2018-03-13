@@ -29,6 +29,7 @@ class RegistrasiNaskahController extends Controller
     public function index()
     {
     	$jenisNaskah = JenisNaskah::all();
+        $user = Auth::user();
     	$naskah = Naskah::first();
     	if (is_null($naskah)) {
     		$nomor_agenda = null;
@@ -36,7 +37,7 @@ class RegistrasiNaskahController extends Controller
     		$nomor_agenda = Naskah::orderBy('id_naskah', 'desc')->first()->nomor_agenda;
     	}
     	$urgensi = Urgensi::all();
-        $dataUser = User::all('id_user', 'nama')->toArray();
+        $dataUser = User::whereNotIn('id_user', [$user->id_user])->with('jabatan')->get()->toArray();
         $user = json_encode($dataUser);
     	return view('registrasi_naskah.tambah_naskah', compact('jenisNaskah', 'urgensi', 'nomor_agenda', 'user'));
     }
@@ -63,6 +64,21 @@ class RegistrasiNaskahController extends Controller
     		$input['kepada'] = null;
     		$input['tembusan'] = null;
     	}
+
+        if ($input['tipe_registrasi'] == 1) {
+            $tipe = 'in';
+        }elseif($input['tipe_registrasi'] == 2) {
+            $tipe = 'memo';
+        }elseif($input['tipe_registrasi'] == 3) {
+            $tipe = 'keluar';
+        }elseif($input['tipe_registrasi'] == 4) {
+            $tipe = 'out';
+        }elseif($input['tipe_registrasi'] == 5) {
+            $tipe = 'tl';
+        }
+
+        $input['file_dir'] = Auth::user()->id_user.'-'.$tipe.'-'.$input['id_group'];
+        mkdir('assets/FilesUploaded/'.$input['file_dir']);
         Naskah::create($input);
         $last_id = Naskah::all()->last();
 
@@ -70,7 +86,7 @@ class RegistrasiNaskahController extends Controller
     		foreach ($files as $key => $file) {
     			$namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
     			$arrFiles[] = $namaFile;
-    			Storage::disk('uploads')->putFileAs('FilesUploaded', $file, $namaFile);
+    			Storage::disk('uploads')->putFileAs('FilesUploaded/'.$input['file_dir'].'/', $file, $namaFile);
                 Files::create(['id_naskah' => $last_id->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
     		}
     	}
@@ -97,7 +113,7 @@ class RegistrasiNaskahController extends Controller
         }elseif($input['tipe_registrasi'] == 2) {
             $kepada['sebagai'] = 'to_memo';
         }elseif($input['tipe_registrasi'] == 3) {
-            $kepada['sebagai'] = 'to_reply';
+            $kepada['sebagai'] = 'to_konsep';
         }elseif($input['tipe_registrasi'] == 4) {
             $kepada['sebagai'] = 'to_keluar';
         }elseif($input['tipe_registrasi'] == 5) {
@@ -119,7 +135,7 @@ class RegistrasiNaskahController extends Controller
         if (!is_null($tembusan)) {
             foreach ($tembusan as $key => $data) {
                 $penerima['id_user'] = $input['id_user'];
-                $penerima['sebagai'] = 'cc1';
+                $penerima['sebagai'] = 'bcc';
                 $penerima['kirim_user'] = $data;
                 Penerima::create($penerima);
             }

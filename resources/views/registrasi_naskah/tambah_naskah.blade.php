@@ -209,10 +209,14 @@
 
 $('.tujuan-naskah').tagsinput({
     itemValue: 'id_user',
-    itemText: 'nama',
+    itemText: function(pengguna){
+        return pengguna.nama + ' (' + pengguna.jabatan.jabatan + ')';
+    },
     typeahead: {
         name: 'pengguna',
-        displayKey: 'nama',
+        displayKey: function(pengguna){
+            return pengguna.nama + ' (' + pengguna.jabatan.jabatan + ')';
+        },
         source: pengguna.local,
         // source: places.map(function(item) { return item.name }),
         afterSelect: function() {

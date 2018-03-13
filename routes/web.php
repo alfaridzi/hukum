@@ -60,13 +60,15 @@ Route::middleware(['user'])->group(function(){
 	Route::get('/naskah-masuk/detail/{id}', 'Naskah\NaskahMasukController@detail');
 	Route::get('/naskah-masuk/detail/{id}/ubah-metadata', 'Naskah\NaskahMasukController@ubahMetadata');
 	Route::post('/naskah-masuk/detail/{id}/ubah-metadata/update', 'Naskah\NaskahMasukController@updateMetadata');
+	Route::post('/naskah-masuk/detail/{id}/teruskan', 'BalasController@teruskan');
+	Route::post('/naskah-masuk/detail/{id}/balas', 'BalasController@balas');
 
 	Route::get('/log/registrasi-naskah-masuk', 'Log\RegistrasiNaskahMasuk\LogController@rgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}', 'Log\RegistrasiNaskahMasuk\LogController@detailRgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata', 'Log\RegistrasiNaskahMasuk\LogController@ubahMetaRgNaskahMasuk');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/ubah-metadata/update', 'Log\RegistrasiNaskahMasuk\LogController@updateMetaRgNaskahMasuk');
-	Route::get('/log/registrasi-naskah-masuk/download/{namaFile}', 'Log\RegistrasiNaskahMasuk\LogController@downloadRgNaskahMasuk');
-	Route::post('/log/registrasi-naskah-masuk/detail/{id}/teruskan', 'Log\RegistrasiNaskahMasuk\LogController@teruskanRgNaskahMasuk');
+	Route::get('/log/registrasi-naskah-masuk/{id}/download/{namaFile}', 'Log\RegistrasiNaskahMasuk\LogController@downloadRgNaskahMasuk');
+	Route::post('/log/registrasi-naskah-masuk/detail/{id}/teruskan', 'BalasController@teruskan');
 
 	Route::get('/log/memo', 'Log\Memo\LogController@memo');
 	Route::get('/log/memo/detail/{id}', 'Log\Memo\LogController@detailMemo');

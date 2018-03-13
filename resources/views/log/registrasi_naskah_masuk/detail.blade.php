@@ -47,12 +47,19 @@
     </div>
 @endif
 
-@if(!$cekNaskah->isEmpty())
-<a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
-<a href="javascript:;" class="btn btn-info" id="btn-balas">Reply</a> 
-<a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a> 
+@if(is_null($getNaskah->id_berkas))
+    <h3 style="color: red" class="text-center">Naskah Belum Diberkaskan</h3>
 @endif
-<a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+
+@if(!$cekNaskah->isEmpty())
+    <a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
+    <a href="javascript:;" class="btn btn-info" id="btn-balas">Reply</a> 
+    <a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>
+@endif
+
+@if($getNaskah->id_user == Auth::user()->id_user)
+    <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+@endif
 
 <div>
 
@@ -77,26 +84,32 @@
 					<th>Tujuan Naskah</th> <!-- Tujuan Kepada sama tembusan -->
 					<th>Keterangan</th>
 					<th>Pesan</th>
+                    <th>File Upload</th>
+                    <th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
                 @foreach($naskah as $data)
                 <tr>
                     <td>{{ $no++ }}</td>
-                    <td>{{ $data->tanggal_registrasi }}</td>
+                    <td>{{ $data->created_at }}</td>
                     <td>{{ $data->user->jabatan->jabatan }}</td>
-                    <td>@foreach($data->penerima as $dataPenerima)
-                        @if($dataPenerima->sebagai == 'cc1')
+                    <td>
+                    @foreach($data->get_tujuan() as $dataPenerima)
+                        @if($dataPenerima->sebagai == 'bcc')
                             @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
                         @endif
                         @if(!is_null($dataPenerima->tujuan_kirim))
                             {{ $dataPenerima->tujuan_kirim->jabatan->jabatan }},
                         @endif
                     @endforeach</td>
-                    <td>@foreach($data->groupPenerima as $dataPenerima)
-                        {{ $dataPenerima->get_sebagai() }}
-                    @endforeach</td>
+                    <td>{{ $data->get_sebagai() }}</td>
                     <td>{{ $data->pesan }}</td>
+                    <td><ol>@foreach($data->files as $dataFiles)
+                        <li><a href="{{ url('log/registrasi-naskah-masuk/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                    @php $cek = false @endphp
+                    @endforeach</ol></td>
+                    <td></td>
                 </tr>
                 @endforeach
 			</tbody>
@@ -114,27 +127,32 @@
 					<th>Keterangan</th>
 					<th>Pesan</th>
                     <th>File Upload</th>
+                    <th>Aksi</th>
 				</tr>
 			</thead>
 			<tbody>
                 @foreach($naskah1 as $data)
                 <tr>
                     <td>{{ $no1++ }}</td>
-                    <td>{{ $data->tanggal_registrasi }}</td>
+                    <td>{{ $data->created_at }}</td>
                     <td>{{ $data->user->jabatan->jabatan }}</td>
-                    <td>@foreach($data->penerima as $dataPenerima)
-                        @if($dataPenerima->sebagai == 'cc1')
-                            @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
+
+                    <td>
+                    @foreach($data->get_tujuan() as $dataPenerima)
+                        @if($dataPenerima->sebagai == 'bcc')
+                            @if(!$cek1) @php $cek1 = true @endphp<br> <b>Tembusan:</b> @endif
                         @endif
                         @if(!is_null($dataPenerima->tujuan_kirim))
                             {{ $dataPenerima->tujuan_kirim->jabatan->jabatan }},
                         @endif
                     @endforeach</td>
-                    <td>{{ $data->get_tipe_registrasi() }}</td>
+                    <td>{{ $data->get_sebagai() }}</td>
                     <td>{{ $data->pesan }}</td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('log/registrasi-naskah-masuk/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                        <li><a href="{{ url('log/registrasi-naskah-masuk/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                    @php $cek1 = false @endphp
                     @endforeach</ol></td>
+                    <td></td>
                 </tr>
                 @endforeach
 			</tbody>
@@ -280,22 +298,22 @@
   </div>
 </div>
 
-{{-- <div class="modal fade" id="modal-balas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modal-balas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Kirim Nota Dinas</h4>
+        <h4 class="modal-title" id="myModalLabel">Teruskan</h4>
       </div>
       <div class="modal-body">
-        <form class="form-horizontal" id="form-teruskan" action="{{ url('pengaturan/ekstensi-file/tambah') }}" method="post">
+        <form class="form-horizontal" id="form-balas" action="{{ url('log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/balas') }}" method="post" enctype="multipart/form-data">
             {!! csrf_field() !!}
             <div class="form-group">
                 <div class="col-md-3 col-sm-3 col-xs-3">
                     <label>Tujuan Surat</label>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="kepada" required="">
+                    <input class="form-control tujuan-naskah" type="text" name="kepada" required="">
                 </div>
             </div>
             <div class="form-group">
@@ -303,7 +321,7 @@
                     <label>Tembusan</label>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control" type="text" name="tembusan">
+                    <input class="form-control tujuan-naskah" type="text" name="tembusan">
                 </div>
             </div>
             <div class="form-group">
@@ -314,15 +332,36 @@
                     <textarea class="form-control" name="pesan"></textarea>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>File Upload</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9 box-file">
+                    <div class="input-group control-group increment">
+                      <input type="file" name="file_uploads[]" class="form-control">
+                      <div class="input-group-btn"> 
+                        <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                      </div>
+                    </div>
+                    <div class="clone hide">
+                      <div class="control-group input-group" style="margin-top:10px">
+                        <input type="file" name="file_uploads[]" class="form-control">
+                        <div class="input-group-btn"> 
+                          <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" id="submit-teruskan" form="form-teruskan" class="btn btn-primary">Save changes</button>
+        <button type="submit" id="submit-balas" form="form-balas" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
-</div> --}}
+</div>
 
 @endsection
 @push('js')
@@ -343,10 +382,14 @@
 
 $('.tujuan-naskah').tagsinput({
     itemValue: 'id_user',
-    itemText: 'nama',
+    itemText: function(pengguna){
+        return pengguna.nama + ' (' + pengguna.jabatan.jabatan + ')';
+    },
     typeahead: {
         name: 'pengguna',
-        displayKey: 'nama',
+        displayKey: function(pengguna){
+            return pengguna.nama + ' (' + pengguna.jabatan.jabatan + ')';
+        },
         source: pengguna.local,
         // source: places.map(function(item) { return item.name }),
         afterSelect: function() {

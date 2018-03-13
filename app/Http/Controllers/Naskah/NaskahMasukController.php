@@ -17,22 +17,69 @@ use App\Model\Pengaturan\SifatNaskah;
 use App\Model\Pengaturan\MediaArsip;
 use App\Model\Pengaturan\Bahasa;
 use App\Model\Pengaturan\SatuanUnit;
+use App\Model\Penerima;
+use App\Model\User;
+
+use Auth;
 
 class NaskahMasukController extends Controller
 {
     public function index()
     {
-    	$naskah = Naskah::with('urgensi')->get();
+    	$user = Auth::user();
+        $naskah = Naskah::whereNotIn('tipe_registrasi', ['5'])->whereHas('penerima', function($q) use($user){
+            $q->whereHas('tujuan_kirim', function($q) use($user){
+                $q->where('id_user', $user->id_user)->orWhere('id_jabatan', $user->id_jabatan);
+            })->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
+        })->with('urgensi')->with(['penerima' => function($q) use($user){
+            $q->whereHas('tujuan_kirim', function($q) use($user){
+                $q->where('id_user', $user->id_user)->orWhere('id_jabatan', $user->id_jabatan);
+            })->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
+        }])->orderBy('id_naskah', 'asc')->get();
     	$no = 1;
     	return view('naskah_masuk.naskah_masuk', compact('naskah', 'no'));
     }
 
     public function detail($id)
     {
-    	$naskah = Naskah::where('id_naskah', $id)->with()->first();
-    	$no = 1;
-    	$no1 = 1;
-    	return view('naskah_masuk.detail_naskah_masuk', compact('naskah', 'no', 'no1'));
+    	$getNaskah = Naskah::findOrFail($id);
+
+        $user = Auth::user();
+        $update = Penerima::where('id_naskah', $id)->where('kirim_user', $user->id_user)->get();
+        if (!$update->isEmpty()) {
+            foreach($update as $data)
+            {
+                $data->update(['status_naskah' => '1']);
+            }
+        }
+        $metadataNaskah = Naskah::where('id_naskah', $id)->with('urgensi', 'jenisNaskah', 'tingkatPerkembangan', 'sifatNaskah', 'mediaArsip', 'bahasas', 'satuanUnit')->first();
+
+        $naskah = Penerima::where('id_naskah', $id)->where(function($q) use($user, $id){
+            $q->WhereHas('tujuan_kirim', function($query) use ($user){
+                $query->where('id_jabatan', $user->id_jabatan);
+            })->orWhereHas('user', function($query) use($user){
+                $query->where('id_jabatan', $user->id_jabatan);
+            });
+        })->with('user')->with(['files' => function($q) use($id){
+            $q->where('id_naskah', $id);
+        }])->groupBy('id_group')->orderBy('id_penerima', 'DESC')->get();
+
+        $naskah1 = Penerima::where('id_naskah', $id)->groupBy('id_group')->with('user')->with(['files' => function($q) use($id){
+            $q->where('id_naskah', $id);
+        }])->orderBy('id_penerima', 'desc')->get();
+
+        $cekNaskah = Penerima::where('id_naskah', $id)->whereNotIn('sebagai', ['to_tl', 'bcc'])->whereHas('tujuan_kirim', function($q) use($user){
+            $q->where('id_jabatan', $user->id_jabatan);
+        })->orderBy('id_user', 'desc')->get();
+
+        $dataUser = User::whereNotIn('id_user', [$user->id_user])->with('jabatan')->get()->toArray();
+        $user = json_encode($dataUser);
+
+        $no = 1;
+        $no1 = 1;
+        $cek = false;
+        $cek1 = false;
+    	return view('naskah_masuk.detail_naskah_masuk', compact('user', 'metadataNaskah', 'cek', 'cek1', 'cekNaskah', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'getNaskah'));
     }
 
     public function ubahMetadata($id)
