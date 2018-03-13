@@ -14,9 +14,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         setlocale(LC_TIME, 'IND');
         Schema::defaultStringLength(191);
+
+        view()->composer("*","App\Http\ViewComposers\DashboardViewComposer");
     }
 
     /**

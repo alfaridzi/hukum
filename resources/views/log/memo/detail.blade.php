@@ -508,7 +508,7 @@
                 </div>
                 @foreach($isiDisposisi as $data)
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input type="checkbox" value="{{ $data->id_disposisi }}" name="disposisi"> {{ $data->isi_disposisi }}
+                    <input type="checkbox" value="{{ $data->id_disposisi }}" name="disposisi[]"> {{ $data->isi_disposisi }}
                 </div>
                 @endforeach
             </div>
@@ -517,7 +517,7 @@
                     <label>Tujuan</label>
                 </div>
                 <div class="col-md-9 col-sm-9 col-xs-9">
-                    <input class="form-control tujuan-naskah" type="text" name="kepada">
+                    <input class="form-control tujuan-naskah" type="text" name="kepada" required>
                 </div>
             </div>
             <div class="form-group">

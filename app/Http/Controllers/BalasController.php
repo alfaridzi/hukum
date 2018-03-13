@@ -150,15 +150,8 @@ class BalasController extends Controller
             }
         }
 
-        if (is_null($input['disposisi'])) {
-            $disposisi = null;
-        }else{
-            $input['disposisi'] = explode(',', $input['disposisi']);
-            $disposisi = $input['disposisi'];
-        }
-
-        if (!is_null($disposisi)) {
-            foreach ($disposisi as $key => $data) {
+        if (!is_null($input['disposisi'])) {
+            foreach ($input['disposisi'] as $key => $data) {
                 $input['disposisi'] = $data;
                 Disposisi::create($input);
             }
