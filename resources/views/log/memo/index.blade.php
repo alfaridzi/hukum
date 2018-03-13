@@ -34,6 +34,7 @@
 				<th>Hal</th>
 				<th>Tanggal Naskah</th>
 				<th>Tanggal Registrasi</th>
+				<th>Aksi</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -62,6 +63,14 @@
 				</a></td>
 				<td><a href="{{ url('log/memo/detail/'.$data->id_naskah) }}">{{ $data->tanggal_naskah }}</a></td>
 				<td><a href="{{ url('log/memo/detail/'.$data->id_naskah) }}">{{ $data->tanggal_registrasi }}</a></td>
+				<td>
+					@if($data->getPenerima->count() == 1)
+					<form action="{{ url('log/memo/delete/'.$data->id_naskah) }}" method="post">
+						@csrf
+						<button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus naskah ini?')">Hapus</button>
+					</form>
+					@endif
+				</td>
 			</tr>
 			@endforeach
 		</tbody>

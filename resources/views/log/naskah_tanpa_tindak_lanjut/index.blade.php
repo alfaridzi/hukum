@@ -30,6 +30,7 @@
 				<th>Nomor Naskah</th>
 				<th>Hal</th>
 				<th>Tanggal Naskah</th>
+				<th>Aksi</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -45,6 +46,10 @@
 					@endif
 				</a></td>
 				<td><a href="{{ url('log/naskah-tanpa-tindak-lanjut/detail/'.$data->id_naskah) }}">{{ $data->tanggal_naskah }}</a></td>
+				<td><form action="{{ url('log/naskah-tanpa-tindak-lanjut/delete/'.$data->id_naskah) }}" method="post">
+					@csrf
+					<button type="submit" class="btn btn-danger" onclick="return confirm('Apakah anda yakin ingin menghapus naskah ini?')">Hapus</button>
+				</form></td>
 			</tr>
 			@endforeach
 		</tbody>

@@ -67,6 +67,7 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/naskah-masuk/detail/{id}/balas', 'BalasController@balas');
 	Route::post('/naskah-masuk/detail/{id}/disposisi', 'BalasController@disposisi');
 	Route::get('/naskah-masuk/detail/{id}/download/{namaFile}', 'DownloadController');
+	Route::post('/naskah-masuk/detail/{id}/delete/{idGroup}', 'NaskahDeleteController@deletePenerima');
 
 	Route::get('/log/registrasi-naskah-masuk', 'Log\RegistrasiNaskahMasuk\LogController@rgNaskahMasuk');
 	Route::get('/log/registrasi-naskah-masuk/detail/{id}', 'Log\RegistrasiNaskahMasuk\LogController@detailRgNaskahMasuk');
@@ -76,6 +77,8 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/teruskan', 'BalasController@teruskan');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/balas', 'BalasController@balas');
 	Route::post('/log/registrasi-naskah-masuk/detail/{id}/disposisi', 'BalasController@disposisi');
+	Route::post('/log/registrasi-naskah-masuk/delete/{id}', 'NaskahDeleteController@deleteNaskah');
+	Route::post('/log/registrasi-naskah-masuk/detail/{id}/delete/{idGroup}', 'NaskahDeleteController@deletePenerima');
 
 	Route::get('/log/memo', 'Log\Memo\LogController@memo');
 	Route::get('/log/memo/detail/{id}', 'Log\Memo\LogController@detailMemo');
@@ -85,6 +88,8 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/log/memo/detail/{id}/teruskan', 'BalasController@teruskan');
 	Route::post('/log/memo/detail/{id}/balas', 'BalasController@balas');
 	Route::post('/log/memo/detail/{id}/disposisi', 'BalasController@disposisi');
+	Route::post('/log/memo/delete/{id}', 'NaskahDeleteController@deleteNaskah');
+	Route::post('/log/memo/detail/{id}/delete/{idGroup}', 'NaskahDeleteController@deletePenerima');
 
 	Route::get('/log/nota-dinas', 'Log\NotaDinas\LogController@notaDinas');
 	Route::get('/log/nota-dinas/detail/{id}', 'Log\NotaDinas\LogController@detailNotaDinas');
@@ -94,6 +99,8 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/log/nota-dinas/detail/{id}/teruskan', 'BalasController@teruskan');
 	Route::post('/log/nota-dinas/detail/{id}/balas', 'BalasController@balas');
 	Route::post('/log/nota-dinas/detail/{id}/disposisi', 'BalasController@disposisi');
+	Route::post('/log/nota-dinas/delete/{id}', 'NaskahDeleteController@deleteNaskah');
+	Route::post('/log/nota-dinas/detail/{id}/delete/{idGroup}', 'NaskahDeleteController@deletePenerima');
 
 	Route::get('/log/naskah-keluar', 'Log\NaskahKeluar\LogController@naskahKeluar');
 	Route::get('/log/naskah-keluar/detail/{id}', 'Log\NaskahKeluar\LogController@detailNaskahKeluar');
@@ -103,12 +110,15 @@ Route::middleware(['user'])->group(function(){
 	Route::post('/log/naskah-keluar/detail/{id}/teruskan', 'BalasController@teruskan');
 	Route::post('/log/naskah-keluar/detail/{id}/balas', 'BalasController@balas');
 	Route::post('/log/naskah-keluar/detail/{id}/disposisi', 'BalasController@disposisi');
+	Route::post('/log/naskah-keluar/delete/{id}', 'NaskahDeleteController@deleteNaskah');
+	Route::post('/log/naskah-keluar/detail/{id}/delete/{idGroup}', 'NaskahDeleteController@deletePenerima');
 
 	Route::get('/log/naskah-tanpa-tindak-lanjut', 'Log\NaskahTanpaTindakLanjut\LogController@index');
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}', 'Log\NaskahTanpaTindakLanjut\LogController@detail');
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}/ubah-metadata', 'Log\NaskahTanpaTindakLanjut\LogController@ubahMetadata');
 	Route::post('/log/naskah-tanpa-tindak-lanjut/detail/{id}/ubah-metadata/update', 'Log\NaskahTanpaTindakLanjut\LogController@updateMetadata');
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}/download/{namaFile}', 'DownloadController');
+	Route::post('/log/naskah-tanpa-tindak-lanjut/delete/{id}', 'Log\NaskahTanpaTindakLanjut\LogController@delete');
 
 	/* ------------------------- Bagian Pengaturan ----------------------------------- */
 	Route::prefix('pengaturan')->group(function(){

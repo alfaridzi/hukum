@@ -22,6 +22,9 @@ class Naskah extends Model
         return $this->hasOne('App\berkas','id_berkas','id_berkas');
     }
 
+    public function getPenerima() {
+        return $this->hasMany('App\Model\Penerima', 'id_naskah', 'id_naskah');
+    }
 
     public function tingkatPerkembangan()
     {

@@ -43,7 +43,20 @@ class LogController extends Controller
 
     public function detail($id)
     {
-    	$getGroup = Naskah::findOrFail($id)->id_group;
+        //Berkas
+        $userJabatan = Auth::user()->jabatan;
+        $sifatNaskah = SifatNaskah::all();
+        $klasifikasi = klasifikasi::where('parent_id', '=', 0)->get();
+        $dataBerkas = Berkas::all();
+        $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
+        if($berkas->count() > 0) {
+            $nomor_berkas = $berkas->last()->nomor_berkas + 1;
+        } else {
+            $nomor_berkas = 1;
+        }
+
+        $getNaskah = Naskah::findOrFail($id)->load('berkas');
+
     	$user = Auth::user();
     	$metadataNaskah = Naskah::where('id_naskah', $id)->with('urgensi', 'jenisNaskah', 'tingkatPerkembangan', 'sifatNaskah', 'mediaArsip', 'bahasas', 'satuanUnit')->first();
     	$naskah = Naskah::where([['id_naskah', '=', $id], ['id_user', '=' ,$user->id_user]])->orWhereHas('penerima', function($q) use($user, $id){
@@ -52,13 +65,14 @@ class LogController extends Controller
 
     	$naskah1 = Naskah::where('id_naskah', $id)->whereHas('penerima', function($q) use($id){
     		$q->where('id_naskah', $id);
-    	})->with('user', 'penerima', 'penerima.user', 'penerima.tujuan_kirim')->with(['files' => function($q) use($id, $getGroup){
-    		$q->where('id_naskah', $id)->whereNotIn('sebagai', ['to_tl', 'to_memo', 'to_keluar']);
+    	})->with('user', 'penerima', 'penerima.user', 'penerima.tujuan_kirim')->with(['files' => function($q) use($id){
+    		$q->where('id_naskah', $id);
     	}])->get();
        	$no = 1;
     	$no1 = 1;
+        $no2 = 1;
     	$cek = false;
-    	return view('log.naskah_tanpa_tindak_lanjut.detail', compact('metadataNaskah', 'cek', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1'));
+    	return view('log.naskah_tanpa_tindak_lanjut.detail', compact('metadataNaskah', 'getNaskah', 'cek', 'cekTembusan', 'naskah', 'naskah1', 'no', 'no1', 'userJabatan', 'klasifikasi', 'nomor_berkas', 'dataBerkas', 'no2'));
     }
 
     public function ubahMetadata($id)
@@ -92,19 +106,26 @@ class LogController extends Controller
     	return redirect('log/naskah-tanpa-tindak-lanjut/detail/'.$id)->with('success', 'Berhasil update metadata');
     }
 
-    public function download($namaFile)
+    public function delete(Request $request, $id)
     {
-    	$file = Files::where('nama_file', $namaFile)->first();
+    	$naskah = Naskah::findOrFail($id);
+        $penerima = Penerima::where('id_naskah', $id)->get();
 
-    	if (!File::exists('assets/FilesUploaded/'.$file->nama_file)) {
-    		return redirect()->back()->withErrors('Tidak dapat menemukan file');
-    	}
+        $file = Files::where('id_naskah', $id)->get();
 
-    	return response()->download('assets/FilesUploaded/'.$file->nama_file);
-    }
+        foreach ($file as $key => $data) {
+            if (File::exists('assets/FilesUploaded/'.$naskah->file_dir.'/'.$data->nama_file)) {
+                File::delete('assets/FilesUploaded/'.$naskah->file_dir.'/'.$data->nama_file);
+            }
+            $data->delete();
+        }
 
-    public function teruskanMemo(Requests $request, $id)
-    {
-    	$input = $request->all();
+        foreach ($penerima as $data) {
+            $data->delete();
+        }
+
+        $naskah->delete();
+
+        return redirect()->back()->with('success', 'Berhasil menghapus naskah');
     }
 }

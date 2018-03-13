@@ -147,7 +147,14 @@
                         <li><a href="{{ url('/log/naskah-keluar/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @php $cek = false @endphp
                     @endforeach</ol></td>
-                    <td></td>
+                    <td>
+                        @if($data->id_user == Auth::user()->id_user && $naskah->count() > $no)
+                            <form action="{{ url('/log/naskah-keluar/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
+                            @csrf
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus ini?')">Delete</button>
+                            </form>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -207,7 +214,14 @@
                         <li><a href="{{ url('/log/naskah-keluar/detail/'.$data->id_naskah.'download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @php $cek1 = false; @endphp
                     @endforeach</ol></td>
-                    <td></td>
+                    <td>
+                        @if($data->id_user == Auth::user()->id_user && $naskah1->count() > $no1)
+                            <form action="{{ url('/log/naskah-keluar/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
+                            @csrf
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus ini?')">Delete</button>
+                            </form>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
