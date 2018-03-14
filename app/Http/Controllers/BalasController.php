@@ -139,8 +139,8 @@ class BalasController extends Controller
         ];
 
         $validator = Validator::make($input, [
-            'disposisi' => 'required',
             'kepada' => 'required',
+            'disposisi' => 'nullable',
         ], $messages);
 
         if ($validator->fails()) {
@@ -148,7 +148,7 @@ class BalasController extends Controller
                         ->withErrors($validator)
                         ->withInput();
         }
-        
+
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
         $id_group = $penerima->id_group + 1;
@@ -158,6 +158,10 @@ class BalasController extends Controller
         $input['id_user'] = Auth::user()->id_user;
         $input['id_naskah'] = $naskah->id_naskah;
         $input['sebagai'] = 'cc1';
+
+        if (!isset($input['disposisi'])) {
+            $input['disposisi'] = null;
+        }
 
         if (!is_null($files)) {
             foreach ($files as $key => $file) {
@@ -189,5 +193,13 @@ class BalasController extends Controller
         }
     	
     	return redirect()->back()->with('success', 'Berhasil mengirim disposisi');
+    }
+
+    public function cetakDisposisi($id, $id_group)
+    {
+        $penerima = Penerima::where('id_naskah', $id)->where('id_group', $id_group)->with(['disposisi' => function($q) use($id, $id_group){
+            $q->where('id_naskah', $id)->where('id_group', $id_group)->groupBy('id_group');
+        }])->with('naskah')->with('user', 'tujuan_kirim')->groupBy('id_group')->first();
+        return view('cetak_disposisi', compact('penerima'));
     }
 }

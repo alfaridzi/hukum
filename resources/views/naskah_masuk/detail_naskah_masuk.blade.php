@@ -147,6 +147,9 @@
                         <li><a href="{{ url('naskah-masuk/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @endforeach</ol></td>
                     <td>
+                        @if(!$data->disposisi->isEmpty())
+                        <a href="{{ url('cetak/'.$data->id_naskah.'/disposisi/'.$data->id_group) }}" class="btn btn-info" id="cetakDisposisi">Print</a>
+                        @endif
                         @if($data->id_user == Auth::user()->id_user && $naskah->count() > $no)
                             <form action="{{ url('naskah-masuk/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
                             @csrf
@@ -215,6 +218,9 @@
                     @endforeach</ol></td>
                     @php $cek1 = false; @endphp
                     <td>
+                        @if(!$data->disposisi->isEmpty())
+                        <a href="{{ url('cetak/'.$data->id_naskah.'/disposisi/'.$data->id_group) }}" class="btn btn-info" id="cetakDisposisi">Print</a>
+                        @endif
                         @if($data->id_user == Auth::user()->id_user && $naskah1->count() > $no1)
                             <form action="{{ url('naskah-masuk/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
                             @csrf
@@ -789,6 +795,11 @@ $('.tujuan-naskah').tagsinput({
 
 
     $(document).ready(function() {
+        $('a#cetakDisposisi').click(function() {
+            window.open($(this).attr('href'),'title', 'width=800, height=700');
+            return false;
+        });
+        
         $('#table-detail-1').DataTable();
         $('#table-detail-2').DataTable();
         $('#table-detail-3').DataTable();

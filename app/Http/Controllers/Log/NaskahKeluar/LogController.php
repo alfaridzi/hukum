@@ -32,7 +32,7 @@ class LogController extends Controller
     public function naskahKeluar()
     {
     	$user = Auth::user();
-    	$naskah = Naskah::where('tipe_registrasi', '4')->whereHas('user', function($q) use($user){
+    	$naskah = Naskah::whereIn('tipe_registrasi', ['2', '3', '4'])->whereHas('user', function($q) use($user){
     		$q->where('id_jabatan', $user->id_jabatan);
     	})->with(['penerima' => function($q){
     		$q->where('sebagai', 'to_keluar')->groupBy('id_group');

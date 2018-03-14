@@ -120,6 +120,11 @@ Route::middleware(['user'])->group(function(){
 	Route::get('/log/naskah-tanpa-tindak-lanjut/detail/{id}/download/{namaFile}', 'DownloadController');
 	Route::post('/log/naskah-tanpa-tindak-lanjut/delete/{id}', 'Log\NaskahTanpaTindakLanjut\LogController@delete');
 
+	Route::get('/cetak/{id}/disposisi/{id_group}', 'BalasController@cetakDisposisi');
+
+	Route::get('/laporan', 'LaporanController@index');
+	Route::get('/laporan/naskah-masuk', 'LaporanController@naskahMasuk');
+	Route::get('/laporan/naskah-keluar', 'LaporanController@naskahKeluar');
 	/* ------------------------- Bagian Pengaturan ----------------------------------- */
 	Route::prefix('pengaturan')->group(function(){
 		Route::get('bahasa', 'Pengaturan\BahasaController@index');

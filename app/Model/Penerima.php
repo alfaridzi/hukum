@@ -47,6 +47,8 @@ class Penerima extends Model
             return 'Memo';
         }elseif($sebagai->sebagai == 'cc1'){
             return 'Disposisi';
+        }elseif($sebagai->sebagai == 'final'){
+            return 'Dokumen Final';
         }
     }
 

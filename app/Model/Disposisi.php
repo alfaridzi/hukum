@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Disposisi extends Model
 {
@@ -13,6 +14,11 @@ class Disposisi extends Model
     public function naskah()
     {
     	return $this->belongsTo('App\Model\Naskah\Naskah', 'id_naskah', 'id_naskah');
+    }
+
+    public function get_disposisi()
+    {
+        return $this->where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->get();
     }
 
     public function penerima()
@@ -28,5 +34,11 @@ class Disposisi extends Model
     public function isiDisposisi()
     {
     	return $this->belongsTo('App\Model\Pengaturan\IsiDisposisi', 'disposisi', 'id_disposisi');
+    }
+
+    public function get_tanggal_disposisi()
+    {
+        $tanggal = $this->created_at;
+        return Carbon::parse($tanggal)->formatLocalized('%d %B %Y');
     }
 }

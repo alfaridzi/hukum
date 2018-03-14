@@ -460,9 +460,11 @@
     </script>
 <script type="text/javascript">
 	$(document).ready(function() {
+
 		$('#table-detail-1').DataTable();
 		$('#table-detail-2').DataTable();
-
+        $('#table-detail-3').DataTable();
+        
         $('#btn-teruskan').on('click', function(){
             $('#modal-teruskan').modal('show');
         });

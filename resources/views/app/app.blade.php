@@ -105,6 +105,8 @@
                     </ul>
                   </li>
 
+                  <li><a href="{{ url('laporan') }}"><i class="fa fa-archive"></i> Laporan</a></li>
+
                    <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
