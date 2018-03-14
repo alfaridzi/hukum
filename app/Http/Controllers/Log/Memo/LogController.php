@@ -38,7 +38,7 @@ class LogController extends Controller
     		$q->where('sebagai', 'to_memo')->groupBy('id_group');
     	}])->with('urgensi')->with(['getPenerima' => function($q){
             $q->groupBy('id_group');
-        }])->orderBy('id_naskah', 'asc')->get();
+        }])->orderBy('id_naskah', 'desc')->get();
     	$no = 1;
     	return view('log.memo.index', compact('naskah', 'no'));
     }

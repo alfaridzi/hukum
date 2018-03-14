@@ -8,6 +8,7 @@ use App\Model\Penerima;
 use App\Model\Files;
 use App\Model\Disposisi;
 
+use Validator;
 use Auth;
 use Storage;
 
@@ -131,10 +132,27 @@ class BalasController extends Controller
 
     public function disposisi(Request $request, $id)
     {
+        $input = $request->all();
+
+        $messages = [
+            'kepada.required' => 'Bidang isian tujuan wajib diisi.',
+        ];
+
+        $validator = Validator::make($input, [
+            'disposisi' => 'required',
+            'kepada' => 'required',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+        
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
         $id_group = $penerima->id_group + 1;
-    	$input = $request->all();
+    	
         $input['id_group'] = $id_group;
         $files = $request->file('file_uploads');
         $input['id_user'] = Auth::user()->id_user;

@@ -146,7 +146,6 @@
                     </td>
                     <td><ol>@foreach($data->files as $dataFiles)
                         <li><a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
-                    @php $cek = false @endphp
                     @endforeach</ol></td>
                     <td>
                         @if($data->id_user == Auth::user()->id_user && $naskah->count() > $no)
@@ -157,6 +156,7 @@
                         @endif
                     </td>
                 </tr>
+                @php $cek = false @endphp
                 @endforeach
             </tbody>
         </table>
@@ -212,7 +212,6 @@
                     </td>
                     <td><ol>@foreach($data->files as $dataFiles)
                         <li><a href="{{ url('log/registrasi-naskah-masuk/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
-                    @php $cek1 = false @endphp
                     @endforeach</ol></td>
                     <td>
                         @if($data->id_user == Auth::user()->id_user && $naskah1->count() > $no1)
@@ -223,6 +222,7 @@
                         @endif
                     </td>
                 </tr>
+                @php $cek1 = false @endphp
                 @endforeach
             </tbody>
         </table>

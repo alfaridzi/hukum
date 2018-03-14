@@ -38,7 +38,7 @@ class LogController extends Controller
     		$q->where('sebagai', 'to')->groupBy('id_group');
     	}])->with('urgensi')->with(['getPenerima' => function($q){
             $q->groupBy('id_group');
-        }])->orderBy('id_naskah', 'asc')->get();
+        }])->orderBy('id_naskah', 'desc')->get();
         // $naskah = Naskah::where('tipe_registrasi', '1')->with(['penerima' => function($q){
         //     $q->where('sebagai', 'to')->groupBy('id_group');
         // }])->with('urgensi')->orderBy('id_naskah', 'asc')->get();
