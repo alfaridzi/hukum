@@ -70,17 +70,19 @@
     <h3 style="color: red" class="text-center">Naskah Belum Diberkaskan</h3>
 @endif
 
-@if(!$cekNaskah->isEmpty())
-    <a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
-    <a href="javascript:;" class="btn btn-info" id="btn-balas">Balas</a> 
-    <a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>
-    @if($getNaskah->id_user == Auth::user()->id_user)
-        <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
-    @else
+@if($getNaskah->penerima->whereIn('sebagai', ['final'])->isEmpty())
+    @if(!$cekNaskah->isEmpty())
+        <a href="javascript:;" class="btn btn-success" id="btn-teruskan">Teruskan</a> 
+        <a href="javascript:;" class="btn btn-info" id="btn-balas">Balas</a> 
+        <a href="javascript:;" class="btn btn-primary" id="btn-disposisi">Disposisi</a>
+        @if($getNaskah->id_user == Auth::user()->id_user)
+            <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+        @else
+            <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
+        @endif
+    @elseif($getNaskah->id_user == Auth::user()->id_user)
         <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
     @endif
-@elseif($getNaskah->id_user == Auth::user()->id_user)
-    <a href="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/ubah-metadata') }}" class="btn btn-warning">Ubah Metadata</a>
 @endif
 
 <div>
@@ -97,6 +99,12 @@
   <div class="tab-content">
     <div role="tabpanel" class="tab-pane active" id="tindaklanjut-masuk">
         <br>
+        @if($getNaskah->penerima->whereIn('sebagai', ['final'])->isEmpty())
+            @if(!$cekNaskah->isEmpty())
+                <a href="javascript:;" class="btn btn-success" id="btn-final">Upload Dokumen Final</a>
+                <p style="color:red;">(Dipergunakan untuk mengupload hasil scan naskah yang telah ditandatangani pimpinan dan diberikan nomor naskah)</p>
+            @endif
+        @endif
         <table class="table table-bordered table-responsive" id="table-detail-1">
             <thead>
                 <tr>
@@ -123,15 +131,26 @@
                         @endif
                     </td>
                     <td>
-                    @foreach($data->get_tujuan() as $dataPenerima)
-                        @if($dataPenerima->sebagai == 'bcc')
-                            @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
+                    @if($data->sebagai == 'final')
+                            <p style="color: red">{{ $data->get_sebagai() }}</p>
+                        @else
+                        @foreach($data->get_tujuan() as $dataPenerima)
+                            @if($dataPenerima->sebagai == 'bcc')
+                                @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
+                            @endif
+                            @if(!is_null($dataPenerima->tujuan_kirim))
+                                {{ $dataPenerima->tujuan_kirim->jabatan->jabatan }},
+                            @endif
+                        @endforeach
+                    @endif
+                    </td>
+                    <td>
+                        @if($data->sebagai == 'final')
+                            <p style="color: red">{{ $data->get_sebagai() }}</p>
+                        @else
+                            {{ $data->get_sebagai() }}
                         @endif
-                        @if(!is_null($dataPenerima->tujuan_kirim))
-                            {{ $dataPenerima->tujuan_kirim->jabatan->jabatan }},
-                        @endif
-                    @endforeach</td>
-                    <td>{{ $data->get_sebagai() }}</td>
+                    </td>
                     <td>
                         @if(!$data->disposisi->isEmpty())
                             <ul>
@@ -151,7 +170,7 @@
                         @if(!$data->disposisi->isEmpty())
                         <a href="{{ url('cetak/'.$data->id_naskah.'/disposisi/'.$data->id_group) }}" class="btn btn-info" id="cetakDisposisi">Print</a>
                         @endif
-                        @if($data->id_user == Auth::user()->id_user && $naskah->count() > $no)
+                        @if($data->id_user == Auth::user()->id_user && $naskah->count() >= $no)
                             <form action="{{ url('/log/registrasi-naskah-masuk/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
                             @csrf
                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus ini?')">Delete</button>
@@ -192,15 +211,26 @@
                         @endif
                     </td>
                     <td>
+                    @if($data->sebagai == 'final')
+                        <p style="color: red">{{ $data->get_sebagai() }}</p>
+                    @else
                     @foreach($data->get_tujuan() as $dataPenerima)
                         @if($dataPenerima->sebagai == 'bcc')
-                            @if(!$cek1) @php $cek1 = true @endphp<br> <b>Tembusan:</b> @endif
+                            @if(!$cek) @php $cek = true @endphp<br> <b>Tembusan:</b> @endif
                         @endif
                         @if(!is_null($dataPenerima->tujuan_kirim))
                             {{ $dataPenerima->tujuan_kirim->jabatan->jabatan }},
                         @endif
-                    @endforeach</td>
-                    <td>{{ $data->get_sebagai() }}</td>
+                    @endforeach
+                    @endif
+                    </td>
+                    <td>
+                        @if($data->sebagai == 'final')
+                            <p style="color: red">{{ $data->get_sebagai() }}</p>
+                        @else
+                            {{ $data->get_sebagai() }}
+                        @endif
+                    </td>
                     <td>
                         @if(!$data->disposisi->isEmpty())
                             <ul>
@@ -220,7 +250,7 @@
                         @if(!$data->disposisi->isEmpty())
                         <a href="{{ url('cetak/'.$data->id_naskah.'/disposisi/'.$data->id_group) }}" class="btn btn-info" id="cetakDisposisi">Print</a>
                         @endif
-                        @if($data->id_user == Auth::user()->id_user && $naskah1->count() > $no1)
+                        @if($data->id_user == Auth::user()->id_user && $naskah1->count() >= $no1)
                             <form action="{{ url('/log/registrasi-naskah-masuk/detail/'.$data->id_naskah.'/delete/'.$data->id_group) }}" method="post">
                             @csrf
                                 <button class="btn btn-danger" type="submit" onclick="return confirm('Apakah anda yakin ingin menghapus ini?')">Delete</button>
@@ -579,6 +609,63 @@
   </div>
 </div>
 
+<div class="modal fade" id="modal-final" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Upload Dokumen Final</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" id="form-final" action="{{ url('/log/registrasi-naskah-masuk/detail/'.$metadataNaskah->id_naskah.'/dokumen-final') }}" method="post" enctype="multipart/form-data">
+            {!! csrf_field() !!}
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Jenis Dokumen</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <p>-- Dokumen Final --</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>Pesan</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <textarea class="form-control" name="pesan"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <label>File Upload</label>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9 box-file">
+                    <div class="input-group control-group increment">
+                      <input type="file" name="file_uploads[]" class="form-control">
+                      <div class="input-group-btn"> 
+                        <button class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                      </div>
+                    </div>
+                    <div class="clone hide">
+                      <div class="control-group input-group" style="margin-top:10px">
+                        <input type="file" name="file_uploads[]" class="form-control">
+                        <div class="input-group-btn"> 
+                          <button class="btn btn-danger" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" id="submit-final" form="form-final" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="modal fade" id="modal-tambah-berkas" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -815,17 +902,25 @@ $('.tujuan-naskah').tagsinput({
             $('#modal-disposisi').modal('show');
         });
 
+        $('#btn-final').on('click', function(){
+            $('#modal-final').modal('show');
+        });
+
         $('#tambah-berkas').on('click', function() {
             $('#modal-tambah-berkas').modal('show');
         });
 
         $(document).on('click', '#btn-pindah', function(e){
             e.preventDefault();
-            var id_berkas = $(this).data('id-berkas');
+            var jawaban = confirm('Apakah anda yakin ingin memindahkan naskah ini?');
 
-            $('input#id_berkas').val(id_berkas);
+            if (jawaban) {
+                var id_berkas = $(this).data('id-berkas');
 
-            document.getElementById('form-pindah-berkas').submit();
+                $('input#id_berkas').val(id_berkas);
+
+                document.getElementById('form-pindah-berkas').submit();
+            }
         })
 
         $(document).on('click', '#submit-tambah-berkas', function(){

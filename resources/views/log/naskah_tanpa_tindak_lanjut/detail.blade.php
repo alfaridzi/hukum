@@ -1,5 +1,5 @@
 @extends('app.app')
-@section('page-title', 'Detail Naskah Tanpa Tindak Lanjut')
+@section('page-title', 'Detail Naskah')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
 <style type="text/css">
@@ -94,7 +94,7 @@
                     <td>{{ $data->get_tipe_registrasi() }}</td>
                     <td>{{ $data->pesan }}</td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                        <li><a href="{{ url('/log/naskah-tanpa-tindak-lanjut/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @endforeach</ol></td>
                     <td></td>
                 </tr>
@@ -140,7 +140,7 @@
                     <td>{{ $data->get_tipe_registrasi() }}</td>
                     <td>{{ $data->pesan }}</td>
                     <td><ol>@foreach($data->files as $dataFiles)
-                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
+                        <li><a href="{{ url('/log/naskah-tanpa-tindak-lanjut/detail/'.$data->id_naskah.'/download/'.$dataFiles->nama_file) }}">{{ $dataFiles->nama_file }}</a></li>
                     @endforeach</ol></td>
                     <td></td>
                 </tr>
@@ -479,11 +479,15 @@
 
         $(document).on('click', '#btn-pindah', function(e){
             e.preventDefault();
-            var id_berkas = $(this).data('id-berkas');
+            var jawaban = confirm('Apakah anda yakin ingin memindahkan naskah ini?');
 
-            $('input#id_berkas').val(id_berkas);
+            if (jawaban) {
+                var id_berkas = $(this).data('id-berkas');
 
-            document.getElementById('form-pindah-berkas').submit();
+                $('input#id_berkas').val(id_berkas);
+
+                document.getElementById('form-pindah-berkas').submit();
+            }
         })
 
         $(document).on('click', '#submit-tambah-berkas', function(){

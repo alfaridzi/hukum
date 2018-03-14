@@ -25,6 +25,17 @@ class Penerima extends Model
     	}
     }
 
+    public function statusNaskah()
+    {
+        $sebagai = $this->where('id_naskah', $this->id_naskah)->where('kirim_user', Auth::user()->id_user)->whereIn('status_naskah', ['0'])->first();
+
+        if (is_null($sebagai)) {
+            return 'Sudah Dibaca';
+        }else{
+            return 'Belum Dibaca';
+        }
+    }
+
     public function get_sebagai()
     {
         $sebagai = $this->where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->groupBy('id_group')->first();

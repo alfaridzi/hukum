@@ -48,6 +48,7 @@ class NaskahMasukController extends Controller
     {
         $sifatNaskah = SifatNaskah::all();
         $isiDisposisi = IsiDisposisi::all();
+
         //Berkas
         $userJabatan = Auth::user()->jabatan;
         $sifatNaskah = SifatNaskah::all();
