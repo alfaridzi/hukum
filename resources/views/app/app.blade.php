@@ -97,10 +97,6 @@
 
                        
                        <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
-
-                    
-                       <li><a href="{{ url('/berkas/usul') }}"> Usul pindah arsip inaktif </a></li>
-
                     
                     </ul>
                   </li>
@@ -134,15 +130,16 @@
                     </ul>
                   </li>
 
-                  <!--<li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                       <li><a href="{{ url('/unitkerja') }}"> Naskah masuk </a></li>
+                       <li><a href="{{ url('/laporan/reg-naskah-masuk') }}">Registrasi naskah masuk </a></li>
+                        <li><a href="{{ url('laporan/reg-naskah-tanpa-tindak-lanjut') }}"> Registrasi naskah tanpa tindak lanjut </a></li>
 
-                       <li><a href="{{ url('/pengguna') }}"> Naskah keluar </a></li>
-                        <li><a href="{{ url('/pengguna') }}"> Registrasi naskah masuk </a></li>
+                       <li><a href="{{ url('laporan/naskah-masuk') }}"> Naskah Masuk </a></li>
+                        <li><a href="{{ url('/pengguna') }}"> Naskah Keluar </a></li>
 
-                        <li><a href="{{ url('/pengguna') }}"> Registrasi naskah tanpa tindak lanjut </a></li>
-                         <li><a href="{{ url('/pengguna') }}"> Daftar berkas </a></li>
+                       
+                         <li><a href="{{ url('/laporan/berkas') }}"> Daftar berkas </a></li>
                     </ul>
                   </li>
        

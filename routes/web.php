@@ -38,6 +38,14 @@ Route::middleware(['user'])->group(function(){
 	Route::get('klasifikasi/delete/{id}', 'klasifikasiController@deleteData');
 	Route::post('klasifikasi/update/{id}','klasifikasiController@updateKlasifikasi');
 
+
+	Route::get('laporan/reg-naskah-masuk','laporanController@index');
+	Route::get('laporan/reg-naskah-tanpa-tindak-lanjut','laporanController@reg_naskah_tanpa_tindak_lanjut');
+	Route::get('laporan/naskah-masuk','laporanController@naskah_masuk');
+
+	Route::get('laporan/naskah-keluar','laporanController@naskah_keluar');
+
+	Route::get('laporan/berkas','laporanController@berkas');
 	//a
 
 	Route::get('berkas','berkasController@index');
