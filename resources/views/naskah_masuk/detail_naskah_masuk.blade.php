@@ -342,7 +342,7 @@
         <hr>
         <div class="row">
             <div class="col-md-12">
-                <p style="color: red; font-weight: bold; font-size: 12px">Naskah sudah diberkaskan di Nomor Berkas: {{ $getNaskah->berkas->kode_klasifikasi }} - Nama Berkas: {{ $getNaskah->berkas->judul_berkas }}, Pada Unit Kerja: {{ $getNaskah->berkas->jabatan->jabatan }}</p>
+                <p style="color: red; font-weight: bold; font-size: 12px">Naskah sudah diberkaskan di Nomor Berkas: {{ $getNaskah->berkas->kode_klasifikasi.'/'.$getNaskah->berkas->nomor_berkas }} - Nama Berkas: {{ $getNaskah->berkas->judul_berkas }}, Pada Unit Kerja: {{ $getNaskah->berkas->jabatan->jabatan }}</p>
             </div>
         </div>
         @endif

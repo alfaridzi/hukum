@@ -124,7 +124,6 @@
 
             <a href="javascript:;" id="pilih_berkas" class="btn btn-xs btn-primary" style="border-radius: 0px">Pilih Berkas</a>
 
-            <a href="javascript:;" type="" id="buat_berkas" class="btn btn-xs btn-success" style="border-radius: 0px">Buat Berkas</a>
         </div>
 
 

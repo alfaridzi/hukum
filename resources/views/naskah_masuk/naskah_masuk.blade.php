@@ -1,7 +1,7 @@
 @extends('app.app')
 @section('page-title', 'Naskah Masuk')
 @push('css')
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.cs s') }}">
 @endpush
 @section('content')
 

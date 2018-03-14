@@ -4,6 +4,8 @@ namespace App\Model\Naskah;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Model\Penerima;
+use Auth;
 
 class Naskah extends Model
 {
@@ -18,8 +20,19 @@ class Naskah extends Model
     	return $this->belongsTo('App\Model\Pengaturan\Urgensi', 'tingkat_urgensi', 'id_urgensi');
     }
 
+
+    public function get_tujuan()
+    {
+        return Penerima::where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->get();
+    }
+
+
     public function berkas() {
         return $this->hasOne('App\berkas','id_berkas','id_berkas');
+    }
+
+    public function penerimas() {
+        return $this->hasOne('App\Model\Penerima', 'id_naskah', 'id_naskah');
     }
 
     public function getPenerima() {
@@ -68,6 +81,14 @@ class Naskah extends Model
         }elseif($this->kategori_arsip == '0'){
             return 'Umum';
         }
+    }
+
+    public function axis() {
+        return Penerima::where('id_naskah', $this->id_naskah)->where('sebagai','to')->get();
+    }
+
+    public function axis_nm() { //nskh masuk
+        return Auth::user()->jabatan->jabatan;
     }
 
     public function get_akses_publik()
