@@ -116,12 +116,22 @@
                     </ul>
                   </li>
 
+                  <li><a><i class="fa fa-file-archive"></i> Penyusutan Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/berkas/pindah') }}"> Usul Pindah Arsip Inaktif </a></li>
+                       <li><a href="{{ url('/berkas/usul-musnah') }}"> Usul Musnah Arsip </a></li>
+                       <li><a href="{{ url('/berkas/musnah') }}"> Pemusnahan Arsip </a></li>
+                       <li><a href="{{ url('/berkas/usul-serah') }}"> Usul Serah Arsip Statis </a></li>
+                       <li><a href="{{ url('/berkas/serah') }}"> Penyerahan Arsip Statis </a></li>
+                    </ul>
+                  </li>
+
                      <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
 
-                       
-                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                       <li><a href="{{ url('/berkas/aktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa inaktif</a></li>
                     
                     </ul>
                   </li>
@@ -158,8 +168,8 @@
                     <ul class="nav child_menu">
                        <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
 
-                       
-                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa inaktif</a></li>
+                       <li><a href="{{ url('/berkas/pindah') }}"> Usul Pindah Arsip Inaktif </a></li>
                     
                     </ul>
                   </li>
@@ -210,8 +220,8 @@
                     <ul class="nav child_menu">
                        <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
 
-                       
-                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa inaktif</a></li>
+                       <li><a href="{{ url('/berkas/pindah') }}"> Usul Pindah Arsip Inaktif </a></li>
                     
                     </ul>
                   </li>
@@ -252,8 +262,8 @@
                     <ul class="nav child_menu">
                        <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
 
-                       
-                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa inaktif</a></li>
+                       <li><a href="{{ url('/berkas/pindah') }}"> Usul Pindah Arsip Inaktif </a></li>
                     
                     </ul>
                   </li>

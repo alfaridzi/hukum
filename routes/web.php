@@ -77,6 +77,29 @@ Route::middleware(['user'])->group(function(){
 	Route::get('berkas/tutup/{id}','berkasController@tutup_berkas');
 	Route::post('berkas/pindah/naskah/{id}', 'berkasController@pindahBerkas');
 	Route::get('berkas/inaktif','berkasController@inaktif');
+	Route::get('berkas/aktif','berkasController@aktif');
+
+	//Penyusutan
+	Route::get('/berkas/pindah', function(){
+		return view('penyusutan_berkas.usul_pindah_arsip_inaktif');
+	});
+
+	Route::get('/berkas/usul-musnah', function(){
+		return view('penyusutan_berkas.usul_musnah_arsip');
+	});
+
+	Route::get('/berkas/musnah', function(){
+		return view('penyusutan_berkas.pemusnahan_arsip');
+	});
+
+	Route::get('/berkas/usul-serah', function(){
+		return view('penyusutan_berkas.usul_serah_arsip_statis');
+	});
+
+	Route::get('/berkas/serah', function(){
+		return view('penyusutan_berkas.penyerahan_arsip_statis');
+	});
+
 	//pengguna
 	Route::get('/pengguna', 'penggunaController@index');
 	Route::post('/pengguna/tambah', 'penggunaController@tambah');

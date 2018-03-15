@@ -38,6 +38,18 @@ class berkasController extends Controller
     	return view('berkas_inaktif',compact('berkas','no'));
     }
 
+    public function aktif() {
+        $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->where('r_aktif','<',date('Y-m-d'))->get();
+        if($berkas->count() > 0) {
+            $nomor_berkas = $berkas->last()->nomor_berkas + 1;
+        } else {
+            $nomor_berkas = 1;
+        }
+
+        $no = 1;
+        return view('berkas_aktif',compact('berkas','no'));
+    }
+
 
     public function tambah(Request $request)
     {

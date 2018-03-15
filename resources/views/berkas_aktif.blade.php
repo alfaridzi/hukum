@@ -1,5 +1,5 @@
 @extends('app.app')
-@section('page-title', 'Pengaturan berkas inaktif')
+@section('page-title', 'Pengaturan berkas aktif')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
 
@@ -62,7 +62,7 @@
 				<th>Status Berkas</th>
 				<th>No Berkas</th>
 				<th>Nama Berkas</th>
-				<th>Akhir Retensi Inaktif</th>
+				<th>Akhir Retensi Aktif</th>
 			
 			</tr>
 		</thead>
@@ -74,7 +74,7 @@
 				<td>{{ $data->kode_klasifikasi.'/'.$data->nomor_berkas }}</td>
 				<td>{{ $data->judul_berkas }}</td>
 			
-				<td>{{ $data->r_inaktif }}</td>
+				<td>{{ $data->r_aktif }}</td>
 
 				</form>
 			</tr>
