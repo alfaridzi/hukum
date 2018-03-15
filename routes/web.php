@@ -39,11 +39,33 @@ Route::middleware(['user'])->group(function(){
 	Route::post('klasifikasi/update/{id}','klasifikasiController@updateKlasifikasi');
 
 
-	Route::get('laporan/reg-naskah-masuk','laporanController@index');
+	Route::get('lap/reg-naskah-masuk', function() {
+		return view('lap_regmasuk');
+	});
+	Route::get('laporan/reg-naskah-masuk','laporanController@reg_masuk');
+
+	Route::get('lap/reg-naskah-tanpa-tindak-lanjut', function() {
+		return view('lap_ttl');
+	});
+
 	Route::get('laporan/reg-naskah-tanpa-tindak-lanjut','laporanController@reg_naskah_tanpa_tindak_lanjut');
+
+	Route::get('lap/naskah-masuk', function() {
+		return view('lap_naskahmasuk');
+	});
+
 	Route::get('laporan/naskah-masuk','laporanController@naskah_masuk');
 
+
+	Route::get('lap/naskah-keluar', function() {
+		return view('lap_naskahkeluar');
+	});
+
 	Route::get('laporan/naskah-keluar','laporanController@naskah_keluar');
+
+	Route::get('lap/berkas', function() {
+		return view('lap_berkas');
+	});
 
 	Route::get('laporan/berkas','laporanController@berkas');
 	//a

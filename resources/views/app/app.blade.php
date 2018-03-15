@@ -54,27 +54,12 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
-                  
-                  <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
-                        <li><a href="{{ url('registrasi-naskah/template-dokumen') }}">Download Template Dokumen</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
-                  
-                  <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                        <li><a href="{{ url('log/registrasi-naskah-masuk') }}">Registrasi Naskah Masuk</a></li>
-                        <li><a href="{{ url('log/memo') }}">Memo</a></li>
-                        <li><a href="{{ url('log/nota-dinas') }}">Nota Dinas</a></li>
-                        <li><a href="{{ url('log/naskah-keluar') }}">Naskah Keluar</a></li>
-                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut') }}">Naskah Tanpa Tindak Lanjut</a></li>
-                    </ul>
-                  </li>
 
-                   <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
+
+
+                  @if(Auth::user()->role == '1')
+                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                    <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
 
@@ -90,6 +75,54 @@
                     </ul>
                   </li>
 
+                  @elseif(Auth::user()->role == '2')
+
+                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                   <li><a><i class="fa fa-user"></i> Unit Kerja &amp; Pengguna <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/unitkerja') }}"> Pengaturan Unit Kerja </a></li>
+
+                       <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
+                    </ul>
+                  </li>
+
+                     <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
+
+                       
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                    
+                    </ul>
+                  </li>
+
+
+
+
+
+                  @elseif(Auth::user()->role == '3')
+
+                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                  
+                  <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
+                        <li><a href="{{ url('registrasi-naskah/template-dokumen') }}">Download Template Dokumen</a></li>
+                    </ul>
+                  </li>
+
+                  <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
+                  
+                  <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                  
+                        <li><a href="{{ url('log/memo') }}">Memo</a></li>
+                        <li><a href="{{ url('log/nota-dinas') }}">Nota Dinas</a></li>
+                        <li><a href="{{ url('log/naskah-keluar') }}">Naskah Keluar</a></li>
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut') }}">Naskah Tanpa Tindak Lanjut</a></li>
+                    </ul>
+                  </li>
+
 
                    <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -101,49 +134,106 @@
                     </ul>
                   </li>
 
-                   <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
+
+                     <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                        <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
-                        <li><a href="{{ url('pengaturan/jenis-naskah') }}">Jenis Surat</a></li>
-                        <li><a href="{{ url('pengaturan/media-arsip') }}">Media Arsip</a></li>
-                        <li><a href="{{ url('pengaturan/sifat-naskah') }}">Sifat Surat</a></li>
-                        <li><a href="{{ url('pengaturan/tingkat-perkembangan') }}">Tingkat Perkembangan</a></li>
-                        <li><a href="{{ url('pengaturan/tingkat-urgensi') }}">Tingkat Urgensi</a></li>
-                        <li><a href="{{ url('pengaturan/ekstensi-file') }}">Ekstensi File</a></li>
-                        {{-- <li><a>Level One<span class="fa fa-chevron-down"></span></a>
-                          <ul class="nav child_menu">
-                            <li class="sub_menu"><a href="level2.html"></a>
-                            </li>
-                            <li><a href="#level2_1">Level Two</a>
-                            </li>
-                            <li><a href="#level2_2">Level Two</a>
-                            </li>
-                          </ul>
-                        </li> --}}
-                        <li><a href="{{ url('pengaturan/text-tombol') }}">Text Tombol</a>
-                        <li><a href="{{ url('pengaturan/satuan-unit') }}">Satuan Unit</a></li>
-                        <li><a href="{{ url('pengaturan/grup-jabatan') }}">Grup Jabatan</a></li>
-                        <li><a href="{{ url('pengaturan/isi-disposisi') }}">Isi Disposisi</a></li>
-                        <li><a href="{{ url('pengaturan/halaman-depan') }}">Halaman Depan</a></li>
-                        <li><a href="{{ url('pengaturan/instansi') }}">Data Instansi</a></li>
-                        <li><a href="{{ url('pengaturan/template-dokumen') }}">Upload Template Dokumen</a></li>
+                       <li><a href="{{ url('/lap/reg-naskah-masuk') }}">Registrasi naskah masuk </a></li>
+                        <li><a href="{{ url('lap/reg-naskah-tanpa-tindak-lanjut') }}"> naskah tanpa tindak lanjut </a></li>
+
+                       <li><a href="{{ url('lap/naskah-masuk') }}"> Naskah Masuk </a></li>
+                        <li><a href="{{ url('/lap/naskah-keluar') }}"> Naskah Keluar </a></li>
+
+                       
+                         <li><a href="{{ url('/lap/berkas') }}"> Daftar berkas </a></li>
                     </ul>
                   </li>
+
+
+
+
+
+
+                  @elseif(Auth::user()->role == '4')
+
+                    <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+
+                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
+                        <li><a href="{{ url('registrasi-naskah/template-dokumen') }}">Download Template Dokumen</a></li>
+                    </ul>
+                  </li>
+
+                  <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
+
+                    <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
+
+                       
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                    
+                    </ul>
+                  </li>
+
+
+
 
                   <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                       <li><a href="{{ url('/laporan/reg-naskah-masuk') }}">Registrasi naskah masuk </a></li>
-                        <li><a href="{{ url('laporan/reg-naskah-tanpa-tindak-lanjut') }}"> Registrasi naskah tanpa tindak lanjut </a></li>
-
-                       <li><a href="{{ url('laporan/naskah-masuk') }}"> Naskah Masuk </a></li>
-                        <li><a href="{{ url('/pengguna') }}"> Naskah Keluar </a></li>
+                       <li><a href="{{ url('/lap/reg-naskah-masuk') }}">Registrasi naskah masuk </a></li>
+                        <li><a href="{{ url('/lap/naskah-keluar') }}"> Naskah Keluar </a></li>
 
                        
-                         <li><a href="{{ url('/laporan/berkas') }}"> Daftar berkas </a></li>
+                         <li><a href="{{ url('/lap/berkas') }}"> Daftar berkas </a></li>
                     </ul>
                   </li>
-       
-                  </li>-->
+
+
+
+                  @elseif(Auth::user()->role == '5')
+
+                   <li><a href="{{ url('/dashboard') }}"><i class="fa fa-home" aria-hidden="true"></i> Home </a></li>
+                    <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Registrasi Naskah <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('registrasi-naskah') }}">Registrasi Naskah</a></li>
+                        <li><a href="{{ url('registrasi-naskah/template-dokumen') }}">Download Template Dokumen</a></li>
+                    </ul>
+                  </li>
+                   <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('log/registrasi-naskah-masuk') }}">Registrasi Naskah Masuk</a></li>
+                       
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut') }}">Naskah Tanpa Tindak Lanjut</a></li>
+                    </ul>
+                  </li>
+
+                  <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('berkas') }}"> Berkas Unit Kerja </a></li>
+
+                       
+                       <li><a href="{{ url('/berkas/inaktif') }}"> Daftar Berkas yang melewati masa aktif</a></li>
+                    
+                    </ul>
+                  </li>
+
+                   <li><a><i class="fa fa-user"></i> Laporan <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                       <li><a href="{{ url('/lap/reg-naskah-masuk') }}">Registrasi naskah masuk </a></li>
+                        <li><a href="{{ url('lap/reg-naskah-tanpa-tindak-lanjut') }}"> naskah tanpa tindak lanjut </a></li>
+
+                      
+                       
+                         <li><a href="{{ url('/lap/berkas') }}"> Daftar berkas </a></li>
+                    </ul>
+                  </li>
+
+
+
+
+                  @endif
+                 
                 </ul>
               </div>
 

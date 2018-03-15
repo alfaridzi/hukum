@@ -87,6 +87,21 @@ class Naskah extends Model
         return Penerima::where('id_naskah', $this->id_naskah)->where('sebagai','to')->get();
     }
 
+
+     public function axis_xs() {
+
+        $id_reg =  $this->tipe_registrasi;
+
+
+        if($id_reg === '4') {
+                 return Penerima::where('id_naskah', $this->id_naskah)->where('sebagai','to_keluar')->get();
+        } else if($id_reg === '3') {
+                 return Penerima::where('id_naskah', $this->id_naskah)->where('sebagai','to_konsep')->get();
+        } else if($id_reg === '2') {
+                return Penerima::where('id_naskah', $this->id_naskah)->where('sebagai','to_memo')->get();
+        }
+    }
+
     public function axis_nm() { //nskh masuk
         return Auth::user()->jabatan->jabatan;
     }

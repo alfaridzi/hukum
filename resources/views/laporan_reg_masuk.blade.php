@@ -6,7 +6,8 @@
 </style>
 
 
-<h3 class="text-center" style="font-weight:700">Laporan Naskah Masuk</h3>
+
+<h3 class="text-center" style="font-weight:700">Laporan Registrasi Naskah Masuk</h3>
 
 <?php
 $dari = date('d-m-Y', strtotime($_GET['dari']));
@@ -25,17 +26,16 @@ $sampai = date('d-m-Y', strtotime($_GET['dari']));
 				<th>Nomor Naskah</th>
 				<th>Perihal</th>
 				<th>Instansi Pengirim</th>
-				<th>Lokasi Fisik Berkas</th>
 			</tr>
 		</thead>
 		<tbody>
 
 			@if($naskah->count() < 1)
 			<tr>
-				<td colspan="8" class="text-center"> Tidak ada data</td>
+				<td colspan="7" class="text-center"> Tidak ada data</td>
 			</tr>
 			@endif
-			
+
 			@foreach($naskah as $data)
 			<tr>
 				<td>{{ $no++ }}</td>
@@ -51,7 +51,6 @@ $sampai = date('d-m-Y', strtotime($_GET['dari']));
 				<td>{{ $data->hal }}
 
 				<td>{{ $data->asal_naskah }}</td>
-				<td>{{ $data->lokasi_fisik }}</td>
 				
 				
 				

@@ -6,7 +6,7 @@
 </style>
 
 
-<h3 class="text-center" style="font-weight:700">Laporan Naskah Masuk</h3>
+<h3 class="text-center" style="font-weight:700">Laporan Naskah Keluar</h3>
 
 <?php
 $dari = date('d-m-Y', strtotime($_GET['dari']));
@@ -19,13 +19,13 @@ $sampai = date('d-m-Y', strtotime($_GET['dari']));
 		<thead>
 			<tr>
 				<th>No</th>
-				<th>No agenda</th>
-				<th>Tanggal Registrasi</th>
 				<th>Tanggal Naskah</th>
 				<th>Nomor Naskah</th>
 				<th>Perihal</th>
-				<th>Instansi Pengirim</th>
-				<th>Lokasi Fisik Berkas</th>
+				<th>Asal Naskah</th>
+				<th>Tujuan Naskah</th>
+				<th>Tanggal Naskah Keluar</th>
+				<th>Keterangan</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -35,23 +35,21 @@ $sampai = date('d-m-Y', strtotime($_GET['dari']));
 				<td colspan="8" class="text-center"> Tidak ada data</td>
 			</tr>
 			@endif
-			
+
 			@foreach($naskah as $data)
 			<tr>
 				<td>{{ $no++ }}</td>
-
-				<td>{{ $data->nomor_agenda }}</td>
-
-				<td>{{ $data->tanggal_registrasi }}</td>
-
 				<td>{{ $data->tanggal_naskah }}</td>
-
 				<td>{{ $data->nomor_naskah }}</td>
-
 				<td>{{ $data->hal }}
-
-				<td>{{ $data->asal_naskah }}</td>
-				<td>{{ $data->lokasi_fisik }}</td>
+				<td>{{ Auth::user()->nama }}</td>
+				<td>
+					@foreach($data->axis_xs() as $penerimas)
+               		{{ $penerimas->tujuan_kirim->jabatan->jabatan }}
+                    @endforeach
+                </td>
+				<td>{{ $data->tanggal_registrasi }}</td>
+				<th> {{ $data->get_tipe_registrasi() }}</th>
 				
 				
 				
