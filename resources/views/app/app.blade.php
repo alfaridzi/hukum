@@ -116,7 +116,7 @@
                     </ul>
                   </li>
 
-                  <li><a><i class="fa fa-file-archive"></i> Penyusutan Berkas <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-folder"></i> Penyusutan Berkas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/berkas/pindah') }}"> Usul Pindah Arsip Inaktif </a></li>
                        <li><a href="{{ url('/berkas/usul-musnah') }}"> Usul Musnah Arsip </a></li>
