@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\Naskah\Naskah;
+use App\Model\Pengaturan\Ekstensi;
 use App\Model\Penerima;
 use App\Model\Files;
 use App\Model\Disposisi;
 
+use Validator;
 use Auth;
 use Storage;
 
@@ -15,6 +17,12 @@ class BalasController extends Controller
 {
     public function teruskan(Request $request, $id)
     {
+        $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
+        $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
+        $this->validate($request, [
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+        ]);
+
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
         $id_group = $penerima->id_group + 1;
@@ -71,6 +79,12 @@ class BalasController extends Controller
 
     public function balas(Request $request, $id)
     {
+        $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
+        $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
+        $this->validate($request, [
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+        ]);
+
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
         $id_group = $penerima->id_group + 1;
@@ -131,15 +145,39 @@ class BalasController extends Controller
 
     public function disposisi(Request $request, $id)
     {
+        $input = $request->all();
+        $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
+        $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
+
+        $messages = [
+            'kepada.required' => 'Bidang isian tujuan wajib diisi.',
+        ];
+
+        $validator = Validator::make($input, [
+            'kepada' => 'required',
+            'disposisi' => 'nullable',
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000',
+        ], $messages);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
         $id_group = $penerima->id_group + 1;
-    	$input = $request->all();
+    	
         $input['id_group'] = $id_group;
         $files = $request->file('file_uploads');
         $input['id_user'] = Auth::user()->id_user;
         $input['id_naskah'] = $naskah->id_naskah;
         $input['sebagai'] = 'cc1';
+
+        if (!isset($input['disposisi'])) {
+            $input['disposisi'] = null;
+        }
 
         if (!is_null($files)) {
             foreach ($files as $key => $file) {
@@ -171,5 +209,49 @@ class BalasController extends Controller
         }
     	
     	return redirect()->back()->with('success', 'Berhasil mengirim disposisi');
+    }
+
+    public function cetakDisposisi($id, $id_group)
+    {
+        $penerima = Penerima::where('id_naskah', $id)->where('id_group', $id_group)->with(['disposisi' => function($q) use($id, $id_group){
+            $q->where('id_naskah', $id)->where('id_group', $id_group)->groupBy('id_group');
+        }])->with('naskah')->with('user', 'tujuan_kirim')->groupBy('id_group')->first();
+        return view('cetak_disposisi', compact('penerima'));
+    }
+
+    public function dokumenFinal(Request $request, $id)
+    {
+        $input = $request->all();
+
+        $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
+        $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
+
+        $this->validate($request, [
+            'file_uploads'   => 'nullable',
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+        ]);
+        $naskah = Naskah::findOrFail($id);
+        $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
+        $id_group = $penerima->id_group + 1;
+
+        $input['id_group'] = $id_group;
+        $input['id_naskah'] = $id;
+        $input['sebagai'] = 'final';
+        $input['id_user'] = Auth::user()->id_user;
+        $input['kirim_user'] = 'all';
+
+        $files = $request->file('file_uploads');
+        if (!is_null($files)) {
+            foreach ($files as $key => $file) {
+                $namaFile = substr(str_random(5).'-'.pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME), 0, 30).'.'.$file->getClientOriginalExtension();
+                $arrFiles[] = $namaFile;
+                Storage::disk('uploads')->putFileAs('FilesUploaded/'.$naskah->file_dir.'/', $file, $namaFile);
+                Files::create(['id_naskah' => $naskah->id_naskah, 'id_group' => $input['id_group'], 'nama_file' => $namaFile]);
+            }
+        }
+
+        Penerima::create($input);
+
+        return redirect()->back()->with('success', 'Berhasil upload dokumen final');
     }
 }

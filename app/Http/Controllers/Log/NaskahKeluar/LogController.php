@@ -32,13 +32,13 @@ class LogController extends Controller
     public function naskahKeluar()
     {
     	$user = Auth::user();
-    	$naskah = Naskah::where('tipe_registrasi', '4')->whereHas('user', function($q) use($user){
+    	$naskah = Naskah::whereIn('tipe_registrasi', ['2', '3', '4'])->whereHas('user', function($q) use($user){
     		$q->where('id_jabatan', $user->id_jabatan);
     	})->with(['penerima' => function($q){
-    		$q->where('sebagai', 'to_keluar')->groupBy('id_group');
+    		$q->whereIn('sebagai', ['to_konsep', 'to_memo', 'to_keluar'])->groupBy('id_group');
     	}])->with('urgensi')->with(['getPenerima' => function($q){
             $q->groupBy('id_group');
-        }])->orderBy('id_naskah', 'asc')->get();
+        }])->orderBy('id_naskah', 'desc')->get();
     	$no = 1;
     	return view('log.naskah_keluar.index', compact('naskah', 'no'));
     }

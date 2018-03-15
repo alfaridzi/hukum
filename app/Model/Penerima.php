@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Penerima extends Model
 {
@@ -22,6 +23,17 @@ class Penerima extends Model
     	}elseif($this->status_naskah == '1') {
     		return 'Sudah Dibaca';
     	}
+    }
+
+    public function statusNaskah()
+    {
+        $sebagai = $this->where('id_naskah', $this->id_naskah)->where('kirim_user', Auth::user()->id_user)->whereIn('status_naskah', ['0'])->first();
+
+        if (is_null($sebagai)) {
+            return 'Sudah Dibaca';
+        }else{
+            return 'Belum Dibaca';
+        }
     }
 
     public function get_sebagai()
@@ -46,6 +58,8 @@ class Penerima extends Model
             return 'Memo';
         }elseif($sebagai->sebagai == 'cc1'){
             return 'Disposisi';
+        }elseif($sebagai->sebagai == 'final'){
+            return 'Dokumen Final';
         }
     }
 

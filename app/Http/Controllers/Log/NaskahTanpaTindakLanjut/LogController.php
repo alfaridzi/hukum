@@ -36,7 +36,7 @@ class LogController extends Controller
     		$q->where('id_jabatan', $user->id_jabatan);
     	})->with(['penerima' => function($q){
     		$q->where('sebagai', 'to_tl')->groupBy('id_group');
-    	}])->orderBy('id_naskah', 'asc')->get();
+    	}])->orderBy('id_naskah', 'desc')->get();
     	$no = 1;
     	return view('log.naskah_tanpa_tindak_lanjut.index', compact('naskah', 'no'));
     }

@@ -38,7 +38,8 @@ class NaskahMasukController extends Controller
             $q->whereHas('tujuan_kirim', function($q) use($user){
                 $q->where('id_user', $user->id_user)->orWhere('id_jabatan', $user->id_jabatan);
             })->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
-        }])->orderBy('id_naskah', 'asc')->get();
+        }])->orderBy('id_naskah', 'desc')->get();
+
     	$no = 1;
     	return view('naskah_masuk.naskah_masuk', compact('naskah', 'no'));
     }
@@ -47,6 +48,7 @@ class NaskahMasukController extends Controller
     {
         $sifatNaskah = SifatNaskah::all();
         $isiDisposisi = IsiDisposisi::all();
+
         //Berkas
         $userJabatan = Auth::user()->jabatan;
         $sifatNaskah = SifatNaskah::all();
