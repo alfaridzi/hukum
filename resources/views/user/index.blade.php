@@ -2,14 +2,8 @@
 @section('page-title', 'Pengaturan user')
 @push('css')
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
-
-
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/dataTables/css/dataTables.bootstrap.min.css') }}">
-
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
-  
-    
 <link rel="stylesheet" type="text/css" href="http://sikdnew.kemsos.go.id/style/tree.skinpengguna.css">
 <link rel='stylesheet' type='text/css' href='http://wwwendt.de/tech/dynatree/src/skin-vista/ui.dynatree.css'>
 
@@ -165,7 +159,7 @@
 	        	</div>
 
 	        	<div class="col-md-12 col-sm-10 col-xs-10">
-        			<select name="jabatan_atasan_langsung" class="selectpicker" data-live-search="true">
+        			<select name="id_jabatan_atasan" class="selectpicker" data-live-search="true">
 	        		@foreach($unit as $item)
 					  <option value="{{ $item->id }}">{{ $item->jabatan }}</option>
 					 @endforeach

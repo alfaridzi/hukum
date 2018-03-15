@@ -9,6 +9,7 @@ class DashboardViewComposer {
 
 	protected $user;
 	protected $naskah;
+	protected $count_naskah;
 
 	public function __construct()
 	{
@@ -24,13 +25,24 @@ class DashboardViewComposer {
                 })->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
             }])->orderBy('id_naskah', 'desc')->limit(3)->get();
 
+            $count_naskah = Naskah::whereNotIn('tipe_registrasi', ['5'])->whereHas('penerima', function($q) use($user){
+            $q->whereHas('tujuan_kirim', function($q) use($user){
+                $q->where('id_user', $user->id_user)->orWhere('id_jabatan', $user->id_jabatan);
+            })->where('status_naskah', '0')->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
+            })->with('urgensi')->with(['penerima' => function($q) use($user){
+                $q->whereHas('tujuan_kirim', function($q) use($user){
+                    $q->where('id_user', $user->id_user)->orWhere('id_jabatan', $user->id_jabatan);
+                })->orderBy('id_penerima', 'asc')->groupBy('id_naskah');
+            }])->orderBy('id_naskah', 'desc')->count();
+
             $this->user = $user;
             $this->naskah = $naskah;
+            $this->count_naskah = $count_naskah;
         }
 	}
 
     public function compose(View $view) {
-        $view->with('gUser', $this->user)->with('naskahBaru', $this->naskah);
+        $view->with('gUser', $this->user)->with('naskahBaru', $this->naskah)->with('count_naskah', $this->count_naskah);
     }
 }
 ?>

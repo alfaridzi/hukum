@@ -66,8 +66,38 @@
                        <li><a href="{{ url('/pengguna') }}"> Pengaturan Pengguna </a></li>
                     </ul>
                   </li>
+                  
+                  
+                  <li><a><i class="fa fa-cog"></i> Pengaturan <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{ url('pengaturan/bahasa') }}">Bahasa</a></li>
+                        <li><a href="{{ url('pengaturan/jenis-naskah') }}">Jenis Surat</a></li>
+                        <li><a href="{{ url('pengaturan/media-arsip') }}">Media Arsip</a></li>
+                        <li><a href="{{ url('pengaturan/sifat-naskah') }}">Sifat Surat</a></li>
+                        <li><a href="{{ url('pengaturan/tingkat-perkembangan') }}">Tingkat Perkembangan</a></li>
+                        <li><a href="{{ url('pengaturan/tingkat-urgensi') }}">Tingkat Urgensi</a></li>
+                        <li><a href="{{ url('pengaturan/ekstensi-file') }}">Ekstensi File</a></li>
+                        {{-- <li><a>Level One<span class="fa fa-chevron-down"></span></a>
+                          <ul class="nav child_menu">
+                            <li class="sub_menu"><a href="level2.html"></a>
+                            </li>
+                            <li><a href="#level2_1">Level Two</a>
+                            </li>
+                            <li><a href="#level2_2">Level Two</a>
+                            </li>
+                          </ul>
+                        </li> --}}
+                        <li><a href="{{ url('pengaturan/text-tombol') }}">Text Tombol</a>
+                        <li><a href="{{ url('pengaturan/satuan-unit') }}">Satuan Unit</a></li>
+                        <li><a href="{{ url('pengaturan/grup-jabatan') }}">Grup Jabatan</a></li>
+                        <li><a href="{{ url('pengaturan/isi-disposisi') }}">Isi Disposisi</a></li>
+                        <li><a href="{{ url('pengaturan/halaman-depan') }}">Halaman Depan</a></li>
+                        <li><a href="{{ url('pengaturan/instansi') }}">Data Instansi</a></li>
+                        <li><a href="{{ url('pengaturan/template-dokumen') }}">Upload Template Dokumen</a></li>
+                    </ul>
+                  </li>
 
-                  <li><a><i class="fa fa-shield"></i> Klasifikasi &amp; Berkas <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-shield"></i> Klasifikasi <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                        <li><a href="{{ url('/klasifikasi') }}"> Pengaturan Klasifikasi </a></li>
 
@@ -165,6 +195,16 @@
                   </li>
 
                   <li><a href="{{ url('naskah-masuk') }}"><i class="fa fa-envelope-o" aria-hidden="true"></i> Naskah Masuk </a></li>
+                  
+                  <li><a href="#"><i class="fa fa-book" aria-hidden="true"></i> Log Registrasi <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                  
+                        <li><a href="{{ url('log/memo') }}">Memo</a></li>
+                        <li><a href="{{ url('log/nota-dinas') }}">Nota Dinas</a></li>
+                        <li><a href="{{ url('log/naskah-keluar') }}">Naskah Keluar</a></li>
+                        <li><a href="{{ url('log/naskah-tanpa-tindak-lanjut') }}">Naskah Tanpa Tindak Lanjut</a></li>
+                    </ul>
+                  </li>
 
                     <li><a><i class="fa fa-file-archive-o"></i> Berkas <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -288,7 +328,7 @@
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">{{ $naskahBaru->count() }} @if($naskahBaru->count() > 3) + @endif</span>
+                    <span class="badge bg-green">{{ $naskahBaru->count() }} @if($count_naskah > 3) + @endif</span>
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     @foreach($naskahBaru as $data)
