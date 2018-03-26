@@ -55,11 +55,15 @@
 				</td>
 				<td>
 					<ul>
+					@if(!$penerima->disposisi->isEmpty())
 					@foreach($penerima->disposisi as $dataDisposisi)
+						@if(!is_null($dataDisposisi->disposisi))
 						@foreach($dataDisposisi->get_disposisi() as $data)
-						<li>{{ $data->isiDisposisi->isi_disposisi }}</li>
+						<li>{{ $data->isiDisposisi() }}</li>
 						@endforeach
+						@endif
 					@endforeach
+					@endif
 					</ul>
 				</td>
 			</tr>

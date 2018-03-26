@@ -338,20 +338,9 @@
                 <li role="presentation" class="dropdown">
                   <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                     <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">{{ $naskahBaru->count() }} @if($count_naskah > 3) + @endif</span>
+                    <span class="badge bg-green">{{ $count_naskah }}</span>
                   </a>
                   <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    @foreach($naskahBaru as $data)
-                    <li>
-                      <a href="{{ url('/naskah-masuk/detail/'.$data->id_naskah) }}">
-                          <span>Nomor Naskah: {{ $data->nomor_naskah }}</span>
-                        </span>
-                        <span class="message">
-                          Asal Naskah: {{ $data->asal_naskah }}
-                        </span>
-                      </a>
-                    </li>
-                    @endforeach
                     <li>
                       <div class="text-center">
                         <a href="{{ url('/naskah-masuk') }}">
@@ -367,6 +356,11 @@
           </div>
         </div>
         <!-- /top navigation -->
+        <style type="text/css">
+          .right_col {
+            min-height: 10px !important;
+          }
+        </style>
 
         <!-- page content -->
         <div class="right_col" role="main">

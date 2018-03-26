@@ -20,12 +20,14 @@ class BalasController extends Controller
         $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
         $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
         $this->validate($request, [
-            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:5000'
         ]);
 
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
-        $id_group = $penerima->id_group + 1;
+        $id_group = str_random(15);
+        // $id_group = $penerima->id_group + 1;
+        
     	$input = $request->all();
         $input['id_group'] = $id_group;
         $files = $request->file('file_uploads');
@@ -82,12 +84,14 @@ class BalasController extends Controller
         $dataEkstensi = Ekstensi::all('jenis_ekstensi')->toArray();
         $ekstensi = implode(',', array_pluck($dataEkstensi, 'jenis_ekstensi'));
         $this->validate($request, [
-            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:5000'
         ]);
 
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
-        $id_group = $penerima->id_group + 1;
+        $id_group = str_random(15);
+        // $id_group = $penerima->id_group + 1;
+
     	$input = $request->all();
         $input['id_group'] = $id_group;
         $files = $request->file('file_uploads');
@@ -156,7 +160,7 @@ class BalasController extends Controller
         $validator = Validator::make($input, [
             'kepada' => 'required',
             'disposisi' => 'nullable',
-            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000',
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:5000',
         ], $messages);
 
         if ($validator->fails()) {
@@ -167,8 +171,9 @@ class BalasController extends Controller
 
     	$naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
-        $id_group = $penerima->id_group + 1;
-    	
+        $id_group = str_random(15);
+        // $id_group = $penerima->id_group + 1;
+
         $input['id_group'] = $id_group;
         $files = $request->file('file_uploads');
         $input['id_user'] = Auth::user()->id_user;
@@ -228,17 +233,19 @@ class BalasController extends Controller
 
         $this->validate($request, [
             'file_uploads'   => 'nullable',
-            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000'
+            'file_uploads.*' => 'mimes:'.$ekstensi.'|max:5000'
         ]);
         $naskah = Naskah::findOrFail($id);
         $penerima = Penerima::where('id_naskah', $id)->orderBy('id_penerima', 'desc')->first();
-        $id_group = $penerima->id_group + 1;
+        $id_group = str_random(15);
+        // $id_group = $penerima->id_group + 1;
 
         $input['id_group'] = $id_group;
         $input['id_naskah'] = $id;
         $input['sebagai'] = 'final';
         $input['id_user'] = Auth::user()->id_user;
         $input['kirim_user'] = 'all';
+        $input['status_naskah'] = '1';
 
         $files = $request->file('file_uploads');
         if (!is_null($files)) {

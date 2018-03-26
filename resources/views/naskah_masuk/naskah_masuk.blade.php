@@ -41,6 +41,7 @@
 			<tr>
 				<td>{{ $no++ }}</td>
 				<td><a href="{{ url('/naskah-masuk/detail/'.$data->id_naskah) }}">@foreach($data->penerima as $dataPenerima)
+
 					{{ $dataPenerima->statusNaskah() }}
 					@endforeach</a></td>
 				<td><a href="{{ url('/naskah-masuk/detail/'.$data->id_naskah) }}">{{ $data->urgensi->tingkat }}</a></td>

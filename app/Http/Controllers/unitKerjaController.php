@@ -18,7 +18,7 @@ class unitKerjaController extends Controller
      */
     public function unitKerja()
     {
-        $unitKerja = unitKerja::where('parent_id', '=', 0)->get();
+        $unitKerja = unitKerja::where('parent_id', '=', 'root')->get();
 
         
         $grupjabatan[0] = '-';

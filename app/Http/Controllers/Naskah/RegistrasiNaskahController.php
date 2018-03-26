@@ -30,8 +30,6 @@ class RegistrasiNaskahController extends Controller
 {
     public function index()
     {
-
-
         $berkas = berkas::where('id_unitkerja', Auth::user()->id_jabatan)->get();
         $no = 1;
     	$jenisNaskah = JenisNaskah::all();
@@ -54,13 +52,16 @@ class RegistrasiNaskahController extends Controller
     	$files = $request->file('file_uploads');
     	$input['tanggal_registrasi'] = Carbon::now();
         $input['id_user'] = Auth::user()->id_user;
-        $id_group = Naskah::all()->last();
-        $input['id_group'] = null;
-        if (is_null($id_group)) {
-            $input['id_group'] += 1;
-        }else{
-            $input['id_group'] = $id_group->id_group + 1;
-        }
+        $input['id_naskah'] = str_random(15);
+        $id_group = str_random(15);
+        $input['id_group'] = $id_group;
+        // $id_group = Naskah::all()->last();
+        // $input['id_group'] = null;
+        // if (is_null($id_group)) {
+        //     $input['id_group'] += 1;
+        // }else{
+        //     $input['id_group'] = $id_group->id_group + 1;
+        // }
         $input['tingkat_perkembangan'] = Perkembangan::firstOrFail()->id_perkembangan;
         $input['sifat_naskah'] = SifatNaskah::firstOrFail()->id_sifat_naskah;
         $input['media_arsip'] = MediaArsip::firstOrFail()->id_media_arsip;

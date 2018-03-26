@@ -13,6 +13,8 @@ class unitKerja extends Model
      *
      * @return string
     */
+    public $incrementing = false;
+    
     public function childs() {
         return $this->hasMany('App\unitKerja','parent_id','id') ;
     }

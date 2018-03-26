@@ -154,7 +154,7 @@
                         @if(!$data->disposisi->isEmpty())
                             <ul>
                             @foreach($data->disposisi as $disposisi)
-                                <li>{{ $disposisi->isiDisposisi->isi_disposisi }}</li>
+                                <li>{{ $disposisi->isiDisposisi() }}</li>
                             @endforeach
                             </ul>
                             {{ $data->pesan }}
@@ -235,7 +235,7 @@
                         @if(!$data->disposisi->isEmpty())
                             <ul>
                             @foreach($data->disposisi as $disposisi)
-                                <li>{{ $disposisi->isiDisposisi->isi_disposisi }}</li>
+                                <li>{{ $disposisi->isiDisposisi() }}</li>
                             @endforeach
                             </ul>
                             {{ $data->pesan }}

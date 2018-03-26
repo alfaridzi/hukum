@@ -10,6 +10,7 @@ class Disposisi extends Model
     protected $table = 'tbl_disposisi';
     protected $fillable = ['id_naskah', 'id_group', 'no_index', 'sifat', 'disposisi', 'updated_at'];
     protected $primaryKey = 'id_disposisi';
+    // public $incrementing = false;
 
     public function naskah()
     {
@@ -33,7 +34,12 @@ class Disposisi extends Model
 
     public function isiDisposisi()
     {
-    	return $this->belongsTo('App\Model\Pengaturan\IsiDisposisi', 'disposisi', 'id_disposisi');
+        if ($this->where('id_naskah', $this->id_naskah)->where('id_group', $this->id_group)->pluck('disposisi') == '[null]') {
+            return '';
+        }else{
+            return str_replace('"]', '', str_replace('["', '', $this->belongsTo('App\Model\Pengaturan\isiDisposisi', 'disposisi', 'id_disposisi')->pluck('isi_disposisi')));
+        }
+    	
     }
 
     public function get_tanggal_disposisi()

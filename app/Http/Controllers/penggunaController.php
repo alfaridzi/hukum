@@ -13,7 +13,7 @@ class penggunaController extends Controller
     public function index()
     {
     	$user = user::all();
-    	$unitKerja = unitKerja::where('parent_id', '=', 0)->get();
+    	$unitKerja = unitKerja::where('parent_id', '=', 'root')->get();
     	$unit = unitKerja::all();
     	$no = 1;
     	return view('user.index', compact('user', 'no','unitKerja','unit'));

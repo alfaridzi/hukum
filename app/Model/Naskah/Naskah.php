@@ -15,6 +15,8 @@ class Naskah extends Model
 
     protected $primaryKey = 'id_naskah';
 
+    public $incrementing = false;
+
     public function urgensi()
     {
     	return $this->belongsTo('App\Model\Pengaturan\Urgensi', 'tingkat_urgensi', 'id_urgensi');

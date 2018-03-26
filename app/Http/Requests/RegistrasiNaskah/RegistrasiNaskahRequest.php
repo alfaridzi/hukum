@@ -35,7 +35,7 @@ class RegistrasiNaskahRequest extends FormRequest
                 'hal' => 'required|string',
                 'asal_naskah' => 'required|string',
                 'tingkat_urgensi' => 'required|integer',
-                'file_upload.*' => 'mimes:'.$ekstensi.'|max:15000',
+                'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000',
                 'tipe_registrasi' => 'required|integer',
             ];
         }else{
@@ -49,7 +49,7 @@ class RegistrasiNaskahRequest extends FormRequest
                 'tingkat_urgensi' => 'required|integer',
                 'kepada' => 'required',
                 'tembusan' => 'nullable',
-                'file_upload.*' => 'mimes:'.$ekstensi.'|max:15000',
+                'file_uploads.*' => 'mimes:'.$ekstensi.'|max:15000',
                 'tipe_registrasi' => 'required|integer',
             ];
         }
